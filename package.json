@@ -1,0 +1,13 @@
+{
+  "name": "iabgpp",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "workspaces" : [
+    "modules/stub",
+    "modules/cmpapi"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces"
+  }
+}
