@@ -3,7 +3,11 @@ import { FixedIntegerEncoder } from "./FixedIntegerEncoder.js";
 
 export class DatetimeEncoder {
   public static encode(value: Date): string {
-    return FixedIntegerEncoder.encode(Math.round(value.getTime() / 100), 36);
+    if (value) {
+      return FixedIntegerEncoder.encode(Math.round(value.getTime() / 100), 36);
+    } else {
+      return FixedIntegerEncoder.encode(0, 36);
+    }
   }
 
   public static decode(bitString: string): Date {

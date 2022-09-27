@@ -22,6 +22,7 @@
     "./test/encoder/datatype/encoder/FixedIntegerRangeEncoder.test.ts",
     "./test/encoder/datatype/encoder/FixedStringEncoder.test.ts",
     "./test/encoder/section/HeaderV1.test.ts",
+    "./test/encoder/section/TcfCaV2.test.ts",
     "./test/encoder/section/TcfEuV2.test.ts",
     "./test/encoder/section/UspV1.test.ts",
     "./test/encoder/section/UspV1Legacy.test.ts",

@@ -1,5 +1,6 @@
 import { EncodableSection } from "./section/EncodableSection.js";
 import { HeaderV1 } from "./section/HeaderV1.js";
+import { TcfCaV2 } from "./section/TcfCaV2.js";
 import { TcfEuV2 } from "./section/TcfEuV2.js";
 import { UspV1 } from "./section/UspV1.js";
 
@@ -8,7 +9,7 @@ export class GppModel {
   private sectionOrder: string[];
 
   constructor(encodedString?: string) {
-    this.sectionOrder = [TcfEuV2.NAME, UspV1.NAME];
+    this.sectionOrder = [TcfEuV2.NAME, TcfCaV2.NAME, UspV1.NAME];
 
     if (encodedString && encodedString.length > 0) {
       this.decode(encodedString);
@@ -18,7 +19,10 @@ export class GppModel {
   public setFieldValue(sectionName: string, fieldName: string, value: any) {
     let section: EncodableSection = null;
     if (!this.sections.has(sectionName)) {
-      if (sectionName === TcfEuV2.NAME) {
+      if (sectionName === TcfCaV2.NAME) {
+        section = new TcfCaV2();
+        this.sections.set(TcfCaV2.NAME, section);
+      } else if (sectionName === TcfEuV2.NAME) {
         section = new TcfEuV2();
         this.sections.set(TcfEuV2.NAME, section);
       } else if (sectionName === UspV1.NAME) {
@@ -111,7 +115,10 @@ export class GppModel {
 
     let sectionIds = header.getFieldValue("SectionIds");
     for (let i = 0; i < sectionIds.length; i++) {
-      if (sectionIds[i] === TcfEuV2.ID) {
+      if (sectionIds[i] === TcfCaV2.ID) {
+        let section = new TcfCaV2(encodedSections[i + 1]);
+        this.sections.set(TcfCaV2.NAME, section);
+      } else if (sectionIds[i] === TcfEuV2.ID) {
         let section = new TcfEuV2(encodedSections[i + 1]);
         this.sections.set(TcfEuV2.NAME, section);
       } else if (sectionIds[i] === UspV1.ID) {
@@ -132,7 +139,10 @@ export class GppModel {
   public decodeSection(sectionName: string, encodedString: string): void {
     let section: EncodableSection = null;
     if (!this.sections.has(sectionName)) {
-      if (sectionName === TcfEuV2.NAME) {
+      if (sectionName === TcfCaV2.NAME) {
+        section = new TcfCaV2();
+        this.sections.set(TcfCaV2.NAME, section);
+      } else if (sectionName === TcfEuV2.NAME) {
         section = new TcfEuV2();
         this.sections.set(TcfEuV2.NAME, section);
       } else if (sectionName === UspV1.NAME) {
