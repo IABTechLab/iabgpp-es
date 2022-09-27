@@ -1,0 +1,24 @@
+.DS_Store
+node_modules/
+modules/**/lib
+modules/**/dist
+modules/**/coverage
+modules/**/node_modules
+modules/**/.nyc_output
+test-results.xml
+.nyc_output
+coverage
+tags
+tags.*
+.nyc_output
+.coveralls.yml
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+*.log

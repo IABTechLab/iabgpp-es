@@ -67,7 +67,6 @@ export abstract class AbstractEncodableSegmentedBitStringSection implements Enco
           if (this.fields.has(fieldName)) {
             let field = this.fields.get(fieldName);
             let substring = field.substring(segmentBitString, index);
-            console.log(fieldName + " " + substring);
             field.decode(substring);
             index += substring.length;
           } else {

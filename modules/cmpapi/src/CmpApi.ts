@@ -4,6 +4,7 @@ import { CmpStatus } from "./cmpapi/status/CmpStatus.js";
 import { DisplayStatus } from "./cmpapi/status/DisplayStatus.js";
 import { EventStatus } from "./cmpapi/status/EventStatus.js";
 import { CallResponder } from "./cmpapi/CallResponder.js";
+import { TcfCaV2 } from "./encoder/section/TcfCaV2.js";
 import { TcfEuV2 } from "./encoder/section/TcfEuV2.js";
 import { UspV1 } from "./encoder/section/UspV1.js";
 import { Gvl, GvlUrlConfig } from "./Gvl.js";
@@ -46,6 +47,7 @@ export class CmpApi {
     if (currentAPI && currentAPI.length > 0) {
       this.cmpApiContext.eventQueue.exec(currentAPI);
     } else {
+      this.cmpApiContext.eventQueue.exec(TcfCaV2.NAME);
       this.cmpApiContext.eventQueue.exec(TcfEuV2.NAME);
       this.cmpApiContext.eventQueue.exec(UspV1.NAME);
     }

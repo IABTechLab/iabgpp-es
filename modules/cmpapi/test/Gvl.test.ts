@@ -3,8 +3,8 @@ import * as sinon from "sinon";
 import { Gvl, GvlUrlConfig } from "../src/Gvl";
 import { XMLHttpTestTools } from "./util/XMLHttpTestTools";
 
-import vendorlistJson from "./vendorlist/vendor-list.json";
-import translationJson from "./vendorlist/purposes-fr.json";
+import vendorlistJson from "./vendorlist/vendor-list.json" assert { type: "json" };
+import translationJson from "./vendorlist/purposes-fr.json" assert { type: "json" };
 
 describe("Gvl", (): void => {
   const assertPopulated = (gvl: Gvl): void => {

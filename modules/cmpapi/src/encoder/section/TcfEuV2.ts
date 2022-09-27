@@ -13,7 +13,7 @@ import { Base64UrlEncoder } from "../datatype/encoder/Base64UrlEncoder.js";
 import { TcfEuV2Field } from "../field/TcfEuV2Field.js";
 
 export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
-  public static readonly ID = 5;
+  public static readonly ID = 2;
   public static readonly VERSION = 2;
   public static readonly NAME = "tcfeuv2";
 

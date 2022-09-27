@@ -24,7 +24,7 @@ window.__gpp_stub = function () {
       gppVersion: "1.0", // must be “Version.Subversion”, current: “1.0”
       cmpStatus: "stub", // possible values: stub, loading, loaded, error
       cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-      apiSupport: ["tcfeuv2", "uspv1"], // list of supported APIs
+      apiSupport: ["tcfeuv2", "tcfcav2", "uspv1"], // list of supported APIs
       currentAPI: "", // name of detected API once CMP is loaded
       cmpId: 0, // IAB assigned CMP ID, may be 0 during stub/loading
     };
