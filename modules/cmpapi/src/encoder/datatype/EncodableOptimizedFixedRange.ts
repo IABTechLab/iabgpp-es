@@ -24,10 +24,10 @@ export class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
       let index = 0;
       for (let i = 0; i < max; i++) {
         if (i === this.value[index] - 1) {
-          bits[i] = 1;
+          bits[i] = true;
           index++;
         } else {
-          bits[i] = 0;
+          bits[i] = false;
         }
       }
       return "0" + FixedIntegerEncoder.encode(max, 16) + FixedBitfieldEncoder.encode(bits, bitFieldLength);
@@ -41,7 +41,7 @@ export class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
       let value = [];
       let bits = FixedBitfieldEncoder.decode(bitString.substring(17));
       for (let i = 0; i < bits.length; i++) {
-        if (bits[i] === 1) {
+        if (bits[i] === true) {
           value.push(i + 1);
         }
       }
