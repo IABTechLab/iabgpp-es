@@ -1,11 +1,11 @@
 import { DecodingError } from "../../error/DecodingError.js";
-import { FixedIntegerEncoder } from "./FixedIntegerEncoder.js";
+import { BooleanEncoder } from "./BooleanEncoder.js";
 
 export class FixedBitfieldEncoder {
-  public static encode(value: number[], bitStringLength: number): string {
+  public static encode(value: boolean[], bitStringLength: number): string {
     let bitString = "";
     for (let i = 0; i < value.length; i++) {
-      bitString += FixedIntegerEncoder.encode(value[i], 1);
+      bitString += BooleanEncoder.encode(value[i]);
     }
 
     while (bitString.length < bitStringLength) {
@@ -15,14 +15,14 @@ export class FixedBitfieldEncoder {
     return bitString;
   }
 
-  public static decode(bitString: string): number[] {
+  public static decode(bitString: string): boolean[] {
     if (!/^[0-1]*$/.test(bitString)) {
       throw new DecodingError("Undecodable FixedBitfield '" + bitString + "'");
     }
 
-    let value: number[] = [];
+    let value: boolean[] = [];
     for (let i = 0; i < bitString.length; i++) {
-      value.push(FixedIntegerEncoder.decode(bitString.substring(i, i + 1)));
+      value.push(BooleanEncoder.decode(bitString.substring(i, i + 1)));
     }
     return value;
   }

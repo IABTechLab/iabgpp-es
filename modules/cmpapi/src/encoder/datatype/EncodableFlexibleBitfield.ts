@@ -1,10 +1,10 @@
 import { FixedBitfieldEncoder } from "./encoder/FixedBitfieldEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
 
-export class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<number[]> {
+export class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataType<boolean[]> {
   private getLength: Function;
 
-  constructor(getLength: () => number, value?: number[]) {
+  constructor(getLength: () => number, value?: boolean[]) {
     super(value);
     this.getLength = getLength;
   }
