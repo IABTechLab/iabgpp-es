@@ -6,7 +6,7 @@ import { UspV1Field } from "../field/UspV1Field.js";
 import { AbstractEncodableBitStringSection } from "./AbstractEncodableBitStringSection.js";
 
 export class UspV1 extends AbstractEncodableBitStringSection {
-  public static readonly ID = 7;
+  public static readonly ID = 6;
   public static readonly VERSION = 1;
   public static readonly NAME = "uspv1";
 
