@@ -26,6 +26,10 @@ describe("encoder.FibonacciIntegerRangeEncoder", (): void => {
     expect(FibonacciIntegerRangeEncoder.encode([3, 5, 6, 7, 8])).to.eql("0000000000100001110110011");
   });
 
+  it("should encode [2,5,6,7,8,9,10,11,12] to '00000000001000111001101011'", (): void => {
+    expect(FibonacciIntegerRangeEncoder.encode([2, 5, 6, 7, 8, 9, 10, 11, 12])).to.eql("00000000001000111001101011");
+  });
+
   it("should decode '000000000000' to []", (): void => {
     expect(FibonacciIntegerRangeEncoder.decode("000000000000")).to.eql([]);
   });
@@ -44,6 +48,10 @@ describe("encoder.FibonacciIntegerRangeEncoder", (): void => {
 
   it("should decode '0000000000100001110110011' to [3,5,6,7,8]", (): void => {
     expect(FibonacciIntegerRangeEncoder.decode("0000000000100001110110011")).to.eql([3, 5, 6, 7, 8]);
+  });
+
+  it("should decode '00000000001000111001101011' to [2,5,6,7,8,9,10,11,12]", (): void => {
+    expect(FibonacciIntegerRangeEncoder.decode("00000000001000111001101011")).to.eql([2, 5, 6, 7, 8, 9, 10, 11, 12]);
   });
 
   it("should decode '0011' to error", (): void => {

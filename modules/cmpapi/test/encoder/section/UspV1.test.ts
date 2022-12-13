@@ -19,17 +19,17 @@ describe("manifest.section.UspV1", (): void => {
     expect(uspv1.getFieldValue("LspaCovered")).to.eql(3);
   });
 
-  it("should encode 1, 2, 3 to BbA", (): void => {
+  it("should encode 1, 2, 3 to BbAA", (): void => {
     let uspv1 = new UspV1();
     uspv1.setFieldValue("Notice", 1);
     uspv1.setFieldValue("OptOutSale", 2);
     uspv1.setFieldValue("LspaCovered", 3);
 
-    expect(uspv1.encode()).to.eql("BbA");
+    expect(uspv1.encode()).to.eql("BbAA");
   });
 
-  it("should decode BbA to 1, 2, 3", (): void => {
-    let uspv1 = new UspV1("BbA");
+  it("should decode BbAA to 1, 2, 3", (): void => {
+    let uspv1 = new UspV1("BbAA");
     expect(uspv1.getFieldValue("Notice")).to.eql(1);
     expect(uspv1.getFieldValue("OptOutSale")).to.eql(2);
     expect(uspv1.getFieldValue("LspaCovered")).to.eql(3);
