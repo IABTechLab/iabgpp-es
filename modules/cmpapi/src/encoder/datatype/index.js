@@ -6,6 +6,7 @@ export * from "./EncodableFibonacciInteger.js";
 export * from "./EncodableFibonacciIntegerRange.js";
 export * from "./EncodableFixedBitfield.js";
 export * from "./EncodableFixedInteger.js";
+export * from "./EncodableFixedIntegerList.js";
 export * from "./EncodableFixedIntegerRange.js";
 export * from "./EncodableFixedString.js";
 export * from "./EncodableFlexibleBitfield.js";

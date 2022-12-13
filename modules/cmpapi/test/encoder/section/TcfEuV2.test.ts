@@ -4,7 +4,7 @@ import { TcfEuV2 } from "../../../src/encoder/section/TcfEuV2";
 describe("manifest.section.TcfEuV2", (): void => {
   it("encode defaults", (): void => {
     let tcfEuV2 = new TcfEuV2();
-    expect(tcfEuV2.encode()).to.eql("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
+    expect(tcfEuV2.encode()).to.eql("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
   });
 
   it("encode with service specific", (): void => {
@@ -12,11 +12,11 @@ describe("manifest.section.TcfEuV2", (): void => {
     tcfEuV2.setFieldValue("IsServiceSpecific", true);
     tcfEuV2.setFieldValue("Created", new Date("2022-01-01T00:00:00Z"));
     tcfEuV2.setFieldValue("LastUpdated", new Date("2022-01-01T00:00:00Z"));
-    expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
   });
 
   it("decode defaults", (): void => {
-    let tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
+    let tcfEuV2 = new TcfEuV2("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
     expect(tcfEuV2.getFieldValue("Version")).to.eql(2);
     expect(tcfEuV2.getFieldValue("Created")).to.eql(new Date("1970-01-01T00:00:00Z"));
     expect(tcfEuV2.getFieldValue("LastUpdated")).to.eql(new Date("1970-01-01T00:00:00Z"));
@@ -112,7 +112,7 @@ describe("manifest.section.TcfEuV2", (): void => {
   });
 
   it("decode service specific", (): void => {
-    let tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    let tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
     expect(tcfEuV2.getFieldValue("Version")).to.eql(2);
     expect(tcfEuV2.getFieldValue("Created")).to.eql(new Date("2022-01-01T00:00:00Z"));
     expect(tcfEuV2.getFieldValue("LastUpdated")).to.eql(new Date("2022-01-01T00:00:00Z"));

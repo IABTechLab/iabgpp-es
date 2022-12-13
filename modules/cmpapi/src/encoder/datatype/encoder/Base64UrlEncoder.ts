@@ -26,11 +26,7 @@ export class Base64UrlEncoder {
       throw new EncodingError("Unencodable Base64Url '" + bitString + "'");
     }
 
-    while (bitString.length % 8 > 0) {
-      bitString += "0";
-    }
-
-    while (bitString.length % 6 > 0) {
+    while (bitString.length % 24 > 0) {
       bitString += "0";
     }
 

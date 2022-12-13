@@ -5,7 +5,7 @@ import { DecodingError } from "../../error/DecodingError.js";
 
 export class FibonacciIntegerRangeEncoder {
   public static encode(value: number[]): string {
-    value.sort();
+    value = value.sort((n1, n2) => n1 - n2);
 
     let groups: number[][] = [];
 

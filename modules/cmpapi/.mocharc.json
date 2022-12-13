@@ -10,6 +10,7 @@
     "./test/encoder/datatype/EncodableFibonacciIntegerRange.test.ts",
     "./test/encoder/datatype/EncodableFixedBitfield.test.ts",
     "./test/encoder/datatype/EncodableFixedInteger.test.ts",
+    "./test/encoder/datatype/EncodableFixedIntegerList.test.ts",
     "./test/encoder/datatype/EncodableFixedIntegerRange.test.ts",
     "./test/encoder/datatype/EncodableFixedString.test.ts",
     "./test/encoder/datatype/encoder/Base64UrlEncoder.test.ts",
@@ -24,8 +25,14 @@
     "./test/encoder/section/HeaderV1.test.ts",
     "./test/encoder/section/TcfCaV2.test.ts",
     "./test/encoder/section/TcfEuV2.test.ts",
+    "./test/encoder/section/UspCaV1.test.ts",
+    "./test/encoder/section/UspCoV1.test.ts",
+    "./test/encoder/section/UspCtV1.test.ts",
+    "./test/encoder/section/UspNatV1.test.ts",
+    "./test/encoder/section/UspUtV1.test.ts",
     "./test/encoder/section/UspV1.test.ts",
     "./test/encoder/section/UspV1Legacy.test.ts",
+    "./test/encoder/section/UspVaV1.test.ts",
     "./test/gvl/client/JsonHttpClient.test.ts"
   ]
 }
