@@ -62,12 +62,20 @@ export class GppModel {
     }
   }
 
+  public setFieldValueBySectionId(sectionId: number, fieldName: string, value: any) {
+    this.setFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName, value);
+  }
+
   public getFieldValue(sectionName: string, fieldName: string) {
     if (this.sections.has(sectionName)) {
       return this.sections.get(sectionName).getFieldValue(fieldName);
     } else {
       return null;
     }
+  }
+
+  public getFieldValueBySectionId(sectionId: number, fieldName: string) {
+    return this.getFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName);
   }
 
   public hasField(sectionName: string, fieldName: string) {
@@ -78,12 +86,24 @@ export class GppModel {
     }
   }
 
+  public hasFieldBySectionId(sectionId: number, fieldName: string) {
+    return this.hasField(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName);
+  }
+
   public hasSection(sectionName: string) {
     return this.sections.has(sectionName);
   }
 
+  public hasSectionId(sectionId: number) {
+    return this.hasSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
+  }
+
   public deleteSection(sectionName: string) {
     this.sections.delete(sectionName);
+  }
+
+  public deleteSectionById(sectionId: number) {
+    this.deleteSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
 
   public clear() {
