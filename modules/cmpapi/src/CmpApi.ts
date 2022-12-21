@@ -9,6 +9,7 @@ import { TcfEuV2 } from "./encoder/section/TcfEuV2.js";
 import { UspV1 } from "./encoder/section/UspV1.js";
 import { Gvl, GvlUrlConfig } from "./Gvl.js";
 import { VendorList } from "./gvl/gvlmodel/VendorList.js";
+import { Sections } from "./encoder/section/Sections.js";
 
 export class CmpApi {
   private callResponder: CallResponder;
@@ -81,20 +82,64 @@ export class CmpApi {
     this.cmpApiContext.gppModel.decodeSection(sectionName, encodedSectionString);
   }
 
+  public setSectionStringById(sectionId: number, encodedSectionString: string): void {
+    this.setSectionString(Sections.SECTION_ID_NAME_MAP.get(sectionId), encodedSectionString);
+  }
+
   public getSectionString(sectionName: string): string {
     return this.cmpApiContext.gppModel.encodeSection(sectionName);
+  }
+
+  public getSectionStringById(sectionId: number): string {
+    return this.getSectionString(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
 
   public setFieldValue(sectionName: string, fieldName: string, value: any): void {
     this.cmpApiContext.gppModel.setFieldValue(sectionName, fieldName, value);
   }
 
+  public setFieldValueBySectionId(sectionId: number, fieldName: string, value: any) {
+    this.setFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName, value);
+  }
+
   public getFieldValue(sectionName: string, fieldName: string): any {
     return this.cmpApiContext.gppModel.getFieldValue(sectionName, fieldName);
   }
 
+  public getFieldValueBySectionId(sectionId: number, fieldName: string) {
+    return this.getFieldValue(Sections.SECTION_ID_NAME_MAP.get(sectionId), fieldName);
+  }
+
   public getSection(sectionName: string): any {
     return this.cmpApiContext.gppModel.getSection(sectionName);
+  }
+
+  public getSectionById(sectionId: number): any {
+    return this.getSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
+  }
+
+  public hasSection(sectionName: string): any {
+    return this.cmpApiContext.gppModel.hasSection(sectionName);
+  }
+
+  public hasSectionId(sectionId: number): any {
+    return this.hasSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
+  }
+
+  public deleteSection(sectionName: string) {
+    this.cmpApiContext.gppModel.deleteSection(sectionName);
+  }
+
+  public deleteSectionById(sectionId: number) {
+    this.deleteSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
+  }
+
+  public clear() {
+    this.cmpApiContext.gppModel.clear();
+  }
+
+  public getObject() {
+    return this.cmpApiContext.gppModel.toObject();
   }
 
   public getGvlFromVendorList(vendorList: VendorList): Gvl {
