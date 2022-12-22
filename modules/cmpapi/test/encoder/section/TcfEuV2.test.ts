@@ -1,6 +1,8 @@
 import { expect } from "chai";
 import { TcfEuV2 } from "../../../src/encoder/section/TcfEuV2";
 
+import { TCString } from "@iabtcf/core";
+
 describe("manifest.section.TcfEuV2", (): void => {
   it("encode defaults", (): void => {
     let tcfEuV2 = new TcfEuV2();
@@ -321,5 +323,38 @@ describe("manifest.section.TcfEuV2", (): void => {
     expect(vendorsDisclosed[vendorsDisclosed.length - 3]).to.eql(789);
     expect(vendorsDisclosed[vendorsDisclosed.length - 2]).to.eql(790);
     expect(vendorsDisclosed[vendorsDisclosed.length - 1]).to.eql(791);
+  });
+
+  it("should decode this actual TcfEuv2 string", (): void => {
+    const actualConsentString = 'CPi8wgAPi8wgAAOACBENCuCoAP_AAEfAACiQJHNd_H__bX9n-f7_6ft0eY1f9_r37uQzDhfNk-8F3L_W_LwX_2E7NF36tq4KmR4ku1LBIUNtHMnUDUmxaokVrzHsak2cpzNKJ_BkknsZe2dYGF9vm5tj-QKZ7_5_d3f52T_9_9v-39z33913v3d93-_13LjdV5_9H_v9fR_b8_Kf9_5-_4v8_____3_e______8AEEggCTDVuIAuxLHAm0DCKBECMKwkKoFABBQDC0QGADg4KdlYBPrCBAAgFAEYEQIcAUYEAgAAAgCQiACQIsEAAAIgEAAIAEQiEABAwCCgAsDAIAAQDQMUQoABAkIMiAiKUwICIEggJbKhBKC6Q0wgCrLACgkRsFAAiAAAUgACAsHAMESAlYsECTFG-QAjBCgFEqFaAGGgAwABBI4RABgACCRwqADAAEEjgA';
+
+    let decodedWithPublicLibrary = TCString.decode(actualConsentString);
+    expect(decodedWithPublicLibrary.cmpId).to.equal(14);
+
+    // Currently this fails with "DecodingError: Undecodable Boolean ''".
+    let decodedWithThisLibrary = new TcfEuV2(actualConsentString);
+    expect(decodedWithThisLibrary.getFieldValue('CmpId')).to.equal(14);
+  });
+
+  it("should decode this other actual TcfEuv2 string", (): void => {
+    const actualConsentString = 'CPgA5EAPgA5EAAOACBENCuCoAP_AAEfAACiQI0Nd_H__bX9n-f7_6Pt0cY1f9_r3ruQzDhfFk-8F3L_W3LwX32E7NF36pq4KmR4ku1LBIQFtHMnUDUmxaokVrzHsak2cpyNKI7BkknsZe2dYGF9Pm5lD-QKZ7_5_d3f52T_9_9v-39z339V3v3d93-_12PjdV599H_v9fR_b8_Kf9_5-_4v8___4IQAAAAQQ_AJMNW4gC7EscCbQMIoAQIwrCQqAUAEFAMLRAYAODgpmVgEusIEACAUARgRAhxBRgQCAAACAJCIAJAiwQAIAiAQAAgARAIQAEDAIKACwMAgABANAxACgAECQgyICIpTAgIgSCAlsqEEoKpDTCAKssAKARGwUACIAABSAAICwcAwRICViwQJMUbwAw0AGAAIJHCIAMAAQSOFQAYAAgkcA';
+
+    let decodedWithPublicLibrary = TCString.decode(actualConsentString);
+    expect(decodedWithPublicLibrary.cmpId).to.equal(14);
+
+    // Currently this fails with "DecodingError: Undecodable Boolean ''".
+    let decodedWithThisLibrary = new TcfEuV2(actualConsentString);
+    expect(decodedWithThisLibrary.getFieldValue('CmpId')).to.equal(14);
+  });
+
+  it("should decode this 3rd test TcfEuv2 string", (): void => {
+    const consentString = 'COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA.YAAAAAAAAAAAAAAAAAA';
+
+    let decodedWithPublicLibrary = TCString.decode(consentString);
+    expect(decodedWithPublicLibrary.cmpId).to.equal(14);
+
+    // Currently this fails with "DecodingError: Undecodable Boolean ''".
+    let decodedWithThisLibrary = new TcfEuV2(consentString);
+    expect(decodedWithThisLibrary.getFieldValue('CmpId')).to.equal(14);
   });
 });
