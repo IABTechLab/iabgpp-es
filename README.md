@@ -12,16 +12,27 @@ fireUpdate(currentAPI?: string, uiVisible = false): void
 getApplicableSection(): number[]
 setApplicableSection(applicableSection: number[]): void
 getCurrentAPI(): string
-setCurrentAPI(currentAPI: string): void {
-setGppString(encodedGppString: string): void {
-getGppString(): string {
-setSectionString(sectionName: string, encodedSectionString: string): void {
-getSectionString(sectionName: string): string {
-setFieldValue(sectionName: string, fieldName: string, value: any): void {
-getFieldValue(sectionName: string, fieldName: string): any {
-getSection(sectionName: string): any {
-getGvlFromVendorList(vendorList: VendorList): Gvl {
-async getGvlFromUrl(gvlUrlConfig: GvlUrlConfig): Promise<Gvl> {
+setCurrentAPI(currentAPI: string): void
+setGppString(encodedGppString: string): void
+getGppString(): string
+setSectionString(sectionName: string, encodedSectionString: string): void
+setSectionStringById(sectionId: number, encodedSectionString: string): void
+getSectionString(sectionName: string): string
+getSectionStringById(sectionId: number): string
+setFieldValue(sectionName: string, fieldName: string, value: any): void
+setFieldValueBySectionId(sectionId: number, fieldName: string, value: any)
+getFieldValue(sectionName: string, fieldName: string): any
+getFieldValueBySectionId(sectionId: number, fieldName: string)
+getSection(sectionName: string): any
+getSectionById(sectionId: number): any
+hasSection(sectionName: string): any
+hasSectionId(sectionId: number): any
+deleteSection(sectionName: string)
+deleteSectionById(sectionId: number)
+clear()
+getObject()
+getGvlFromVendorList(vendorList: VendorList): Gvl
+async getGvlFromUrl(gvlUrlConfig: GvlUrlConfig): Promise<Gvl>
 ```
 
 ## Commands available to consumers
@@ -40,12 +51,8 @@ __gpp("removeEventListener", callback?, param?)
 
 ```javascript
 <script>
-  import {CmpApi} from '@iabgpp/cmpapi';
-  const cmpApi = new CmpApi(1, 3);
-  cmpApi.setGppString(gppString);
-  cmpApi.setFieldValue("uspv1", "OptOutSale", 0);
-  cmpApi.fireUpdate("uspv1");
-  console.log(cmpApi.getGppString());
+  import {CmpApi} from '@iabgpp/cmpapi'; const cmpApi = new CmpApi(1, 3); cmpApi.setGppString(gppString);
+  cmpApi.setFieldValue("uspv1", "OptOutSale", 0); cmpApi.fireUpdate("uspv1"); console.log(cmpApi.getGppString());
 </script>
 ```
 

@@ -98,6 +98,18 @@ export class GppModel {
     return this.hasSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
 
+  public deleteSection(sectionName: string) {
+    this.sections.delete(sectionName);
+  }
+
+  public deleteSectionById(sectionId: number) {
+    this.deleteSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
+  }
+
+  public clear() {
+    this.sections.clear();
+  }
+
   public getHeader() {
     let header = new HeaderV1();
     header.setFieldValue("SectionIds", this.getSectionIds());
@@ -241,7 +253,7 @@ export class GppModel {
   }
 
   public toObject() {
-    let obj = [];
+    let obj = {};
     for (let i = 0; i < Sections.SECTION_ORDER.length; i++) {
       let sectionName = Sections.SECTION_ORDER[i];
       if (this.sections.has(sectionName)) {

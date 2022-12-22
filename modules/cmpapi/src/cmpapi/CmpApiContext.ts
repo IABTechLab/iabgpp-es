@@ -6,6 +6,12 @@ import { GppModel } from "../encoder/GppModel.js";
 import { TcfCaV2 } from "../encoder/section/TcfCaV2.js";
 import { TcfEuV2 } from "../encoder/section/TcfEuV2.js";
 import { UspV1 } from "../encoder/section/UspV1.js";
+import { UspNatV1 } from "../encoder/section/UspNatV1.js";
+import { UspCaV1 } from "../encoder/section/UspCaV1.js";
+import { UspVaV1 } from "../encoder/section/UspVaV1.js";
+import { UspCoV1 } from "../encoder/section/UspCoV1.js";
+import { UspUtV1 } from "../encoder/section/UspUtV1.js";
+import { UspCtV1 } from "../encoder/section/UspCtV1.js";
 
 /**
  * Class holds shareable data across cmp api and provides change event listener for GppModel.
@@ -14,7 +20,17 @@ import { UspV1 } from "../encoder/section/UspV1.js";
  */
 export class CmpApiContext {
   public gppVersion = "1.0";
-  public apiSupport = [TcfEuV2.NAME, TcfCaV2.NAME, UspV1.NAME];
+  public apiSupport = [
+    TcfEuV2.NAME,
+    TcfCaV2.NAME,
+    UspV1.NAME,
+    UspNatV1.NAME,
+    UspCaV1.NAME,
+    UspVaV1.NAME,
+    UspCoV1.NAME,
+    UspUtV1.NAME,
+    UspCtV1.NAME,
+  ];
 
   public readonly eventQueue = new EventListenerQueue(this);
   public cmpStatus: CmpStatus = CmpStatus.LOADING;
