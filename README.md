@@ -216,3 +216,7 @@ __gpp("removeEventListener", callback?, param?)
 |uspctv1|12|MspaServiceProviderMode|2 bit int. 0=Not applicable, 1=Yes, 2=No|
 |uspctv1|12|GpcSegmentType|2 bit int. Value is 1|
 |uspctv1|12|Gpc|Boolean|
+
+## Example
+
+[https://iabgpp.com](https://iabgpp.com)
