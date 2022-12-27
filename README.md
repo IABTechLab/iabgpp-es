@@ -51,8 +51,12 @@ __gpp("removeEventListener", callback?, param?)
 
 ```javascript
 <script>
-  import {CmpApi} from '@iabgpp/cmpapi'; const cmpApi = new CmpApi(1, 3); cmpApi.setGppString(gppString);
-  cmpApi.setFieldValue("uspv1", "OptOutSale", 0); cmpApi.fireUpdate("uspv1"); console.log(cmpApi.getGppString());
+  import {CmpApi} from '@iabgpp/cmpapi';
+  const cmpApi = new CmpApi(1, 3);
+  cmpApi.setGppString(gppString);
+  cmpApi.setFieldValue("uspv1", "OptOutSale", 0);
+  cmpApi.fireUpdate("uspv1"); 
+  console.log(cmpApi.getGppString());
 </script>
 ```
 
@@ -218,6 +222,6 @@ __gpp("removeEventListener", callback?, param?)
 | uspctv1      | 12         | GpcSegmentType                      | 2 bit int. Value is 1                                          |
 | uspctv1      | 12         | Gpc                                 | Boolean                                                        |
 
-## Example
+## Example Usage / Encoder / Decoder
 
 [https://iabgpp.com](https://iabgpp.com)
