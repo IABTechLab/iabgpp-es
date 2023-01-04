@@ -1,23 +1,11 @@
-[![NPM version](https://img.shields.io/npm/v/@iabgpp/stub.svg?style=flat-square)](https://www.npmjs.com/package/@iabgpp/stub)
-[![npm module downloads per month](http://img.shields.io/npm/dm/@iabgpp/stub.svg?style=flat)](https://www.npmjs.org/package/@iabgpp/stub)
-[![InteractiveAdvertisingBureau](https://circleci.com/gh/InteractiveAdvertisingBureau/iabgpp-es.svg?style=shield)](https://circleci.com/gh/InteractiveAdvertisingBureau/iabgpp-es)
-
 # @iabgpp/stub
 
 Cmp API Stub code. Maybe included in commonjs loader or dropped directly on the page.
 
 #### Installation
 
-npm
-
 ```
 npm install @iabgpp/stub
-```
-
-yarn
-
-```
-yarn add @iabgpp/stub
 ```
 
 #### Using
@@ -49,9 +37,9 @@ git clone https://github.com/InteractiveAdvertisingBureau/iabgpp-es.git
 
 cd iabgpp-es/modules/stub/
 
-yarn // or npm install
+npm install
 
-yarn build // or npm run build
+npm run build
 ```
 
 Built stub will be output to ./lib

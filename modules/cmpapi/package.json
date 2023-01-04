@@ -1,7 +1,8 @@
 {
   "name": "@iabgpp/cmpapi",
-  "version": "3.1.0",
+  "version": "3.0.4",
   "license": "Apache-2.0",
+  "private": false,
   "type": "module",
   "main": "lib/cjs/index.js",
   "types": "lib/mjs/index.d.ts",
