@@ -1,7 +1,6 @@
 export * from "./HeaderV1Field.js";
 export * from "./TcfCaV1Field.js";
 export * from "./TcfEuV2Field.js";
-export * from "./UspV1Field.js";
 export * from "./UspCaV1Field.js";
 export * from "./UspCoV1Field.js";
 export * from "./UspCtV1Field.js";
