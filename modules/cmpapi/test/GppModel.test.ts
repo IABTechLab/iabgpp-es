@@ -1,6 +1,7 @@
 import { GppModel } from "../src/encoder/GppModel";
 import { expect } from "chai";
 import { HeaderV1Field } from "../src/encoder/field/HeaderV1Field";
+import { TcfCaV1Field } from "../src/encoder/field/TcfCaV1Field";
 
 let utcDateTime = new Date("2022-01-01T00:00:00Z");
 
@@ -58,7 +59,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
     );
   });
 
@@ -200,15 +201,136 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
 
-    gppModel.setFieldValue("tcfcav1", "CmpId", 880);
-    gppModel.setFieldValue("tcfcav1", "CmpVersion", 0);
-    gppModel.setFieldValue("tcfcav1", "ConsentScreen", 0);
-    gppModel.setFieldValue("tcfcav1", "ConsentLanguage", "EN");
-    gppModel.setFieldValue("tcfcav1", "VendorListVersion", 48);
-    gppModel.setFieldValue("tcfcav1", "TcfPolicyVersion", 2);
-    gppModel.setFieldValue("tcfcav1", "UseNonStandardStacks", false);
-    gppModel.setFieldValue("tcfcav1", "Created", utcDateTime);
-    gppModel.setFieldValue("tcfcav1", "LastUpdated", utcDateTime);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.CMP_ID, 50);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.CMP_VERSION, 2);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.VENDOR_LIST_VERSION, 413);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.USE_NON_STANDARD_STACKS, true);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT, [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ]);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.PURPOSES_EXPRESS_CONSENT, [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.PURPOSES_IMPLIED_CONSENT, [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ]);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.VENDOR_EXPRESS_CONSENT, [12, 24, 48]);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.VENDOR_IMPLIED_CONSENT, [18, 30]);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT, [
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+    ]);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT, [
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+    ]);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.NUM_CUSTOM_PURPOSES, 3);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT, [false, true, false]);
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT, [true, false, true]);
+
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
+    gppModel.setFieldValue("tcfcav1", TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
 
     expect(gppModel.hasSection("uspv1")).to.eql(true);
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
@@ -216,7 +338,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAA.YAAAAAAAAAA~1YNN"
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN"
     );
 
     expect(gppString.split("~").length).to.eql(4);
@@ -233,7 +355,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode defaults from all sections", (): void => {
     let gppString =
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA";
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
@@ -315,7 +437,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode uspv1 and tcfeuv2 and tcfcav1 sections", (): void => {
     let gppString =
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAA.YAAAAAAAAAA~1YNN";
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([2, 5, 6]);
@@ -341,15 +463,141 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue("tcfeuv2", "Created")).to.eql(utcDateTime);
     expect(gppModel.getFieldValue("tcfeuv2", "LastUpdated")).to.eql(utcDateTime);
 
-    expect(gppModel.getFieldValue("tcfcav1", "Version")).to.eql(2);
-    expect(gppModel.getFieldValue("tcfcav1", "CmpId")).to.eql(880);
-    expect(gppModel.getFieldValue("tcfcav1", "CmpVersion")).to.eql(0);
-    expect(gppModel.getFieldValue("tcfcav1", "ConsentScreen")).to.eql(0);
-    expect(gppModel.getFieldValue("tcfcav1", "ConsentLanguage")).to.eql("EN");
-    expect(gppModel.getFieldValue("tcfcav1", "VendorListVersion")).to.eql(48);
-    expect(gppModel.getFieldValue("tcfcav1", "TcfPolicyVersion")).to.eql(2);
-    expect(gppModel.getFieldValue("tcfcav1", "UseNonStandardStacks")).to.eql(false);
-    expect(gppModel.getFieldValue("tcfcav1", "Created")).to.eql(utcDateTime);
-    expect(gppModel.getFieldValue("tcfcav1", "LastUpdated")).to.eql(utcDateTime);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.CMP_ID)).to.eql(50);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.CMP_VERSION)).to.eql(2);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.VENDOR_LIST_VERSION)).to.eql(413);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.USE_NON_STANDARD_STACKS)).to.eql(true);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT)).to.eql([
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ]);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.PURPOSES_EXPRESS_CONSENT)).to.eql([
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.PURPOSES_IMPLIED_CONSENT)).to.eql([
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ]);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.VENDOR_EXPRESS_CONSENT)).to.eql([12, 24, 48]);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.VENDOR_IMPLIED_CONSENT)).to.eql([18, 30]);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT)).to.eql([
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+    ]);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT)).to.eql([
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+    ]);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.NUM_CUSTOM_PURPOSES)).to.eql(3);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.CUSTOM_PURPOSES_EXPRESS_CONSENT)).to.eql([
+      false,
+      true,
+      false,
+    ]);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT)).to.eql([true, false, true]);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.CREATED)).to.eql(new Date("2022-01-01T00:00:00Z"));
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.LAST_UPDATED)).to.eql(new Date("2022-01-01T00:00:00Z"));
+
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.CONSENT_LANGUAGE)).to.eql("EN");
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.SEGMENT_TYPE)).to.eql(3);
   });
 });

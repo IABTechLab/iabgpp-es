@@ -6,7 +6,6 @@ import { EncodableFixedBitfield } from "../datatype/EncodableFixedBitfield.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableFixedString } from "../datatype/EncodableFixedString.js";
 import { AbstractEncodableSegmentedBitStringSection } from "./AbstractEncodableSegmentedBitStringSection.js";
-import { EncodableFixedIntegerRange } from "../datatype/EncodableFixedIntegerRange.js";
 import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
 import { DecodingError } from "../error/DecodingError.js";
 import { TcfCaV1Field } from "../field/TcfCaV1Field.js";
@@ -37,8 +36,8 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT.toString(), new EncodableFixedBitfield(12, []));
     fields.set(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT.toString(), new EncodableFixedBitfield(24, []));
     fields.set(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT.toString(), new EncodableFixedBitfield(24, []));
-    fields.set(TcfCaV1Field.VENDOR_EXPRESS_CONSENT.toString(), new EncodableFixedIntegerRange([]));
-    fields.set(TcfCaV1Field.VENDOR_IMPLIED_CONSENT.toString(), new EncodableFixedIntegerRange([]));
+    fields.set(TcfCaV1Field.VENDOR_EXPRESS_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
+    fields.set(TcfCaV1Field.VENDOR_IMPLIED_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
 
     // publisher purposes segment
     fields.set(TcfCaV1Field.SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 3));

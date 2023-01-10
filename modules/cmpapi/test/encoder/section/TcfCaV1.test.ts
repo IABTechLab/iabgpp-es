@@ -3,12 +3,12 @@ import { TcfCaV1Field } from "../../../src/encoder/field/TcfCaV1Field";
 import { TcfCaV1 } from "../../../src/encoder/section/TcfCaV1";
 
 describe("manifest.section.TcfCaV1", (): void => {
-  it("should encode default to CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
+  it("should encode default to CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
     let tcfCaV2 = new TcfCaV1();
-    expect(tcfCaV2.encode()).to.eql("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    expect(tcfCaV2.encode()).to.eql("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
   });
 
-  it("should encode to CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgAMAAwADAAIACQAHg.fHHHA4444ao", (): void => {
+  it("should encode to CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao", (): void => {
     let tcfCaV2 = new TcfCaV1();
 
     tcfCaV2.setFieldValue(TcfCaV1Field.CMP_ID, 50);
@@ -142,11 +142,11 @@ describe("manifest.section.TcfCaV1", (): void => {
     tcfCaV2.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV2.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
 
-    expect(tcfCaV2.encode()).to.eql("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgAMAAwADAAIACQAHg.fHHHA4444ao");
+    expect(tcfCaV2.encode()).to.eql("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
   });
 
-  it("should decode CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
-    let tcfCaV2 = new TcfCaV1("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+  it("should decode CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
+    let tcfCaV2 = new TcfCaV1("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
 
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.CMP_ID)).to.eql(0);
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.CMP_VERSION)).to.eql(0);
@@ -282,8 +282,8 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.SEGMENT_TYPE)).to.eql(3);
   });
 
-  it("should decode CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgAMAAwADAAIACQAHg.fHHHA4444ao.fHHHA4444ao", (): void => {
-    let tcfCaV2 = new TcfCaV1("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgAMAAwADAAIACQAHg.fHHHA4444ao.fHHHA4444ao");
+  it("should decode CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao", (): void => {
+    let tcfCaV2 = new TcfCaV1("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
 
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.CMP_ID)).to.eql(50);
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.CMP_VERSION)).to.eql(2);
