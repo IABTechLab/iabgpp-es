@@ -58,7 +58,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA~BAA~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
     );
   });
 
@@ -68,9 +68,9 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(false);
     expect(gppModel.hasSection("tcfcav2")).to.eql(false);
 
-    gppModel.setFieldValue("uspv1", "Notice", 1);
-    gppModel.setFieldValue("uspv1", "OptOutSale", 2);
-    gppModel.setFieldValue("uspv1", "LspaCovered", 3);
+    gppModel.setFieldValue("uspv1", "Notice", "Y");
+    gppModel.setFieldValue("uspv1", "OptOutSale", "N");
+    gppModel.setFieldValue("uspv1", "LspaCovered", "N");
 
     expect(gppModel.getSectionIds()).to.eql([6]);
     expect(gppModel.hasSection("uspv1")).to.eql(true);
@@ -78,7 +78,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfcav2")).to.eql(false);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABTA~BbA");
+    expect(gppString).to.eql("DBABTA~1YNN");
 
     expect(gppModel.getSectionIds()).to.eql([6]);
     expect(gppModel.hasSection("uspv1")).to.eql(true);
@@ -144,16 +144,16 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav2")).to.eql(false);
 
-    gppModel.setFieldValue("uspv1", "Notice", 1);
-    gppModel.setFieldValue("uspv1", "OptOutSale", 2);
-    gppModel.setFieldValue("uspv1", "LspaCovered", 3);
+    gppModel.setFieldValue("uspv1", "Notice", "Y");
+    gppModel.setFieldValue("uspv1", "OptOutSale", "N");
+    gppModel.setFieldValue("uspv1", "LspaCovered", "N");
 
     expect(gppModel.hasSection("uspv1")).to.eql(true);
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav2")).to.eql(false);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BbA");
+    expect(gppString).to.eql("DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~1YNN");
 
     expect(gppString.split("~").length).to.eql(3);
 
@@ -187,9 +187,9 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav2")).to.eql(false);
 
-    gppModel.setFieldValue("uspv1", "Notice", 1);
-    gppModel.setFieldValue("uspv1", "OptOutSale", 2);
-    gppModel.setFieldValue("uspv1", "LspaCovered", 3);
+    gppModel.setFieldValue("uspv1", "Notice", "Y");
+    gppModel.setFieldValue("uspv1", "OptOutSale", "N");
+    gppModel.setFieldValue("uspv1", "LspaCovered", "N");
 
     expect(gppModel.hasSection("uspv1")).to.eql(true);
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
@@ -216,7 +216,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAA.YAAAAAAAAAA~BbA"
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAA.YAAAAAAAAAA~1YNN"
     );
 
     expect(gppString.split("~").length).to.eql(4);
@@ -233,7 +233,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode defaults from all sections", (): void => {
     let gppString =
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA~BAA~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA";
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
@@ -248,7 +248,7 @@ describe("manifest.GppModel", (): void => {
   });
 
   it("should decode uspv1 section", (): void => {
-    let gppString = "DBABTA~BbA";
+    let gppString = "DBABTA~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([6]);
@@ -256,9 +256,9 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(false);
     expect(gppModel.hasSection("tcfcav2")).to.eql(false);
 
-    expect(gppModel.getFieldValue("uspv1", "Notice")).to.eql(1);
-    expect(gppModel.getFieldValue("uspv1", "OptOutSale")).to.eql(2);
-    expect(gppModel.getFieldValue("uspv1", "LspaCovered")).to.eql(3);
+    expect(gppModel.getFieldValue("uspv1", "Notice")).to.eql("Y");
+    expect(gppModel.getFieldValue("uspv1", "OptOutSale")).to.eql("N");
+    expect(gppModel.getFieldValue("uspv1", "LspaCovered")).to.eql("N");
   });
 
   it("should decode tcfeuv2 sections", (): void => {
@@ -286,7 +286,7 @@ describe("manifest.GppModel", (): void => {
   });
 
   it("should decode uspv1 and tcfeuv2 sections", (): void => {
-    let gppString = "DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BbA";
+    let gppString = "DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([2, 6]);
@@ -294,9 +294,9 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav2")).to.eql(false);
 
-    expect(gppModel.getFieldValue("uspv1", "Notice")).to.eql(1);
-    expect(gppModel.getFieldValue("uspv1", "OptOutSale")).to.eql(2);
-    expect(gppModel.getFieldValue("uspv1", "LspaCovered")).to.eql(3);
+    expect(gppModel.getFieldValue("uspv1", "Notice")).to.eql("Y");
+    expect(gppModel.getFieldValue("uspv1", "OptOutSale")).to.eql("N");
+    expect(gppModel.getFieldValue("uspv1", "LspaCovered")).to.eql("N");
 
     expect(gppModel.getFieldValue("tcfeuv2", "Version")).to.eql(2);
     expect(gppModel.getFieldValue("tcfeuv2", "CmpId")).to.eql(880);
@@ -315,7 +315,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode uspv1 and tcfeuv2 and tcfcav2 sections", (): void => {
     let gppString =
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAA.YAAAAAAAAAA~BbA";
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAA.YAAAAAAAAAA~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([2, 5, 6]);
@@ -323,9 +323,9 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav2")).to.eql(true);
 
-    expect(gppModel.getFieldValue("uspv1", "Notice")).to.eql(1);
-    expect(gppModel.getFieldValue("uspv1", "OptOutSale")).to.eql(2);
-    expect(gppModel.getFieldValue("uspv1", "LspaCovered")).to.eql(3);
+    expect(gppModel.getFieldValue("uspv1", "Notice")).to.eql("Y");
+    expect(gppModel.getFieldValue("uspv1", "OptOutSale")).to.eql("N");
+    expect(gppModel.getFieldValue("uspv1", "LspaCovered")).to.eql("N");
 
     expect(gppModel.getFieldValue("tcfeuv2", "Version")).to.eql(2);
     expect(gppModel.getFieldValue("tcfeuv2", "CmpId")).to.eql(880);

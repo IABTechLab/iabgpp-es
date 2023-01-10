@@ -6,4 +6,3 @@ export * from "./Sections.js";
 export * from "./TcfCaV2.js";
 export * from "./TcfEuV2.js";
 export * from "./UspV1.js";
-export * from "./UspV1Legacy.js";

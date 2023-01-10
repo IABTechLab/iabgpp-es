@@ -31,7 +31,7 @@
     "./test/encoder/section/UspNatV1.test.ts",
     "./test/encoder/section/UspUtV1.test.ts",
     "./test/encoder/section/UspV1.test.ts",
-    "./test/encoder/section/UspV1Legacy.test.ts",
+    "./test/encoder/section/UspV1.test.ts",
     "./test/encoder/section/UspVaV1.test.ts",
     "./test/gvl/client/JsonHttpClient.test.ts"
   ]

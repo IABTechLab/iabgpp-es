@@ -1,32 +1,21 @@
-import { AbstractEncodableBitStringDataType } from "../datatype/AbstractEncodableBitStringDataType.js";
-import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
-import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
-import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64UrlEncoder.js";
+import { Gvl } from "../../Gvl.js";
 import { UspV1Field } from "../field/UspV1Field.js";
-import { AbstractEncodableBitStringSection } from "./AbstractEncodableBitStringSection.js";
+import { EncodableSection } from "./EncodableSection.js";
 
-export class UspV1 extends AbstractEncodableBitStringSection {
+// Deprecated
+export class UspV1 implements EncodableSection {
   public static readonly ID = 6;
   public static readonly VERSION = 1;
   public static readonly NAME = "uspv1";
 
-  private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
+  protected fields: Map<String, any>;
 
   constructor(encodedString?: string) {
-    let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
-    fields.set(UspV1Field.VERSION.toString(), new EncodableFixedInteger(6, UspV1.VERSION));
-    fields.set(UspV1Field.NOTICE.toString(), new EncodableFixedInteger(2));
-    fields.set(UspV1Field.OPT_OUT_SALE.toString(), new EncodableFixedInteger(2));
-    fields.set(UspV1Field.LSPA_COVERED.toString(), new EncodableFixedInteger(2));
-
-    let fieldOrder = [
-      UspV1Field.VERSION.toString(),
-      UspV1Field.NOTICE.toString(),
-      UspV1Field.OPT_OUT_SALE.toString(),
-      UspV1Field.LSPA_COVERED.toString(),
-    ];
-
-    super(fields, fieldOrder);
+    this.fields = new Map<String, any>();
+    this.fields.set(UspV1Field.VERSION.toString(), UspV1.VERSION);
+    this.fields.set(UspV1Field.NOTICE.toString(), "-");
+    this.fields.set(UspV1Field.OPT_OUT_SALE.toString(), "-");
+    this.fields.set(UspV1Field.LSPA_COVERED.toString(), "-");
 
     if (encodedString && encodedString.length > 0) {
       this.decode(encodedString);
@@ -34,16 +23,56 @@ export class UspV1 extends AbstractEncodableBitStringSection {
   }
 
   //Overriden
-  public encode(): string {
-    let bitString = this.encodeToBitString();
-    let encodedString = this.base64UrlEncoder.encode(bitString);
-    return encodedString;
+  public hasField(fieldName: string): boolean {
+    return this.fields.has(fieldName);
   }
 
   //Overriden
-  public decode(encodedString: string): void {
-    let bitString = this.base64UrlEncoder.decode(encodedString);
-    this.decodeFromBitString(bitString);
+  public getFieldValue(fieldName: string): any {
+    if (this.fields.has(fieldName)) {
+      return this.fields.get(fieldName);
+    } else {
+      return null;
+    }
+  }
+
+  //Overriden
+  public setFieldValue(fieldName: string, value: any): void {
+    if (this.fields.has(fieldName)) {
+      this.fields.set(fieldName, value);
+    } else {
+      throw new Error(fieldName + " not found");
+    }
+  }
+
+  //Overriden
+  public toObj(): any {
+    let obj = {};
+    for (const fieldName of this.fields.keys()) {
+      let value = this.fields.get(fieldName);
+      obj[fieldName.toString()] = value;
+    }
+
+    return obj;
+  }
+
+  //Overriden
+  public encode() {
+    let str = "";
+    str += this.getFieldValue(UspV1Field.VERSION.toString());
+    str += this.getFieldValue(UspV1Field.NOTICE.toString());
+    str += this.getFieldValue(UspV1Field.OPT_OUT_SALE.toString());
+    str += this.getFieldValue(UspV1Field.LSPA_COVERED.toString());
+    return str;
+  }
+
+  //Overriden
+  public decode(encodedString: string) {
+    //TODO: validate
+    this.setFieldValue(UspV1Field.VERSION.toString(), parseInt(encodedString.charAt(0)));
+    this.setFieldValue(UspV1Field.NOTICE.toString(), encodedString.charAt(1));
+    this.setFieldValue(UspV1Field.OPT_OUT_SALE.toString(), encodedString.charAt(2));
+    this.setFieldValue(UspV1Field.LSPA_COVERED.toString(), encodedString.charAt(3));
   }
 
   //Overriden

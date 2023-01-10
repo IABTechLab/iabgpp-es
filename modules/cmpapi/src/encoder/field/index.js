@@ -8,5 +8,4 @@ export * from "./UspCtV1Field.js";
 export * from "./UspNatV1Field.js";
 export * from "./UspUtV1Field.js";
 export * from "./UspV1Field.js";
-export * from "./UspV1LegacyField.js";
 export * from "./UspVaV1Field.js";
