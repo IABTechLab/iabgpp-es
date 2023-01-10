@@ -9,13 +9,16 @@ import { AbstractEncodableSegmentedBitStringSection } from "./AbstractEncodableS
 import { EncodableFixedIntegerRange } from "../datatype/EncodableFixedIntegerRange.js";
 import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
 import { DecodingError } from "../error/DecodingError.js";
-import { Base64UrlEncoder } from "../datatype/encoder/Base64UrlEncoder.js";
 import { TcfEuV2Field } from "../field/TcfEuV2Field.js";
+import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
+import { TraditionalBase64UrlEncoder } from "../datatype/encoder/TraditionalBase64UrlEncoder.js";
 
 export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 2;
   public static readonly VERSION = 2;
   public static readonly NAME = "tcfeuv2";
+
+  private base64UrlEncoder: AbstractBase64UrlEncoder = new TraditionalBase64UrlEncoder();
 
   constructor(encodedString?: string) {
     let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
@@ -124,18 +127,18 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   public encode(): string {
     let segmentBitStrings = this.encodeSegmentsToBitStrings();
     let encodedSegments = [];
-    encodedSegments.push(Base64UrlEncoder.encode(segmentBitStrings[0]));
+    encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[0]));
     if (this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC.toString())) {
       if (segmentBitStrings[1] && segmentBitStrings[1].length > 0) {
-        encodedSegments.push(Base64UrlEncoder.encode(segmentBitStrings[1]));
+        encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[1]));
       }
     } else {
       if (segmentBitStrings[2] && segmentBitStrings[2].length > 0) {
-        encodedSegments.push(Base64UrlEncoder.encode(segmentBitStrings[2]));
+        encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[2]));
       }
 
       if (segmentBitStrings[3] && segmentBitStrings[3].length > 0) {
-        encodedSegments.push(Base64UrlEncoder.encode(segmentBitStrings[3]));
+        encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[3]));
       }
     }
 
@@ -154,7 +157,7 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
        * because we're only on a maximum of encoding version 2 the first 3 bits
        * in the core segment will evaluate to 0.
        */
-      let segmentBitString = Base64UrlEncoder.decode(encodedSegments[i]);
+      let segmentBitString = this.base64UrlEncoder.decode(encodedSegments[i]);
       switch (segmentBitString.substring(0, 3)) {
         // unfortunately, the segment ordering doesn't match the segment ids
         case "000": {

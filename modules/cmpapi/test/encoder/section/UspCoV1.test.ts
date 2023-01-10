@@ -3,12 +3,12 @@ import { UspCoV1Field } from "../../../src/encoder/field/UspCoV1Field";
 import { UspCoV1 } from "../../../src/encoder/section/UspCoV1";
 
 describe("manifest.section.UspCoV1", (): void => {
-  it("should encode default to BAAAAAAA.QAAA", (): void => {
+  it("should encode default to BAAAAAA.QA", (): void => {
     let uspCoV1 = new UspCoV1();
-    expect(uspCoV1.encode()).to.eql("BAAAAAAA.QAAA");
+    expect(uspCoV1.encode()).to.eql("BAAAAAA.QA");
   });
 
-  it("should encode to BbYbG2wA.YAAA", (): void => {
+  it("should encode to BbYbG2w.YA", (): void => {
     let uspCoV1 = new UspCoV1();
 
     uspCoV1.setFieldValue(UspCoV1Field.SHARING_NOTICE, 1);
@@ -23,11 +23,11 @@ describe("manifest.section.UspCoV1", (): void => {
     uspCoV1.setFieldValue(UspCoV1Field.MSPA_SERVICE_PROVIDER_MODE, 3);
     uspCoV1.setFieldValue(UspCoV1Field.GPC, true);
 
-    expect(uspCoV1.encode()).to.eql("BbYbG2wA.YAAA");
+    expect(uspCoV1.encode()).to.eql("BbYbG2w.YA");
   });
 
-  it("should decode BbYbG2wA.YAAA", (): void => {
-    let uspCoV1 = new UspCoV1("BbYbG2wA.YAAA");
+  it("should decode BbYbG2w.YA", (): void => {
+    let uspCoV1 = new UspCoV1("BbYbG2w.YA");
 
     expect(1, uspCoV1.getFieldValue(UspCoV1Field.SHARING_NOTICE));
     expect(2, uspCoV1.getFieldValue(UspCoV1Field.SALE_OPT_OUT_NOTICE));

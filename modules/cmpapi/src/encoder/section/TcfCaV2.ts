@@ -9,13 +9,16 @@ import { AbstractEncodableSegmentedBitStringSection } from "./AbstractEncodableS
 import { EncodableFixedIntegerRange } from "../datatype/EncodableFixedIntegerRange.js";
 import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
 import { DecodingError } from "../error/DecodingError.js";
-import { Base64UrlEncoder } from "../datatype/encoder/Base64UrlEncoder.js";
 import { TcfCaV2Field } from "../field/TcfCaV2Field.js";
+import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
+import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64UrlEncoder.js";
 
 export class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 5;
   public static readonly VERSION = 2;
   public static readonly NAME = "tcfcav2";
+
+  private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
 
   constructor(encodedString?: string) {
     let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
@@ -99,9 +102,9 @@ export class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
   public encode(): string {
     let segmentBitStrings = this.encodeSegmentsToBitStrings();
     let encodedSegments = [];
-    encodedSegments.push(Base64UrlEncoder.encode(segmentBitStrings[0]));
+    encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[0]));
     if (segmentBitStrings[1] && segmentBitStrings[1].length > 0) {
-      encodedSegments.push(Base64UrlEncoder.encode(segmentBitStrings[1]));
+      encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[1]));
     }
 
     return encodedSegments.join(".");
@@ -119,7 +122,7 @@ export class TcfCaV2 extends AbstractEncodableSegmentedBitStringSection {
        * because we're only on a maximum of encoding version 2 the first 3 bits
        * in the core segment will evaluate to 0.
        */
-      let segmentBitString = Base64UrlEncoder.decode(encodedSegments[i]);
+      let segmentBitString = this.base64UrlEncoder.decode(encodedSegments[i]);
       switch (segmentBitString.substring(0, 3)) {
         // unfortunately, the segment ordering doesn't match the segment ids
         case "000": {

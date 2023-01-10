@@ -3,12 +3,12 @@ import { UspCaV1Field } from "../../../src/encoder/field/UspCaV1Field";
 import { UspCaV1 } from "../../../src/encoder/section/UspCaV1";
 
 describe("manifest.section.UspCaV1", (): void => {
-  it("should encode default to BAAAAAAA.QAAA", (): void => {
+  it("should encode default to BAAAAAAA.QA", (): void => {
     let uspCaV1 = new UspCaV1();
-    expect(uspCaV1.encode()).to.eql("BAAAAAAA.QAAA");
+    expect(uspCaV1.encode()).to.eql("BAAAAAAA.QA");
   });
 
-  it("should encode to BbYbGwXY.YAAA", (): void => {
+  it("should encode to BbYbGwXY.YA", (): void => {
     let uspCaV1 = new UspCaV1();
 
     uspCaV1.setFieldValue(UspCaV1Field.SALE_OPT_OUT_NOTICE, 1);
@@ -24,10 +24,10 @@ describe("manifest.section.UspCaV1", (): void => {
     uspCaV1.setFieldValue(UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE, 2);
     uspCaV1.setFieldValue(UspCaV1Field.GPC, true);
 
-    expect(uspCaV1.encode()).to.eql("BbYbGwXY.YAAA");
+    expect(uspCaV1.encode()).to.eql("BbYbGwXY.YA");
   });
 
-  it("should encode to BUoAAABQ.YAAA", (): void => {
+  it("should encode to BUoAAABQ.YA", (): void => {
     let uspCaV1 = new UspCaV1();
 
     uspCaV1.setFieldValue(UspCaV1Field.SALE_OPT_OUT_NOTICE, 1);
@@ -43,11 +43,11 @@ describe("manifest.section.UspCaV1", (): void => {
     uspCaV1.setFieldValue(UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE, 0);
     uspCaV1.setFieldValue(UspCaV1Field.GPC, true);
 
-    expect(uspCaV1.encode()).to.eql("BUoAAABQ.YAAA");
+    expect(uspCaV1.encode()).to.eql("BUoAAABQ.YA");
   });
 
-  it("should decode BbYbGwXY.YAAA", (): void => {
-    let uspCaV1 = new UspCaV1("BbYbGwXY.YAAA");
+  it("should decode BbYbGwXY.YA", (): void => {
+    let uspCaV1 = new UspCaV1("BbYbGwXY.YA");
 
     expect(1, uspCaV1.getFieldValue(UspCaV1Field.SALE_OPT_OUT_NOTICE));
     expect(2, uspCaV1.getFieldValue(UspCaV1Field.SHARING_OPT_OUT_NOTICE));

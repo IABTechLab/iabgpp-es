@@ -2,7 +2,9 @@ import { FixedIntegerEncoder } from "./FixedIntegerEncoder.js";
 import { DecodingError } from "../../error/DecodingError.js";
 import { EncodingError } from "../../error/EncodingError.js";
 
-export class Base64UrlEncoder {
+export abstract class AbstractBase64UrlEncoder {
+  protected abstract pad(bitString: string): string;
+
   /**
    * Base 64 URL character set.  Different from standard Base64 char set
    * in that '+' and '/' are replaced with '-' and '_'.
@@ -20,15 +22,13 @@ export class Base64UrlEncoder {
     ['4', 56], ['5', 57], ['6', 58], ['7', 59], ['8', 60], ['9', 61], ['-', 62], ['_', 63]
   ]);
 
-  public static encode(bitString: string): string {
+  public encode(bitString: string): string {
     // should only be 0 or 1
     if (!/^[0-1]*$/.test(bitString)) {
       throw new EncodingError("Unencodable Base64Url '" + bitString + "'");
     }
 
-    while (bitString.length % 24 > 0) {
-      bitString += "0";
-    }
+    bitString = this.pad(bitString);
 
     let str = "";
 
@@ -37,7 +37,7 @@ export class Base64UrlEncoder {
       let s = bitString.substring(index, index + 6);
       try {
         let n = FixedIntegerEncoder.decode(s);
-        let c = Base64UrlEncoder.DICT.charAt(n);
+        let c = AbstractBase64UrlEncoder.DICT.charAt(n);
         str += c;
 
         index += 6;
@@ -49,7 +49,7 @@ export class Base64UrlEncoder {
     return str;
   }
 
-  public static decode(str: string): string {
+  public decode(str: string): string {
     // should contain only characters from the base64url set
     if (!/^[A-Za-z0-9\-_]*$/.test(str)) {
       throw new DecodingError("Undecodable Base64URL string");
@@ -59,7 +59,7 @@ export class Base64UrlEncoder {
 
     for (let i = 0; i < str.length; i++) {
       let c = str.charAt(i);
-      let n = Base64UrlEncoder.REVERSE_DICT.get(c);
+      let n = AbstractBase64UrlEncoder.REVERSE_DICT.get(c);
       let s = FixedIntegerEncoder.encode(n, 6);
       bitString += s;
     }

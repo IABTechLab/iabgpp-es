@@ -1,4 +1,5 @@
-import { Base64UrlEncoder } from "../datatype/encoder/Base64UrlEncoder.js";
+import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
+import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64UrlEncoder.js";
 import { AbstractEncodableBitStringDataType } from "../datatype/AbstractEncodableBitStringDataType.js";
 import { EncodableFibonacciIntegerRange } from "../datatype/EncodableFibonacciIntegerRange.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
@@ -9,6 +10,8 @@ export class HeaderV1 extends AbstractEncodableBitStringSection {
   public static readonly ID = 3;
   public static readonly VERSION = 1;
   public static readonly NAME = "header";
+
+  private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
 
   constructor(encodedString?: string) {
     let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
@@ -32,13 +35,13 @@ export class HeaderV1 extends AbstractEncodableBitStringSection {
   //Overriden
   public encode(): string {
     let bitString = this.encodeToBitString();
-    let encodedString = Base64UrlEncoder.encode(bitString);
+    let encodedString = this.base64UrlEncoder.encode(bitString);
     return encodedString;
   }
 
   //Overriden
   public decode(encodedString: string): void {
-    let bitString = Base64UrlEncoder.decode(encodedString);
+    let bitString = this.base64UrlEncoder.decode(encodedString);
     this.decodeFromBitString(bitString);
   }
 
