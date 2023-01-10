@@ -23,7 +23,7 @@
     "./test/encoder/datatype/encoder/FixedStringEncoder.test.ts",
     "./test/encoder/datatype/encoder/TraditionalBase64UrlEncoder.test.ts",
     "./test/encoder/section/HeaderV1.test.ts",
-    "./test/encoder/section/TcfCaV2.test.ts",
+    "./test/encoder/section/TcfCaV1.test.ts",
     "./test/encoder/section/TcfEuV2.test.ts",
     "./test/encoder/section/UspCaV1.test.ts",
     "./test/encoder/section/UspCoV1.test.ts",

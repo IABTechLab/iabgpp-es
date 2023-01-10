@@ -51,12 +51,8 @@ __gpp("removeEventListener", callback?, param?)
 
 ```javascript
 <script>
-  import {CmpApi} from '@iabgpp/cmpapi';
-  const cmpApi = new CmpApi(1, 3);
-  cmpApi.setGppString(gppString);
-  cmpApi.setFieldValue("uspv1", "OptOutSale", 0);
-  cmpApi.fireUpdate("uspv1"); 
-  console.log(cmpApi.getGppString());
+  import {CmpApi} from '@iabgpp/cmpapi'; const cmpApi = new CmpApi(1, 3); cmpApi.setGppString(gppString);
+  cmpApi.setFieldValue("uspv1", "OptOutSale", 0); cmpApi.fireUpdate("uspv1"); console.log(cmpApi.getGppString());
 </script>
 ```
 
@@ -115,27 +111,27 @@ __gpp("removeEventListener", callback?, param?)
 | tcfeuv2      | 2          | VendorsAllowed                      | Integer array of variable size                                 |
 | tcfeuv2      | 2          | VendorsDisclosedSegmentType         | 3 bit int. Value is 1                                          |
 | tcfeuv2      | 2          | VendorsDisclosed                    | Integer array of variable size                                 |
-| tcfcav2      | 5          | Version                             | 6 bit int. Value is 2.                                         |
-| tcfcav2      | 5          | Created                             | Datetime. Updated when any fields are set                      |
-| tcfcav2      | 5          | LastUpdated                         | Datetime. Updated when any fields are set                      |
-| tcfcav2      | 5          | CmpId                               | 12 bit int                                                     |
-| tcfcav2      | 5          | CmpVersion                          | 12 bit int                                                     |
-| tcfcav2      | 5          | ConsentScreen                       | 6 bit int                                                      |
-| tcfcav2      | 5          | ConsentLanguage                     | 2 character country code                                       |
-| tcfcav2      | 5          | VendorListVersion                   | 12 bit int                                                     |
-| tcfcav2      | 5          | TcfPolicyVersion                    | 6 bit int. Value is 2.                                         |
-| tcfcav2      | 5          | UseNonStandardStacks                | Boolean                                                        |
-| tcfcav2      | 5          | SpecialFeatureExpressConsent        | Boolean array of size 12                                       |
-| tcfcav2      | 5          | PurposesExpressConsent              | Boolean array of size 24                                       |
-| tcfcav2      | 5          | PurposesImpliedConsent              | Boolean array of size 24                                       |
-| tcfcav2      | 5          | VendorExpressConsent                | Integer array of variable size                                 |
-| tcfcav2      | 5          | VendorImpliedConsent                | Integer array of variable size                                 |
-| tcfcav2      | 5          | PubPurposesSegmentType              | 3 bit int. Value is 3                                          |
-| tcfcav2      | 5          | PubPurposesExpressConsent           | Boolean array of size 24                                       |
-| tcfcav2      | 5          | PubPurposesImpliedConsent           | Boolean array of size 24                                       |
-| tcfcav2      | 5          | NumCustomPurposes                   | 6 bit int                                                      |
-| tcfcav2      | 5          | CustomPurposesExpressConsent        | Boolean array where size is set by the NumCustomPurposes field |
-| tcfcav2      | 5          | CustomPurposesImpliedConsent        | Boolean array where size is set by the NumCustomPurposes field |
+| tcfcav1      | 5          | Version                             | 6 bit int. Value is 2.                                         |
+| tcfcav1      | 5          | Created                             | Datetime. Updated when any fields are set                      |
+| tcfcav1      | 5          | LastUpdated                         | Datetime. Updated when any fields are set                      |
+| tcfcav1      | 5          | CmpId                               | 12 bit int                                                     |
+| tcfcav1      | 5          | CmpVersion                          | 12 bit int                                                     |
+| tcfcav1      | 5          | ConsentScreen                       | 6 bit int                                                      |
+| tcfcav1      | 5          | ConsentLanguage                     | 2 character country code                                       |
+| tcfcav1      | 5          | VendorListVersion                   | 12 bit int                                                     |
+| tcfcav1      | 5          | TcfPolicyVersion                    | 6 bit int. Value is 2.                                         |
+| tcfcav1      | 5          | UseNonStandardStacks                | Boolean                                                        |
+| tcfcav1      | 5          | SpecialFeatureExpressConsent        | Boolean array of size 12                                       |
+| tcfcav1      | 5          | PurposesExpressConsent              | Boolean array of size 24                                       |
+| tcfcav1      | 5          | PurposesImpliedConsent              | Boolean array of size 24                                       |
+| tcfcav1      | 5          | VendorExpressConsent                | Integer array of variable size                                 |
+| tcfcav1      | 5          | VendorImpliedConsent                | Integer array of variable size                                 |
+| tcfcav1      | 5          | PubPurposesSegmentType              | 3 bit int. Value is 3                                          |
+| tcfcav1      | 5          | PubPurposesExpressConsent           | Boolean array of size 24                                       |
+| tcfcav1      | 5          | PubPurposesImpliedConsent           | Boolean array of size 24                                       |
+| tcfcav1      | 5          | NumCustomPurposes                   | 6 bit int                                                      |
+| tcfcav1      | 5          | CustomPurposesExpressConsent        | Boolean array where size is set by the NumCustomPurposes field |
+| tcfcav1      | 5          | CustomPurposesImpliedConsent        | Boolean array where size is set by the NumCustomPurposes field |
 | uspv1        | 6          | Version                             | 6 bit int. Value is 1                                          |
 | uspv1        | 6          | Notice                              | 2 bit int                                                      |
 | uspv1        | 6          | OptOutSale                          | 2 bit int                                                      |

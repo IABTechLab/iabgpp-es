@@ -1,4 +1,4 @@
-export enum TcfCaV2Field {
+export enum TcfCaV1Field {
   VERSION = "Version",
   CREATED = "Created",
   LAST_UPDATED = "LastUpdated",
