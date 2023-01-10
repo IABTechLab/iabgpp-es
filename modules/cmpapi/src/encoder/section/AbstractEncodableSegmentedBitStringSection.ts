@@ -45,8 +45,12 @@ export abstract class AbstractEncodableSegmentedBitStringSection implements Enco
       for (let j = 0; j < this.segments[i].length; j++) {
         let fieldName = this.segments[i][j];
         if (this.fields.has(fieldName)) {
-          let field = this.fields.get(fieldName);
-          segmentBitString += field.encode();
+          try {
+            let field = this.fields.get(fieldName);
+            segmentBitString += field.encode();
+          } catch (e) {
+            throw new Error("Unable to encode " + fieldName);
+          }
         } else {
           throw new Error("Field not found: '" + fieldName + "'");
         }
@@ -65,10 +69,14 @@ export abstract class AbstractEncodableSegmentedBitStringSection implements Enco
         for (let j = 0; j < this.segments[i].length; j++) {
           let fieldName = this.segments[i][j];
           if (this.fields.has(fieldName)) {
-            let field = this.fields.get(fieldName);
-            let substring = field.substring(segmentBitString, index);
-            field.decode(substring);
-            index += substring.length;
+            try {
+              let field = this.fields.get(fieldName);
+              let substring = field.substring(segmentBitString, index);
+              field.decode(substring);
+              index += substring.length;
+            } catch (e) {
+              throw new Error("Unable to decode " + fieldName);
+            }
           } else {
             throw new Error("Field not found: '" + fieldName + "'");
           }
