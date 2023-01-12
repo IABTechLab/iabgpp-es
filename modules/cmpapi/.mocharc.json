@@ -13,7 +13,6 @@
     "./test/encoder/datatype/EncodableFixedIntegerList.test.ts",
     "./test/encoder/datatype/EncodableFixedIntegerRange.test.ts",
     "./test/encoder/datatype/EncodableFixedString.test.ts",
-    "./test/encoder/datatype/encoder/Base64UrlEncoder.test.ts",
     "./test/encoder/datatype/encoder/BooleanEncoder.test.ts",
     "./test/encoder/datatype/encoder/DatetimeEncoder.test.ts",
     "./test/encoder/datatype/encoder/FibonacciIntegerEncoder.test.ts",
@@ -22,8 +21,9 @@
     "./test/encoder/datatype/encoder/FixedIntegerEncoder.test.ts",
     "./test/encoder/datatype/encoder/FixedIntegerRangeEncoder.test.ts",
     "./test/encoder/datatype/encoder/FixedStringEncoder.test.ts",
+    "./test/encoder/datatype/encoder/TraditionalBase64UrlEncoder.test.ts",
     "./test/encoder/section/HeaderV1.test.ts",
-    "./test/encoder/section/TcfCaV2.test.ts",
+    "./test/encoder/section/TcfCaV1.test.ts",
     "./test/encoder/section/TcfEuV2.test.ts",
     "./test/encoder/section/UspCaV1.test.ts",
     "./test/encoder/section/UspCoV1.test.ts",
@@ -31,7 +31,7 @@
     "./test/encoder/section/UspNatV1.test.ts",
     "./test/encoder/section/UspUtV1.test.ts",
     "./test/encoder/section/UspV1.test.ts",
-    "./test/encoder/section/UspV1Legacy.test.ts",
+    "./test/encoder/section/UspV1.test.ts",
     "./test/encoder/section/UspVaV1.test.ts",
     "./test/gvl/client/JsonHttpClient.test.ts"
   ]

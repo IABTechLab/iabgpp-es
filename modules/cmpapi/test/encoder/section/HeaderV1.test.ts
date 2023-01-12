@@ -44,16 +44,16 @@ describe("manifest.section.HeaderV1", (): void => {
     expect(headerV1.encode()).to.eql("DBAA");
   });
 
-  it("should encode section ids [2] to DBABMAAA", (): void => {
+  it("should encode section ids [2] to DBABMA", (): void => {
     let headerV1 = new HeaderV1();
     headerV1.setFieldValue("SectionIds", [2]);
-    expect(headerV1.encode()).to.eql("DBABMAAA");
+    expect(headerV1.encode()).to.eql("DBABMA");
   });
 
-  it("should encode section ids [2,7] to DBACMMAA", (): void => {
+  it("should encode section ids [2,6] to DBACNYA", (): void => {
     let headerV1 = new HeaderV1();
-    headerV1.setFieldValue("SectionIds", [2, 7]);
-    expect(headerV1.encode()).to.eql("DBACMMAA");
+    headerV1.setFieldValue("SectionIds", [2, 6]);
+    expect(headerV1.encode()).to.eql("DBACNYA");
   });
 
   it("should decode DBAA to section ids []", (): void => {
@@ -66,8 +66,8 @@ describe("manifest.section.HeaderV1", (): void => {
     expect(headerV1.getFieldValue("SectionIds")).to.eql([2]);
   });
 
-  it("should decode BDACNYA to section ids [2, 6]", (): void => {
-    let headerV1 = new HeaderV1("BDACNYA");
+  it("should decode DBACNYA to section ids [2, 6]", (): void => {
+    let headerV1 = new HeaderV1("DBACNYA");
     expect(headerV1.getFieldValue("SectionIds")).to.eql([2, 6]);
   });
 });

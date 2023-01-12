@@ -4,7 +4,7 @@ import { FixedIntegerEncoder } from "./FixedIntegerEncoder.js";
 
 export class FixedIntegerRangeEncoder {
   public static encode(value: number[]): string {
-    value.sort();
+    value.sort((n1, n2) => n1 - n2);
 
     let groups: number[][] = [];
 

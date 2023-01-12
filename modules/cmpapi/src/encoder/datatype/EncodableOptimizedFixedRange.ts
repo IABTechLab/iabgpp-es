@@ -18,7 +18,7 @@ export class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
     let bitFieldLength = max;
 
     if (rangeLength <= bitFieldLength) {
-      return "1" + FixedIntegerEncoder.encode(max, 16) + rangeBitString;
+      return FixedIntegerEncoder.encode(max, 16) + "1" + rangeBitString;
     } else {
       let bits = [];
       let index = 0;
@@ -30,7 +30,7 @@ export class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
           bits[i] = false;
         }
       }
-      return "0" + FixedIntegerEncoder.encode(max, 16) + FixedBitfieldEncoder.encode(bits, bitFieldLength);
+      return FixedIntegerEncoder.encode(max, 16) + "0" + FixedBitfieldEncoder.encode(bits, bitFieldLength);
     }
   }
 

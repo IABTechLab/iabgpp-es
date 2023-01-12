@@ -3,7 +3,7 @@ import { DisplayStatus } from "./status/DisplayStatus.js";
 import { EventStatus } from "./status/EventStatus.js";
 import { EventListenerQueue } from "./EventListenerQueue.js";
 import { GppModel } from "../encoder/GppModel.js";
-import { TcfCaV2 } from "../encoder/section/TcfCaV2.js";
+import { TcfCaV1 } from "../encoder/section/TcfCaV1.js";
 import { TcfEuV2 } from "../encoder/section/TcfEuV2.js";
 import { UspV1 } from "../encoder/section/UspV1.js";
 import { UspNatV1 } from "../encoder/section/UspNatV1.js";
@@ -22,7 +22,7 @@ export class CmpApiContext {
   public gppVersion = "1.0";
   public apiSupport = [
     TcfEuV2.NAME,
-    TcfCaV2.NAME,
+    TcfCaV1.NAME,
     UspV1.NAME,
     UspNatV1.NAME,
     UspCaV1.NAME,

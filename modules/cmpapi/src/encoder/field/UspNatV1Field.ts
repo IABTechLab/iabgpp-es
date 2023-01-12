@@ -17,5 +17,6 @@ export enum UspNatV1Field {
   MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode",
 
   GPC_SEGMENT_TYPE = "GpcSegmentType",
+  GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded",
   GPC = "Gpc",
 }

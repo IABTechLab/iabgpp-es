@@ -1,5 +1,5 @@
 export * from "./encoder/index.js";
-export * from "./AbstractEncodableBitStringDateType.js";
+export * from "./AbstractEncodableBitStringDataType.js";
 export * from "./EncodableBoolean.js";
 export * from "./EncodableDatetime.js";
 export * from "./EncodableFibonacciInteger.js";
@@ -11,4 +11,4 @@ export * from "./EncodableFixedIntegerRange.js";
 export * from "./EncodableFixedString.js";
 export * from "./EncodableFlexibleBitfield.js";
 export * from "./EncodableOptimizedFibonacciRange.js";
-export * from "./EncodableOptimzedFixedRange.js";
+export * from "./EncodableOptimizedFixedRange.js";

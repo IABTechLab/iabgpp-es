@@ -1,5 +1,4 @@
 export * from "./ByPurposeVendorMap.js";
-export * from "./Cloneable.js";
 export * from "./ConsentLanguages.js";
 export * from "./Declarations.js";
 export * from "./Feature.js";

@@ -322,4 +322,272 @@ describe("manifest.section.TcfEuV2", (): void => {
     expect(vendorsDisclosed[vendorsDisclosed.length - 2]).to.eql(790);
     expect(vendorsDisclosed[vendorsDisclosed.length - 1]).to.eql(791);
   });
+
+  it("decode 2", (): void => {
+    let tcfEuV2 = new TcfEuV2(
+      "CPi8wgAPi8wgAAOACBENCuCoAP_AAEfAACiQJHNd_H__bX9n-f7_6ft0eY1f9_r37uQzDhfNk-8F3L_W_LwX_2E7NF36tq4KmR4ku1LBIUNtHMnUDUmxaokVrzHsak2cpzNKJ_BkknsZe2dYGF9vm5tj-QKZ7_5_d3f52T_9_9v-39z33913v3d93-_13LjdV5_9H_v9fR_b8_Kf9_5-_4v8_____3_e______8AEEggCTDVuIAuxLHAm0DCKBECMKwkKoFABBQDC0QGADg4KdlYBPrCBAAgFAEYEQIcAUYEAgAAAgCQiACQIsEAAAIgEAAIAEQiEABAwCCgAsDAIAAQDQMUQoABAkIMiAiKUwICIEggJbKhBKC6Q0wgCrLACgkRsFAAiAAAUgACAsHAMESAlYsECTFG-QAjBCgFEqFaAGGgAwABBI4RABgACCRwqADAAEEjgA"
+    );
+
+    expect(tcfEuV2.getFieldValue("Version")).to.eql(2);
+    expect(tcfEuV2.getFieldValue("CmpId")).to.eql(14);
+    expect(tcfEuV2.getFieldValue("CmpVersion")).to.eql(2);
+    expect(tcfEuV2.getFieldValue("ConsentScreen")).to.eql(1);
+    expect(tcfEuV2.getFieldValue("ConsentLanguage")).to.eql("EN");
+    expect(tcfEuV2.getFieldValue("VendorListVersion")).to.eql(174);
+    expect(tcfEuV2.getFieldValue("PolicyVersion")).to.eql(2);
+    expect(tcfEuV2.getFieldValue("IsServiceSpecific")).to.eql(true);
+    expect(tcfEuV2.getFieldValue("UseNonStandardStacks")).to.eql(false);
+
+    expect(tcfEuV2.getFieldValue("SpecialFeatureOptins")).to.eql([
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+
+    expect(tcfEuV2.getFieldValue("PurposeConsents")).to.eql([
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+    expect(tcfEuV2.getFieldValue("PurposeLegitimateInterests")).to.eql([
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+
+    expect(tcfEuV2.getFieldValue("PurposeOneTreatment")).to.eql(false);
+    expect(tcfEuV2.getFieldValue("PublisherCountryCode")).to.eql("US");
+
+    expect(tcfEuV2.getFieldValue("VendorConsents").length).to.eql(772);
+    expect(tcfEuV2.getFieldValue("VendorLegitimateInterests").length).to.eql(280);
+  });
+
+  it("decode 3", (): void => {
+    let tcfEuV2 = new TcfEuV2(
+      "CPgA5EAPgA5EAAOACBENCuCoAP_AAEfAACiQI0Nd_H__bX9n-f7_6Pt0cY1f9_r3ruQzDhfFk-8F3L_W3LwX32E7NF36pq4KmR4ku1LBIQFtHMnUDUmxaokVrzHsak2cpyNKI7BkknsZe2dYGF9Pm5lD-QKZ7_5_d3f52T_9_9v-39z339V3v3d93-_12PjdV599H_v9fR_b8_Kf9_5-_4v8___4IQAAAAQQ_AJMNW4gC7EscCbQMIoAQIwrCQqAUAEFAMLRAYAODgpmVgEusIEACAUARgRAhxBRgQCAAACAJCIAJAiwQAIAiAQAAgARAIQAEDAIKACwMAgABANAxACgAECQgyICIpTAgIgSCAlsqEEoKpDTCAKssAKARGwUACIAABSAAICwcAwRICViwQJMUbwAw0AGAAIJHCIAMAAQSOFQAYAAgkcA"
+    );
+
+    expect(tcfEuV2.getFieldValue("Version")).to.eql(2);
+    expect(tcfEuV2.getFieldValue("CmpId")).to.eql(14);
+    expect(tcfEuV2.getFieldValue("CmpVersion")).to.eql(2);
+    expect(tcfEuV2.getFieldValue("ConsentScreen")).to.eql(1);
+    expect(tcfEuV2.getFieldValue("ConsentLanguage")).to.eql("EN");
+    expect(tcfEuV2.getFieldValue("VendorListVersion")).to.eql(174);
+    expect(tcfEuV2.getFieldValue("PolicyVersion")).to.eql(2);
+    expect(tcfEuV2.getFieldValue("IsServiceSpecific")).to.eql(true);
+    expect(tcfEuV2.getFieldValue("UseNonStandardStacks")).to.eql(false);
+
+    expect(tcfEuV2.getFieldValue("SpecialFeatureOptins")).to.eql([
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+
+    expect(tcfEuV2.getFieldValue("PurposeConsents")).to.eql([
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+    expect(tcfEuV2.getFieldValue("PurposeLegitimateInterests")).to.eql([
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+
+    expect(tcfEuV2.getFieldValue("PurposeOneTreatment")).to.eql(false);
+    expect(tcfEuV2.getFieldValue("PublisherCountryCode")).to.eql("US");
+
+    expect(tcfEuV2.getFieldValue("VendorConsents").length).to.eql(693);
+    expect(tcfEuV2.getFieldValue("VendorLegitimateInterests").length).to.eql(254);
+  });
+
+  it("decode 4", (): void => {
+    let tcfEuV2 = new TcfEuV2("COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA.YAAAAAAAAAAAAAAAAAA");
+
+    expect(tcfEuV2.getFieldValue("Version")).to.eql(2);
+    expect(tcfEuV2.getFieldValue("CmpId")).to.eql(14);
+    expect(tcfEuV2.getFieldValue("CmpVersion")).to.eql(3);
+    expect(tcfEuV2.getFieldValue("ConsentScreen")).to.eql(1);
+    expect(tcfEuV2.getFieldValue("ConsentLanguage")).to.eql("EN");
+    expect(tcfEuV2.getFieldValue("VendorListVersion")).to.eql(26);
+    expect(tcfEuV2.getFieldValue("PolicyVersion")).to.eql(2);
+    expect(tcfEuV2.getFieldValue("IsServiceSpecific")).to.eql(true);
+    expect(tcfEuV2.getFieldValue("UseNonStandardStacks")).to.eql(false);
+
+    expect(tcfEuV2.getFieldValue("SpecialFeatureOptins")).to.eql([
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+
+    expect(tcfEuV2.getFieldValue("PurposeConsents")).to.eql([
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+    expect(tcfEuV2.getFieldValue("PurposeLegitimateInterests")).to.eql([
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+
+    expect(tcfEuV2.getFieldValue("PurposeOneTreatment")).to.eql(false);
+    expect(tcfEuV2.getFieldValue("PublisherCountryCode")).to.eql("US");
+
+    expect(tcfEuV2.getFieldValue("VendorConsents")).to.eql([2, 6, 8, 12, 18, 23, 25, 37, 42]);
+    expect(tcfEuV2.getFieldValue("VendorLegitimateInterests")).to.eql([2, 6, 8, 12, 18, 23, 37, 42]);
+  });
 });

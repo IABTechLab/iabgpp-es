@@ -3,13 +3,16 @@ import { AbstractEncodableBitStringSection } from "./AbstractEncodableBitStringS
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableFixedIntegerList } from "../datatype/EncodableFixedIntegerList.js";
 import { DecodingError } from "../error/DecodingError.js";
-import { Base64UrlEncoder } from "../datatype/encoder/Base64UrlEncoder.js";
 import { UspVaV1Field } from "../field/UspVaV1Field.js";
+import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
+import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64UrlEncoder.js";
 
 export class UspVaV1 extends AbstractEncodableBitStringSection {
   public static readonly ID = 9;
   public static readonly VERSION = 1;
   public static readonly NAME = "uspvav1";
+
+  private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
 
   constructor(encodedString?: string) {
     let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
@@ -53,12 +56,12 @@ export class UspVaV1 extends AbstractEncodableBitStringSection {
 
   //Overriden
   public encode(): string {
-    return Base64UrlEncoder.encode(this.encodeToBitString());
+    return this.base64UrlEncoder.encode(this.encodeToBitString());
   }
 
   //Overriden
   public decode(bitString: string): void {
-    this.decodeFromBitString(Base64UrlEncoder.decode(bitString));
+    this.decodeFromBitString(this.base64UrlEncoder.decode(bitString));
   }
 
   //Overriden

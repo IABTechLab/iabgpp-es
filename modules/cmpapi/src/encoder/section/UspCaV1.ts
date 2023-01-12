@@ -4,13 +4,16 @@ import { EncodableBoolean } from "../datatype/EncodableBoolean.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableFixedIntegerList } from "../datatype/EncodableFixedIntegerList.js";
 import { DecodingError } from "../error/DecodingError.js";
-import { Base64UrlEncoder } from "../datatype/encoder/Base64UrlEncoder.js";
 import { UspCaV1Field } from "../field/UspCaV1Field.js";
+import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
+import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64UrlEncoder.js";
 
 export class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 8;
   public static readonly VERSION = 1;
   public static readonly NAME = "uspcav1";
+
+  private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
 
   constructor(encodedString?: string) {
     let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
@@ -35,8 +38,9 @@ export class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(UspCaV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(), new EncodableFixedInteger(2, 0));
     fields.set(UspCaV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(), new EncodableFixedInteger(2, 0));
 
-    // publisher purposes segment
+    // gpc segment
     fields.set(UspCaV1Field.GPC_SEGMENT_TYPE.toString(), new EncodableFixedInteger(2, 1));
+    fields.set(UspCaV1Field.GPC_SEGMENT_INCLUDED.toString(), new EncodableBoolean(true));
     fields.set(UspCaV1Field.GPC.toString(), new EncodableBoolean(false));
 
     let coreSegment = [
@@ -69,9 +73,12 @@ export class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public encode(): string {
     let segmentBitStrings = this.encodeSegmentsToBitStrings();
     let encodedSegments = [];
-    encodedSegments.push(Base64UrlEncoder.encode(segmentBitStrings[0]));
+    encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[0]));
     if (segmentBitStrings[1] && segmentBitStrings[1].length > 0) {
-      encodedSegments.push(Base64UrlEncoder.encode(segmentBitStrings[1]));
+      let gpcSegmentIncluded = this.fields.get(UspCaV1Field.GPC_SEGMENT_INCLUDED).getValue();
+      if (gpcSegmentIncluded === true) {
+        encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[1]));
+      }
     }
 
     return encodedSegments.join(".");
@@ -81,6 +88,7 @@ export class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public decode(encodedSection: string): void {
     let encodedSegments = encodedSection.split(".");
     let segmentBitStrings = [];
+    let gpcSegmentIncluded = false;
     for (let i = 0; i < encodedSegments.length; i++) {
       /**
        * first char will contain 6 bits, we only need the first 2.
@@ -88,7 +96,7 @@ export class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
        * encoding version, but because we're only on a maximum of encoding version 2 the first 2 bits in
        * the core segment will evaluate to 0.
        */
-      let segmentBitString = Base64UrlEncoder.decode(encodedSegments[i]);
+      let segmentBitString = this.base64UrlEncoder.decode(encodedSegments[i]);
       switch (segmentBitString.substring(0, 2)) {
         // unfortuCaely, the segment ordering doesn't match the segment ids
         case "00": {
@@ -96,6 +104,7 @@ export class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
           break;
         }
         case "01": {
+          gpcSegmentIncluded = true;
           segmentBitStrings[1] = segmentBitString;
           break;
         }
@@ -105,6 +114,7 @@ export class UspCaV1 extends AbstractEncodableSegmentedBitStringSection {
       }
     }
     this.decodeSegmentsFromBitStrings(segmentBitStrings);
+    this.fields.get(UspCaV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
   }
 
   //Overriden
