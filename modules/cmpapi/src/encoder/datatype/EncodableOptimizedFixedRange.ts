@@ -52,7 +52,10 @@ export class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
   public substring(bitString: string, fromIndex: number): string {
     let max = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 16));
     if (bitString.charAt(fromIndex + 16) === "1") {
-      return bitString.substring(fromIndex, 17) + new EncodableFixedIntegerRange().substring(bitString, fromIndex + 17);
+      return (
+        bitString.substring(fromIndex, fromIndex + 17) +
+        new EncodableFixedIntegerRange().substring(bitString, fromIndex + 17)
+      );
     } else {
       return bitString.substring(fromIndex, fromIndex + 17 + max);
     }
