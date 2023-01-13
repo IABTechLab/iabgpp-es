@@ -54,12 +54,12 @@ export class CmpApi {
     }
   }
 
-  public getApplicableSection(): number[] {
-    return this.cmpApiContext.applicableSection;
+  public getApplicableSections(): number[] {
+    return this.cmpApiContext.applicableSections;
   }
 
-  public setApplicableSection(applicableSection: number[]): void {
-    this.cmpApiContext.applicableSection = applicableSection;
+  public setApplicableSections(applicableSections: number[]): void {
+    this.cmpApiContext.applicableSections = applicableSections;
   }
 
   public getCurrentAPI(): string {

@@ -35,7 +35,7 @@ export class CmpApiContext {
   public readonly eventQueue = new EventListenerQueue(this);
   public cmpStatus: CmpStatus = CmpStatus.LOADING;
   public cmpDisplayStatus: DisplayStatus = DisplayStatus.HIDDEN;
-  public applicableSection = [];
+  public applicableSections = [];
   public gppModel: GppModel = new GppModel();
 
   public cmpId: number;

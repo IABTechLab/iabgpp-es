@@ -9,8 +9,8 @@ Encode/decode consent information with the IAB GPP Framework
 ```javascript
 constructor(cmpId: number, cmpVersion: number, customCommands?: CustomCommands)
 fireUpdate(currentAPI?: string, uiVisible = false): void
-getApplicableSection(): number[]
-setApplicableSection(applicableSection: number[]): void
+getApplicableSections(): number[]
+setApplicableSections(applicableSections: number[]): void
 getCurrentAPI(): string
 setCurrentAPI(currentAPI: string): void
 setGppString(encodedGppString: string): void

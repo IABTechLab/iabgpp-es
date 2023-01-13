@@ -7,7 +7,7 @@ export class GetGppDataCommand extends Command {
       sectionId: header.Id,
       gppVersion: this.cmpApiContext.gppVersion,
       sectionList: header.SectionIds,
-      applicableSection: this.cmpApiContext.applicableSection,
+      applicableSections: this.cmpApiContext.applicableSections,
       gppString: this.cmpApiContext.gppModel.encode(),
       pingData: {
         gppVersion: this.cmpApiContext.gppVersion,
