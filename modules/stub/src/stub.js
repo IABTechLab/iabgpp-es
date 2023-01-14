@@ -6,7 +6,7 @@ window.__gpp_addFrame = function (n) {
       i.name = n;
       document.body.appendChild(i);
     } else {
-      window.setTimeout(window.__gppaddFrame, 10, n);
+      window.setTimeout(window.__gpp_addFrame, 10, n);
     }
   }
 };
