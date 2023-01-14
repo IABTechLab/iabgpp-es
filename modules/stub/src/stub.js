@@ -13,9 +13,16 @@ window.__gpp_addFrame = function (n) {
 window.__gpp_stub = function () {
   var b = arguments;
   __gpp.queue = __gpp.queue || [];
-  if (!b.length) {
+  __gpp.events = __gpp.events || [];
+
+  if (!b.length || (b.length == 1 && b[0] == "queue")) {
     return __gpp.queue;
   }
+
+  if (b.length == 1 && b[0] == "events") {
+    return __gpp.events;
+  }
+
   var cmd = b[0];
   var clb = b.length > 1 ? b[1] : null;
   var par = b.length > 2 ? b[2] : null;
@@ -28,7 +35,6 @@ window.__gpp_stub = function () {
       cmpId: 31, // IAB assigned CMP ID, may be 0 during stub/loading
     };
   } else if (cmd === "addEventListener") {
-    __gpp.events = __gpp.events || [];
     if (!("lastId" in __gpp)) {
       __gpp.lastId = 0;
     }
@@ -53,10 +59,9 @@ window.__gpp_stub = function () {
     };
   } else if (cmd === "removeEventListener") {
     var success = false;
-    __gpp.events = __gpp.events || [];
     for (var i = 0; i < __gpp.events.length; i++) {
       if (__gpp.events[i].id == par) {
-        __gpp.events[i].splice(i, 1);
+        __gpp.events.splice(i, 1);
         success = true;
         break;
       }
@@ -96,7 +101,7 @@ window.__gpp_stub = function () {
   }
   //queue all other commands
   else {
-    __cmp.queue.push([].slice.apply(b));
+    __gpp.queue.push([].slice.apply(b));
   }
 };
 window.__gpp_msghandler = function (event) {

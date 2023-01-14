@@ -2,13 +2,13 @@ import { Command } from "./Command.js";
 
 export class GetSectionCommand extends Command {
   protected respond(): any {
-    if (!this.param || this.param.length === 0) {
+    if (!this.parameter || this.parameter.length === 0) {
       throw new Error("<section> parameter required");
     }
 
     let section = null;
-    if (this.cmpApiContext.gppModel.hasSection(this.param)) {
-      section = this.cmpApiContext.gppModel.getSection(this.param);
+    if (this.cmpApiContext.gppModel.hasSection(this.parameter)) {
+      section = this.cmpApiContext.gppModel.getSection(this.parameter);
     }
     this.invokeCallback(section);
     return section;

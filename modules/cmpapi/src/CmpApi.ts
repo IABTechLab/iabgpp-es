@@ -4,9 +4,6 @@ import { CmpStatus } from "./cmpapi/status/CmpStatus.js";
 import { DisplayStatus } from "./cmpapi/status/DisplayStatus.js";
 import { EventStatus } from "./cmpapi/status/EventStatus.js";
 import { CallResponder } from "./cmpapi/CallResponder.js";
-import { TcfCaV1 } from "./encoder/section/TcfCaV1.js";
-import { TcfEuV2 } from "./encoder/section/TcfEuV2.js";
-import { UspV1 } from "./encoder/section/UspV1.js";
 import { Gvl, GvlUrlConfig } from "./Gvl.js";
 import { VendorList } from "./gvl/gvlmodel/VendorList.js";
 import { Sections } from "./encoder/section/Sections.js";
@@ -28,30 +25,42 @@ export class CmpApi {
     this.callResponder = new CallResponder(this.cmpApiContext, customCommands);
   }
 
-  public fireUpdate(currentAPI?: string, uiVisible = false): void {
-    this.cmpApiContext.cmpStatus = CmpStatus.LOADED;
-    this.cmpApiContext.currentAPI = currentAPI;
+  public fireEvent(eventName: string, value: any) {
+    this.cmpApiContext.eventQueue.exec(eventName, value);
+  }
 
-    if (uiVisible) {
-      this.cmpApiContext.cmpDisplayStatus = DisplayStatus.VISIBLE;
-      this.cmpApiContext.eventStatus = EventStatus.CMP_UI_SHOWN;
-    } else {
-      if (this.cmpApiContext.gppModel === undefined) {
-        this.cmpApiContext.cmpDisplayStatus = DisplayStatus.DISABLED;
-        this.cmpApiContext.eventStatus = EventStatus.GPP_LOADED;
-      } else {
-        this.cmpApiContext.cmpDisplayStatus = DisplayStatus.HIDDEN;
-        this.cmpApiContext.eventStatus = EventStatus.USER_ACTION_COMPLETE;
-      }
-    }
+  public fireErrorEvent(value: string) {
+    this.cmpApiContext.eventQueue.exec("error", value);
+  }
 
-    if (currentAPI && currentAPI.length > 0) {
-      this.cmpApiContext.eventQueue.exec(currentAPI);
-    } else {
-      this.cmpApiContext.eventQueue.exec(TcfCaV1.NAME);
-      this.cmpApiContext.eventQueue.exec(TcfEuV2.NAME);
-      this.cmpApiContext.eventQueue.exec(UspV1.NAME);
-    }
+  public fireSectionChange(value: string) {
+    this.cmpApiContext.eventQueue.exec("sectionChange", value);
+  }
+
+  public getEventStatus(): EventStatus {
+    return this.cmpApiContext.eventStatus;
+  }
+
+  public setEventStatus(eventStatus: EventStatus) {
+    this.cmpApiContext.eventStatus = eventStatus;
+  }
+
+  public getCmpStatus(): CmpStatus {
+    return this.cmpApiContext.cmpStatus;
+  }
+
+  public setCmpStatus(cmpStatus: CmpStatus) {
+    this.cmpApiContext.cmpStatus = cmpStatus;
+    this.cmpApiContext.eventQueue.exec("cmpStatus", cmpStatus);
+  }
+
+  public getCmpDisplayStatus(): DisplayStatus {
+    return this.cmpApiContext.cmpDisplayStatus;
+  }
+
+  public setCmpDisplayStatus(cmpDisplayStatus: DisplayStatus) {
+    this.cmpApiContext.cmpDisplayStatus = cmpDisplayStatus;
+    this.cmpApiContext.eventQueue.exec("cmpDisplayStatus", cmpDisplayStatus);
   }
 
   public getApplicableSections(): number[] {

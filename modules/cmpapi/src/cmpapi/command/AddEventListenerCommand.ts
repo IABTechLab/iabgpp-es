@@ -2,13 +2,24 @@ import { Command } from "./Command.js";
 
 export class AddEventListenerCommand extends Command {
   protected respond(): any {
-    let eventListener = {
+    let listenerId = this.cmpApiContext.eventQueue.add({
       callback: this.callback,
-      param: this.param,
-      next: this.next,
-    };
+      parameter: this.parameter,
+    });
 
-    this.cmpApiContext.eventQueue.add(eventListener);
-    return eventListener;
+    return {
+      eventName: "listenerRegistered",
+      listenerId: listenerId,
+      data: true,
+      pingData: {
+        gppVersion: this.cmpApiContext.gppVersion,
+        cmpStatus: this.cmpApiContext.cmpStatus,
+        cmpDisplayStatus: this.cmpApiContext.cmpDisplayStatus,
+        apiSupport: this.cmpApiContext.apiSupport,
+        currentAPI: this.cmpApiContext.currentAPI,
+        cmpId: this.cmpApiContext.cmpId,
+        cmpVersion: this.cmpApiContext.cmpVersion,
+      },
+    };
   }
 }

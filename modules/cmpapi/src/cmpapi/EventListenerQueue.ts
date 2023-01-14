@@ -1,25 +1,36 @@
 import { CmpApiContext } from "./CmpApiContext.js";
 import { CommandCallback } from "./command/CommandCallback.js";
-import { GetSectionCommand } from "./command/GetSectionCommand.js";
 
 interface EventItem {
-  callback?: CommandCallback;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  param?: any;
-  next?: CommandCallback;
+  callback: CommandCallback;
+  parameter?: any;
 }
 
 export class EventListenerQueue {
   private eventQueue = new Map<number, EventItem>();
-  private queueNumber = 0;
+  private queueNumber = 1000;
   private cmpApiContext: CmpApiContext;
 
   constructor(cmpApiContext: CmpApiContext) {
     this.cmpApiContext = cmpApiContext;
+
+    try {
+      // get queued commands
+      let events = window["__gpp"]("events") || [];
+      for (var i = 0; i < events.length; i++) {
+        let eventItem = events[i];
+        this.eventQueue.set(eventItem.id, {
+          callback: eventItem.callback,
+          parameter: eventItem.parameter,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  public add(eventItems: EventItem): number {
-    this.eventQueue.set(this.queueNumber, eventItems);
+  public add(eventItem: EventItem): number {
+    this.eventQueue.set(this.queueNumber, eventItem);
     return this.queueNumber++;
   }
 
@@ -31,19 +42,27 @@ export class EventListenerQueue {
     return this.eventQueue.delete(listenerId);
   }
 
-  public exec(section: string): void {
+  public exec(eventName: string, data: any): void {
     this.eventQueue.forEach((eventItem: EventItem, listenerId: number): void => {
-      if (
-        this.cmpApiContext.gppModel.hasSection(section) &&
-        (!eventItem.param || eventItem.param.length === 0 || section === eventItem.param)
-      ) {
-        new GetSectionCommand(this.cmpApiContext, eventItem.callback, section, listenerId, eventItem.next).execute();
-      }
+      eventItem.callback({
+        eventName: eventName,
+        listenerId: listenerId,
+        data: data,
+        pingData: {
+          gppVersion: this.cmpApiContext.gppVersion,
+          cmpStatus: this.cmpApiContext.cmpStatus,
+          cmpDisplayStatus: this.cmpApiContext.cmpDisplayStatus,
+          apiSupport: this.cmpApiContext.apiSupport,
+          currentAPI: this.cmpApiContext.currentAPI,
+          cmpId: this.cmpApiContext.cmpId,
+          cmpVersion: this.cmpApiContext.cmpVersion,
+        },
+      });
     });
   }
 
   public clear(): void {
-    this.queueNumber = 0;
+    this.queueNumber = 1000;
     this.eventQueue.clear();
   }
 
