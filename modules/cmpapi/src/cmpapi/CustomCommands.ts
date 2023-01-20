@@ -1,5 +1,5 @@
 import { CommandCallback } from "./command/CommandCallback.js";
 
 export interface CustomCommands {
-  [commandName: string]: (callback: CommandCallback, param?: any) => void;
+  [commandName: string]: (callback: CommandCallback, parameter?: any) => void;
 }

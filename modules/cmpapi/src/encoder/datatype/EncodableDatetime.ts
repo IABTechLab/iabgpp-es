@@ -2,8 +2,9 @@ import { DatetimeEncoder } from "./encoder/DatetimeEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
 
 export class EncodableDatetime extends AbstractEncodableBitStringDataType<Date> {
-  constructor(value?: Date) {
-    super(value);
+  constructor(value: Date) {
+    super();
+    this.setValue(value);
   }
 
   public encode(): string {

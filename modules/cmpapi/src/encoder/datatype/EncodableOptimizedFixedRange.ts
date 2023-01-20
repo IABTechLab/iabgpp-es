@@ -5,8 +5,9 @@ import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitString
 import { EncodableFixedIntegerRange } from "./EncodableFixedIntegerRange.js";
 
 export class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<number[]> {
-  constructor(value?: number[]) {
-    super(value);
+  constructor(value: number[]) {
+    super();
+    this.setValue(value);
   }
 
   public encode(): string {
@@ -52,9 +53,22 @@ export class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
   public substring(bitString: string, fromIndex: number): string {
     let max = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 16));
     if (bitString.charAt(fromIndex + 16) === "1") {
-      return bitString.substring(fromIndex, 17) + new EncodableFixedIntegerRange().substring(bitString, fromIndex + 17);
+      return (
+        bitString.substring(fromIndex, fromIndex + 17) +
+        new EncodableFixedIntegerRange([]).substring(bitString, fromIndex + 17)
+      );
     } else {
       return bitString.substring(fromIndex, fromIndex + 17 + max);
     }
+  }
+
+  // Overriden
+  public getValue(): number[] {
+    return [...super.getValue()];
+  }
+
+  // Overriden
+  public setValue(value: number[]) {
+    super.setValue([...new Set(value)].sort((n1, n2) => n1 - n2));
   }
 }

@@ -8,9 +8,17 @@ Encode/decode consent information with the IAB GPP Framework
 
 ```javascript
 constructor(cmpId: number, cmpVersion: number, customCommands?: CustomCommands)
-fireUpdate(currentAPI?: string, uiVisible = false): void
-getApplicableSection(): number[]
-setApplicableSection(applicableSection: number[]): void
+fireEvent(eventName: string, value: any)
+fireErrorEvent(value: string)
+fireSectionChange(value: string)
+getEventStatus()
+setEventStatus(eventStatus: EventStatus)
+getCmpStatus()
+setCmpStatus(cmpStatus: CmpStatus)
+getCmpDisplayStatus(): DisplayStatus
+setCmpDisplayStatus(cmpDisplayStatus: DisplayStatus)
+getApplicableSections(): number[]
+setApplicableSections(applicableSections: number[]): void
 getCurrentAPI(): string
 setCurrentAPI(currentAPI: string): void
 setGppString(encodedGppString: string): void
@@ -38,13 +46,13 @@ async getGvlFromUrl(gvlUrlConfig: GvlUrlConfig): Promise<Gvl>
 ## Commands available to consumers
 
 ```javascript
-__gpp("addEventListener", callback?, param?)
-__gpp("getField", callback?, param?)
-__gpp("getGPPData", callback?, param?)
-__gpp("getSection", callback?, param?)
-__gpp("hasSection", callback?, param?)
-__gpp("ping", callback?, param?)
-__gpp("removeEventListener", callback?, param?)
+__gpp("addEventListener", callback?, parameter?)
+__gpp("getField", callback?, parameter?)
+__gpp("getGPPData", callback?, parameter?)
+__gpp("getSection", callback?, parameter?)
+__gpp("hasSection", callback?, parameter?)
+__gpp("ping", callback?, parameter?)
+__gpp("removeEventListener", callback?, parameter?)
 ```
 
 ## CMP usage Example

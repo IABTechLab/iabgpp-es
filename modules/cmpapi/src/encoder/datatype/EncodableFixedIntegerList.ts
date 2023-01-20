@@ -5,10 +5,11 @@ export class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
   private elementBitStringLength: number;
   private numElements: number;
 
-  constructor(elementBitStringLength: number, numElements: number, value?: number[]) {
-    super(value);
+  constructor(elementBitStringLength: number, value: number[]) {
+    super();
     this.elementBitStringLength = elementBitStringLength;
-    this.numElements = numElements;
+    this.numElements = value.length;
+    this.setValue(value);
   }
 
   public encode(): string {
@@ -22,5 +23,22 @@ export class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
   public substring(bitString: string, fromIndex: number): string {
     //TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.elementBitStringLength * this.numElements);
+  }
+
+  // Overriden
+  public getValue(): number[] {
+    return [...super.getValue()];
+  }
+
+  // Overriden
+  public setValue(value: number[]) {
+    let v = [...value];
+    for (let i = v.length; i < this.numElements; i++) {
+      v.push(0);
+    }
+    if (v.length > this.numElements) {
+      v = v.slice(0, this.numElements);
+    }
+    super.setValue(v);
   }
 }

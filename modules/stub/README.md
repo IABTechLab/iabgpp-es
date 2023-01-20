@@ -1,6 +1,6 @@
 # @iabgpp/stub
 
-Cmp API Stub code. Maybe included in commonjs loader or dropped directly on the page.
+Cmp API Stub code. May be included in commonjs loader or dropped directly on the page.
 
 #### Installation
 

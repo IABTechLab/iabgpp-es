@@ -27,7 +27,7 @@ export class UspUtV1 extends AbstractEncodableBitStringSection {
     fields.set(UspUtV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
     fields.set(
       UspUtV1Field.SENSITIVE_DATA_PROCESSING.toString(),
-      new EncodableFixedIntegerList(2, 8, [0, 0, 0, 0, 0, 0, 0, 0])
+      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0])
     );
     fields.set(UspUtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(), new EncodableFixedInteger(2, 0));
     fields.set(UspUtV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 0));
