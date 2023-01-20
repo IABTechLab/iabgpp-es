@@ -1,4 +1,5 @@
 import { Gvl } from "../../Gvl.js";
+import { InvalidFieldError } from "../error/InvalidFieldError.js";
 import { UspV1Field } from "../field/UspV1Field.js";
 import { EncodableSection } from "./EncodableSection.js";
 
@@ -41,7 +42,7 @@ export class UspV1 implements EncodableSection {
     if (this.fields.has(fieldName)) {
       this.fields.set(fieldName, value);
     } else {
-      throw new Error(fieldName + " not found");
+      throw new InvalidFieldError(fieldName + " not found");
     }
   }
 

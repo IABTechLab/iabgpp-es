@@ -10,6 +10,7 @@ import { UspVaV1 } from "./section/UspVaV1.js";
 import { UspCoV1 } from "./section/UspCoV1.js";
 import { UspUtV1 } from "./section/UspUtV1.js";
 import { UspCtV1 } from "./section/UspCtV1.js";
+import { InvalidFieldError } from "./error/InvalidFieldError.js";
 
 export class GppModel {
   private sections = new Map<string, EncodableSection>();
@@ -58,7 +59,7 @@ export class GppModel {
     if (section) {
       section.setFieldValue(fieldName, value);
     } else {
-      throw new Error(sectionName + " not found");
+      throw new InvalidFieldError(sectionName + "." + fieldName + " not found");
     }
   }
 
