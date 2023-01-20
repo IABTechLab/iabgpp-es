@@ -27,11 +27,11 @@ export class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(UspCtV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
     fields.set(
       UspCtV1Field.SENSITIVE_DATA_PROCESSING.toString(),
-      new EncodableFixedIntegerList(2, 8, [0, 0, 0, 0, 0, 0, 0, 0])
+      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0])
     );
     fields.set(
       UspCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
-      new EncodableFixedIntegerList(2, 3, [0, 0, 0])
+      new EncodableFixedIntegerList(2, [0, 0, 0])
     );
     fields.set(UspCtV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 0));
     fields.set(UspCtV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(), new EncodableFixedInteger(2, 0));

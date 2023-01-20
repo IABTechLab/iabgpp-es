@@ -2,8 +2,9 @@ import { FibonacciIntegerEncoder } from "./encoder/FibonacciIntegerEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
 
 export class EncodableFibonacciInteger extends AbstractEncodableBitStringDataType<number> {
-  constructor(value?: number) {
-    super(value);
+  constructor(value: number) {
+    super();
+    this.setValue(value);
   }
 
   public encode(): string {

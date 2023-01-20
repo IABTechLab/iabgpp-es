@@ -3,8 +3,9 @@ import { FixedIntegerRangeEncoder } from "./encoder/FixedIntegerRangeEncoder.js"
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
 
 export class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataType<number[]> {
-  constructor(value?: number[]) {
-    super(value);
+  constructor(value: number[]) {
+    super();
+    this.setValue(value);
   }
 
   public encode(): string {
@@ -27,5 +28,15 @@ export class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
       }
     }
     return bitString.substring(fromIndex, index);
+  }
+
+  // Overriden
+  public getValue(): number[] {
+    return [...super.getValue()];
+  }
+
+  // Overriden
+  public setValue(value: number[]) {
+    super.setValue([...new Set(value)].sort((n1, n2) => n1 - n2));
   }
 }

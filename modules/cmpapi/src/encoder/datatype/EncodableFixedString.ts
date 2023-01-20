@@ -4,9 +4,10 @@ import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitString
 export class EncodableFixedString extends AbstractEncodableBitStringDataType<string> {
   private stringLength: number;
 
-  constructor(stringLength: number, value?: string) {
-    super(value);
+  constructor(stringLength: number, value: string) {
+    super();
     this.stringLength = stringLength;
+    this.setValue(value);
   }
 
   public encode(): string {

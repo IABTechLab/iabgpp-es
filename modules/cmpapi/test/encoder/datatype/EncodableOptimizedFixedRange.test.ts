@@ -4,7 +4,7 @@ import { EncodableOptimizedFixedRange } from "../../../src/encoder/datatype/Enco
 
 describe("datatype.EncodableFixedString", (): void => {
   it("should encode [12, 24, 48] to '00000000001100000000000000001000000000001000000000000000000000001'", (): void => {
-    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange();
+    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange([]);
     encodableOptimizedFixedRange.setValue([12, 24, 48]);
     expect(encodableOptimizedFixedRange.encode()).to.eql(
       "00000000001100000000000000001000000000001000000000000000000000001"
@@ -12,50 +12,50 @@ describe("datatype.EncodableFixedString", (): void => {
   });
 
   it("should encode [18, 30] to '00000000000111100000000000000000001000000000001'", (): void => {
-    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange();
+    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange([]);
     encodableOptimizedFixedRange.setValue([18, 30]);
     expect(encodableOptimizedFixedRange.encode()).to.eql("00000000000111100000000000000000001000000000001");
   });
 
   it("should encode [28] to '000000000001110000000000000000000000000000001'", (): void => {
-    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange();
+    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange([]);
     encodableOptimizedFixedRange.setValue([28]);
     expect(encodableOptimizedFixedRange.encode()).to.eql("000000000001110000000000000000000000000000001");
   });
 
   it("should encode [29] to '0000000000011101100000000000100000000000011101'", (): void => {
-    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange();
+    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange([]);
     encodableOptimizedFixedRange.setValue([29]);
     expect(encodableOptimizedFixedRange.encode()).to.eql("0000000000011101100000000000100000000000011101");
   });
 
   it("should decode '00000000001100000000000000001000000000001000000000000000000000001' to [12, 24, 48]", (): void => {
-    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange();
+    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange([]);
     encodableOptimizedFixedRange.decode("00000000001100000000000000001000000000001000000000000000000000001");
     expect(encodableOptimizedFixedRange.getValue()).to.eql([12, 24, 48]);
   });
 
   it("should decode '00000000000111100000000000000000001000000000001' to [18, 30]", (): void => {
-    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange();
+    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange([]);
     encodableOptimizedFixedRange.decode("00000000000111100000000000000000001000000000001");
     expect(encodableOptimizedFixedRange.getValue()).to.eql([18, 30]);
   });
 
   it("should decode '000000000001110000000000000000000000000000001' to [28]", (): void => {
-    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange();
+    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange([]);
     encodableOptimizedFixedRange.decode("000000000001110000000000000000000000000000001");
     expect(encodableOptimizedFixedRange.getValue()).to.eql([28]);
   });
 
   it("should decode '0000000000011101100000000000100000000000011101' to [29]", (): void => {
-    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange();
+    let encodableOptimizedFixedRange = new EncodableOptimizedFixedRange([]);
     encodableOptimizedFixedRange.decode("0000000000011101100000000000100000000000011101");
     expect(encodableOptimizedFixedRange.getValue()).to.eql([29]);
   });
 
   it("should substring '000010001111010010000110111111111100000000001111010010000110111111111100000000000000000000000000000000000000000100001101000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001110000000000000000000000000000001000000000000000000000000000000' from index 213 to '000000000001110000000000000000000000000000001'", (): void => {
     expect(
-      new EncodableOptimizedFixedRange().substring(
+      new EncodableOptimizedFixedRange([]).substring(
         "000010001111010010000110111111111100000000001111010010000110111111111100000000000000000000000000000000000000000100001101000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001110000000000000000000000000000001000000000000000000000000000000",
         213
       )
@@ -64,7 +64,7 @@ describe("datatype.EncodableFixedString", (): void => {
 
   it("should substring '000010001111010010000110111111111100000000001111010010000110111111111100000000000000000000000000000000000000000100001101000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001110110000000000010000000000001110100000000000000000000000000000' from index 213 to '000000000001110000000000000000000000000000001'", (): void => {
     expect(
-      new EncodableOptimizedFixedRange().substring(
+      new EncodableOptimizedFixedRange([]).substring(
         "000010001111010010000110111111111100000000001111010010000110111111111100000000000000000000000000000000000000000100001101000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001110110000000000010000000000001110100000000000000000000000000000",
         213
       )

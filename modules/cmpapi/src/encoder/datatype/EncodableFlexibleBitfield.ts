@@ -5,8 +5,9 @@ export class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
   private getLength: Function;
 
   constructor(getLength: () => number, value?: boolean[]) {
-    super(value);
+    super();
     this.getLength = getLength;
+    this.setValue(value);
   }
 
   public encode(): string {
@@ -20,5 +21,23 @@ export class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
   public substring(bitString: string, fromIndex: number): string {
     //TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.getLength());
+  }
+
+  // Overriden
+  public getValue(): boolean[] {
+    return [...super.getValue()];
+  }
+
+  // Overriden
+  public setValue(value: boolean[]) {
+    let numElements = this.getLength();
+    let v = [...value];
+    for (let i = v.length; i < numElements; i++) {
+      v.push(false);
+    }
+    if (v.length > numElements) {
+      v = v.slice(0, numElements);
+    }
+    super.setValue([...v]);
   }
 }

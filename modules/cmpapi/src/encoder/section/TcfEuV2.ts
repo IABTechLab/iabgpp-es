@@ -23,10 +23,12 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   constructor(encodedString?: string) {
     let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
 
+    let date = new Date();
+
     // core section
     fields.set(TcfEuV2Field.VERSION.toString(), new EncodableFixedInteger(6, TcfEuV2.VERSION));
-    fields.set(TcfEuV2Field.CREATED.toString(), new EncodableDatetime());
-    fields.set(TcfEuV2Field.LAST_UPDATED.toString(), new EncodableDatetime());
+    fields.set(TcfEuV2Field.CREATED.toString(), new EncodableDatetime(date));
+    fields.set(TcfEuV2Field.LAST_UPDATED.toString(), new EncodableDatetime(date));
     fields.set(TcfEuV2Field.CMP_ID.toString(), new EncodableFixedInteger(12, 0));
     fields.set(TcfEuV2Field.CMP_VERSION.toString(), new EncodableFixedInteger(12, 0));
     fields.set(TcfEuV2Field.CONSENT_SCREEN.toString(), new EncodableFixedInteger(6, 0));
@@ -35,9 +37,68 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(TcfEuV2Field.POLICY_VERSION.toString(), new EncodableFixedInteger(6, 2));
     fields.set(TcfEuV2Field.IS_SERVICE_SPECIFIC.toString(), new EncodableBoolean(false));
     fields.set(TcfEuV2Field.USE_NON_STANDARD_STACKS.toString(), new EncodableBoolean(false));
-    fields.set(TcfEuV2Field.SPECIAL_FEATURE_OPTINS.toString(), new EncodableFixedBitfield(12, []));
-    fields.set(TcfEuV2Field.PURPOSE_CONSENTS.toString(), new EncodableFixedBitfield(24, []));
-    fields.set(TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS.toString(), new EncodableFixedBitfield(24, []));
+    fields.set(
+      TcfEuV2Field.SPECIAL_FEATURE_OPTINS.toString(),
+      new EncodableFixedBitfield([false, false, false, false, false, false, false, false, false, false, false, false])
+    );
+    fields.set(
+      TcfEuV2Field.PURPOSE_CONSENTS.toString(),
+      new EncodableFixedBitfield([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ])
+    );
+    fields.set(
+      TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS.toString(),
+      new EncodableFixedBitfield([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ])
+    );
     fields.set(TcfEuV2Field.PURPOSE_ONE_TREATMENT.toString(), new EncodableBoolean(false));
     fields.set(TcfEuV2Field.PUBLISHER_COUNTRY_CODE.toString(), new EncodableFixedString(2, "AA"));
     fields.set(TcfEuV2Field.VENDOR_CONSENTS.toString(), new EncodableOptimizedFixedRange([]));
@@ -47,8 +108,64 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
 
     // publisher purposes segment
     fields.set(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 3));
-    fields.set(TcfEuV2Field.PUBLISHER_CONSENTS.toString(), new EncodableFixedBitfield(24, []));
-    fields.set(TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS.toString(), new EncodableFixedBitfield(24, []));
+    fields.set(
+      TcfEuV2Field.PUBLISHER_CONSENTS.toString(),
+      new EncodableFixedBitfield([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ])
+    );
+    fields.set(
+      TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS.toString(),
+      new EncodableFixedBitfield([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ])
+    );
 
     let numCustomPurposes = new EncodableFixedInteger(6, 0);
     fields.set(TcfEuV2Field.NUM_CUSTOM_PURPOSES.toString(), numCustomPurposes);

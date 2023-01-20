@@ -1,10 +1,13 @@
 import { expect } from "chai";
 import { TcfEuV2 } from "../../../src/encoder/section/TcfEuV2";
+import { TcfEuV2Field } from "../../../src/encoder/field/TcfEuV2Field";
 
 describe("manifest.section.TcfEuV2", (): void => {
   it("encode defaults", (): void => {
     let tcfEuV2 = new TcfEuV2();
-    expect(tcfEuV2.encode()).to.eql("CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
+    tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, new Date("2022-01-01T00:00:00Z"));
+    tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
+    expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
   });
 
   it("encode with service specific", (): void => {
@@ -100,8 +103,58 @@ describe("manifest.section.TcfEuV2", (): void => {
     expect(tcfEuV2.getFieldValue("VendorLegitimateInterests")).to.eql([]);
     expect(tcfEuV2.getFieldValue("PublisherRestrictions")).to.eql([]);
     expect(tcfEuV2.getFieldValue("PublisherPurposesSegmentType")).to.eql(3);
-    expect(tcfEuV2.getFieldValue("PublisherConsents")).to.eql([]);
-    expect(tcfEuV2.getFieldValue("PublisherLegitimateInterests")).to.eql([]);
+    expect(tcfEuV2.getFieldValue("PublisherConsents")).to.eql([
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+    expect(tcfEuV2.getFieldValue("PublisherLegitimateInterests")).to.eql([
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
     expect(tcfEuV2.getFieldValue("NumCustomPurposes")).to.eql(0);
     expect(tcfEuV2.getFieldValue("PublisherCustomConsents")).to.eql([]);
     expect(tcfEuV2.getFieldValue("PublisherCustomLegitimateInterests")).to.eql([]);

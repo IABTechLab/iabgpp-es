@@ -22,10 +22,12 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   constructor(encodedString?: string) {
     let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
 
+    let date = new Date();
+
     // core section
     fields.set(TcfCaV1Field.VERSION.toString(), new EncodableFixedInteger(6, TcfCaV1.VERSION));
-    fields.set(TcfCaV1Field.CREATED.toString(), new EncodableDatetime());
-    fields.set(TcfCaV1Field.LAST_UPDATED.toString(), new EncodableDatetime());
+    fields.set(TcfCaV1Field.CREATED.toString(), new EncodableDatetime(date));
+    fields.set(TcfCaV1Field.LAST_UPDATED.toString(), new EncodableDatetime(date));
     fields.set(TcfCaV1Field.CMP_ID.toString(), new EncodableFixedInteger(12, 0));
     fields.set(TcfCaV1Field.CMP_VERSION.toString(), new EncodableFixedInteger(12, 0));
     fields.set(TcfCaV1Field.CONSENT_SCREEN.toString(), new EncodableFixedInteger(6, 0));
@@ -33,16 +35,131 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(TcfCaV1Field.VENDOR_LIST_VERSION.toString(), new EncodableFixedInteger(12, 0));
     fields.set(TcfCaV1Field.TCF_POLICY_VERSION.toString(), new EncodableFixedInteger(6, 2));
     fields.set(TcfCaV1Field.USE_NON_STANDARD_STACKS.toString(), new EncodableBoolean(false));
-    fields.set(TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT.toString(), new EncodableFixedBitfield(12, []));
-    fields.set(TcfCaV1Field.PURPOSES_EXPRESS_CONSENT.toString(), new EncodableFixedBitfield(24, []));
-    fields.set(TcfCaV1Field.PURPOSES_IMPLIED_CONSENT.toString(), new EncodableFixedBitfield(24, []));
+    fields.set(
+      TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT.toString(),
+      new EncodableFixedBitfield([false, false, false, false, false, false, false, false, false, false, false, false])
+    );
+    fields.set(
+      TcfCaV1Field.PURPOSES_EXPRESS_CONSENT.toString(),
+      new EncodableFixedBitfield([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ])
+    );
+    fields.set(
+      TcfCaV1Field.PURPOSES_IMPLIED_CONSENT.toString(),
+      new EncodableFixedBitfield([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ])
+    );
     fields.set(TcfCaV1Field.VENDOR_EXPRESS_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
     fields.set(TcfCaV1Field.VENDOR_IMPLIED_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
 
     // publisher purposes segment
     fields.set(TcfCaV1Field.SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 3));
-    fields.set(TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT.toString(), new EncodableFixedBitfield(24, []));
-    fields.set(TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT.toString(), new EncodableFixedBitfield(24, []));
+    fields.set(
+      TcfCaV1Field.PUB_PURPOSES_EXPRESS_CONSENT.toString(),
+      new EncodableFixedBitfield([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ])
+    );
+    fields.set(
+      TcfCaV1Field.PUB_PURPOSES_IMPLIED_CONSENT.toString(),
+      new EncodableFixedBitfield([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ])
+    );
 
     let numCustomPurposes = new EncodableFixedInteger(6, 0);
     fields.set(TcfCaV1Field.NUM_CUSTOM_PURPOSES.toString(), numCustomPurposes);

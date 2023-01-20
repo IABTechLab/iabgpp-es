@@ -1,10 +1,6 @@
 export abstract class AbstractEncodableBitStringDataType<T> {
   protected value: T;
 
-  constructor(value?: T) {
-    this.value = value;
-  }
-
   public hasValue(): boolean {
     return this.value !== undefined && this.value !== null;
   }

@@ -2,15 +2,16 @@ import { FixedBitfieldEncoder } from "./encoder/FixedBitfieldEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
 
 export class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<boolean[]> {
-  private bitStringLength: number;
+  private numElements: number;
 
-  constructor(bitStringLength: number, value?: boolean[]) {
-    super(value);
-    this.bitStringLength = bitStringLength;
+  constructor(value: boolean[]) {
+    super();
+    this.numElements = value.length;
+    this.setValue(value);
   }
 
   public encode(): string {
-    return FixedBitfieldEncoder.encode(this.value, this.bitStringLength);
+    return FixedBitfieldEncoder.encode(this.value, this.numElements);
   }
 
   public decode(bitString: string) {
@@ -19,6 +20,23 @@ export class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<b
 
   public substring(bitString: string, fromIndex: number): string {
     //TODO: validate
-    return bitString.substring(fromIndex, fromIndex + this.bitStringLength);
+    return bitString.substring(fromIndex, fromIndex + this.numElements);
+  }
+
+  // Overriden
+  public getValue(): boolean[] {
+    return [...super.getValue()];
+  }
+
+  // Overriden
+  public setValue(value: boolean[]) {
+    let v = [...value];
+    for (let i = v.length; i < this.numElements; i++) {
+      v.push(false);
+    }
+    if (v.length > this.numElements) {
+      v = v.slice(0, this.numElements);
+    }
+    super.setValue(v);
   }
 }

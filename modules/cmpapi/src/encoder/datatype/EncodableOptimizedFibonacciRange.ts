@@ -5,8 +5,9 @@ import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitString
 import { EncodableFibonacciIntegerRange } from "./EncodableFibonacciIntegerRange.js";
 
 export class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<number[]> {
-  constructor(value?: number[]) {
-    super(value);
+  constructor(value: number[]) {
+    super();
+    this.setValue(value);
   }
 
   public encode(): string {
@@ -54,10 +55,20 @@ export class EncodableOptimizedFibonacciRange extends AbstractEncodableBitString
     if (bitString.charAt(fromIndex + 16) === "1") {
       return (
         bitString.substring(fromIndex, fromIndex + 17) +
-        new EncodableFibonacciIntegerRange().substring(bitString, fromIndex + 17)
+        new EncodableFibonacciIntegerRange([]).substring(bitString, fromIndex + 17)
       );
     } else {
       return bitString.substring(fromIndex, fromIndex + 17 + max);
     }
+  }
+
+  // Overriden
+  public getValue(): number[] {
+    return [...super.getValue()];
+  }
+
+  // Overriden
+  public setValue(value: number[]) {
+    super.setValue([...new Set(value)].sort((n1, n2) => n1 - n2));
   }
 }

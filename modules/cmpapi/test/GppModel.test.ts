@@ -651,4 +651,54 @@ describe("manifest.GppModel", (): void => {
 
     expect(gppModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([1, 173, 722]);
   });
+
+  it("should decode and encode consistently", (): void => {
+    let fromObjectModel = new GppModel();
+    fromObjectModel.setFieldValue("tcfeuv2", "PurposeConsents", [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ]);
+    fromObjectModel.setFieldValue("tcfeuv2", "VendorConsents", [32, 128, 81, 210, 755, 21, 173, 238]);
+
+    expect(fromObjectModel.encode()).to.eql(fromObjectModel.encode());
+
+    let decodedModel = new GppModel(fromObjectModel.encode());
+
+    expect(decodedModel.getFieldValue("tcfeuv2", "PurposeConsents")).to.eql([
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+
+    expect(decodedModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([21, 32, 81, 128, 173, 210, 238, 755]);
+  });
 });

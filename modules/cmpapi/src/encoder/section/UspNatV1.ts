@@ -31,12 +31,9 @@ export class UspNatV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(UspNatV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
     fields.set(
       UspNatV1Field.SENSITIVE_DATA_PROCESSING.toString(),
-      new EncodableFixedIntegerList(2, 12, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     );
-    fields.set(
-      UspNatV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
-      new EncodableFixedIntegerList(2, 2, [0, 0])
-    );
+    fields.set(UspNatV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(), new EncodableFixedIntegerList(2, [0, 0]));
     fields.set(UspNatV1Field.PERSONAL_DATA_CONSENTS.toString(), new EncodableFixedInteger(2, 0));
     fields.set(UspNatV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 0));
     fields.set(UspNatV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(), new EncodableFixedInteger(2, 0));
