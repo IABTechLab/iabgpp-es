@@ -112,6 +112,7 @@ export class UspCtV1 extends AbstractEncodableSegmentedBitStringSection {
       }
     }
     this.decodeSegmentsFromBitStrings(segmentBitStrings);
+    this.fields.get(UspCtV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
   }
 
   //Overriden
