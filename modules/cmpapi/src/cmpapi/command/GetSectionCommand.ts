@@ -7,8 +7,10 @@ export class GetSectionCommand extends Command {
     }
 
     let section = null;
-    if (this.cmpApiContext.gppModel.hasSection(this.parameter)) {
-      section = this.cmpApiContext.gppModel.getSection(this.parameter);
+    if (this.parameter != "tcfeuv2") {
+      if (this.cmpApiContext.gppModel.hasSection(this.parameter)) {
+        section = this.cmpApiContext.gppModel.getSection(this.parameter);
+      }
     }
     this.invokeCallback(section);
     return section;

@@ -59,7 +59,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAAAAAENAABAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
     );
   });
 
@@ -338,7 +338,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN"
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~CPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN"
     );
 
     expect(gppString.split("~").length).to.eql(4);
@@ -656,29 +656,39 @@ describe("manifest.GppModel", (): void => {
     let fromObjectModel = new GppModel();
     fromObjectModel.setFieldValue("tcfeuv2", "PurposeConsents", [
       true,
+      false,
       true,
       true,
-      true,
-      true,
-      true,
+      false,
+      false,
       true,
       true,
       true,
       true,
     ]);
+    fromObjectModel.setFieldValue("tcfeuv2", "PurposeLegitimateInterests", [
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+    ]);
     fromObjectModel.setFieldValue("tcfeuv2", "VendorConsents", [32, 128, 81, 210, 755, 21, 173, 238]);
-
-    expect(fromObjectModel.encode()).to.eql(fromObjectModel.encode());
 
     let decodedModel = new GppModel(fromObjectModel.encode());
 
     expect(decodedModel.getFieldValue("tcfeuv2", "PurposeConsents")).to.eql([
       true,
+      false,
       true,
       true,
-      true,
-      true,
-      true,
+      false,
+      false,
       true,
       true,
       true,
@@ -698,7 +708,32 @@ describe("manifest.GppModel", (): void => {
       false,
       false,
     ]);
-
+    expect(decodedModel.getFieldValue("tcfeuv2", "PurposeLegitimateInterests")).to.eql([
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ])
     expect(decodedModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([21, 32, 81, 128, 173, 210, 238, 755]);
   });
 });

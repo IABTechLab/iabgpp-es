@@ -15,7 +15,83 @@ describe("manifest.section.TcfEuV2", (): void => {
     tcfEuV2.setFieldValue("IsServiceSpecific", true);
     tcfEuV2.setFieldValue("Created", new Date("2022-01-01T00:00:00Z"));
     tcfEuV2.setFieldValue("LastUpdated", new Date("2022-01-01T00:00:00Z"));
+    tcfEuV2.setFieldValue("PurposeLegitimateInterests", [true, false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false]);
     expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
+  });
+
+  it("purpose legitimate interest excpetion handling", (): void => {
+    let tcfEuV2 = new TcfEuV2();
+    tcfEuV2.setFieldValue("IsServiceSpecific", true);
+    tcfEuV2.setFieldValue("Created", new Date("2022-01-01T00:00:00Z"));
+    tcfEuV2.setFieldValue("LastUpdated", new Date("2022-01-01T00:00:00Z"));
+    tcfEuV2.setFieldValue("PurposeLegitimateInterests", [true, false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false]);
+    expect(tcfEuV2.getFieldValue("PurposeLegitimateInterests")).to.eql([false, false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false]);
   });
 
   it("decode defaults", (): void => {

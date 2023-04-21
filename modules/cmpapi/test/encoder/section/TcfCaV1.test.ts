@@ -7,7 +7,7 @@ describe("manifest.section.TcfCaV1", (): void => {
     let tcfCaV2 = new TcfCaV1();
     tcfCaV2.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV2.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfCaV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    expect(tcfCaV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAABAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
   });
 
   it("should encode to CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao", (): void => {
@@ -144,7 +144,7 @@ describe("manifest.section.TcfCaV1", (): void => {
     tcfCaV2.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV2.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
 
-    expect(tcfCaV2.encode()).to.eql("CPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
+    expect(tcfCaV2.encode()).to.eql("CPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
   });
 
   it("should decode CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
