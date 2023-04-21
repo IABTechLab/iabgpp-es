@@ -244,6 +244,7 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   public encode(): string {
     let segmentBitStrings = this.encodeSegmentsToBitStrings();
     let encodedSegments = [];
+    this.updateDateStamp();
     encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[0]));
     if (this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC.toString())) {
       if (segmentBitStrings[1] && segmentBitStrings[1].length > 0) {
@@ -303,14 +304,24 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
 
   //Overriden
   public setFieldValue(fieldName: string, value: any): void {
-    super.setFieldValue(fieldName, value);
-    if (fieldName !== TcfEuV2Field.CREATED.toString() && fieldName !== TcfEuV2Field.LAST_UPDATED.toString()) {
-      const date = new Date();
-      const utcDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-
-      this.setFieldValue(TcfEuV2Field.CREATED.toString(), utcDate);
-      this.setFieldValue(TcfEuV2Field.LAST_UPDATED.toString(), utcDate);
+    //
+    // special handling for exceptions
+    //
+    // purpose 1, 3 - 6 legitimate interest is always false
+    if (fieldName == TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS.toString()) {
+      value[0] = false;
+      value[2] = value[3] = value[4] = value[5] = false;
     }
+    // create and last update will need to stay in sync
+    if (fieldName == TcfEuV2Field.CREATED.toString() || fieldName  == TcfEuV2Field.LAST_UPDATED.toString()) {
+      if (fieldName == TcfEuV2Field.CREATED.toString()) {
+        super.setFieldValue(TcfEuV2Field.LAST_UPDATED.toString(), value);
+      } else {
+        super.setFieldValue(TcfEuV2Field.CREATED.toString(), value);
+      }
+    }
+    // upddate the actual given fields
+    super.setFieldValue(fieldName, value);
   }
 
   //Overriden
@@ -321,5 +332,14 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   //Overriden
   public getName(): string {
     return TcfEuV2.NAME;
+  }
+
+  // update last_update and create time stamps when a change occurs
+  private updateDateStamp(): void {
+      const date = new Date();
+      const utcDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+      console.log("Debug: updateDateStamp");
+-     super.setFieldValue(TcfEuV2Field.CREATED.toString(), utcDate);
+-     super.setFieldValue(TcfEuV2Field.LAST_UPDATED.toString(), utcDate);
   }
 }
