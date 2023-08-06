@@ -15,12 +15,12 @@ getEventStatus()
 setEventStatus(eventStatus: EventStatus)
 getCmpStatus()
 setCmpStatus(cmpStatus: CmpStatus)
-getCmpDisplayStatus(): DisplayStatus
-setCmpDisplayStatus(cmpDisplayStatus: DisplayStatus)
+getCmpDisplayStatus(): CmpDisplayStatus
+setCmpDisplayStatus(cmpDisplayStatus: CmpDisplayStatus)
 getApplicableSections(): number[]
 setApplicableSections(applicableSections: number[]): void
-getCurrentAPI(): string
-setCurrentAPI(currentAPI: string): void
+getSignalStatus(): SignalStatus
+setSignalStatus(signalStatus: SignalStatus): void
 setGppString(encodedGppString: string): void
 getGppString(): string
 setSectionString(sectionName: string, encodedSectionString: string): void
@@ -48,7 +48,6 @@ async getGvlFromUrl(gvlUrlConfig: GvlUrlConfig): Promise<Gvl>
 ```javascript
 __gpp("addEventListener", callback?, parameter?)
 __gpp("getField", callback?, parameter?)
-__gpp("getGPPData", callback?, parameter?)
 __gpp("getSection", callback?, parameter?)
 __gpp("hasSection", callback?, parameter?)
 __gpp("ping", callback?, parameter?)

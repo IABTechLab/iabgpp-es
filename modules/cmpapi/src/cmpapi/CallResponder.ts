@@ -55,7 +55,7 @@ export class CallResponder {
    * @param {any} param
    * @param {number} version
    */
-  public apiCall(command: string, callback?: CommandCallback, parameter?: any, version?: number): any {
+  public apiCall(command: string, callback?: CommandCallback, parameter?: any, version?: number): void {
     if (typeof command !== "string") {
       return callback(null, false);
     } else if (callback && typeof callback !== "function") {

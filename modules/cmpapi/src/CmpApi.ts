@@ -1,12 +1,13 @@
 import { CmpApiContext } from "./cmpapi/CmpApiContext.js";
 import { CustomCommands } from "./cmpapi/CustomCommands.js";
 import { CmpStatus } from "./cmpapi/status/CmpStatus.js";
-import { DisplayStatus } from "./cmpapi/status/DisplayStatus.js";
+import { CmpDisplayStatus } from "./cmpapi/status/CmpDisplayStatus.js";
 import { EventStatus } from "./cmpapi/status/EventStatus.js";
 import { CallResponder } from "./cmpapi/CallResponder.js";
 import { Gvl, GvlUrlConfig } from "./Gvl.js";
 import { VendorList } from "./gvl/gvlmodel/VendorList.js";
 import { Sections } from "./encoder/section/Sections.js";
+import { SignalStatus } from "./cmpapi/status/SignalStatus.js";
 
 export class CmpApi {
   private callResponder: CallResponder;
@@ -54,13 +55,22 @@ export class CmpApi {
     this.cmpApiContext.eventQueue.exec("cmpStatus", cmpStatus);
   }
 
-  public getCmpDisplayStatus(): DisplayStatus {
+  public getCmpDisplayStatus(): CmpDisplayStatus {
     return this.cmpApiContext.cmpDisplayStatus;
   }
 
-  public setCmpDisplayStatus(cmpDisplayStatus: DisplayStatus) {
+  public setCmpDisplayStatus(cmpDisplayStatus: CmpDisplayStatus) {
     this.cmpApiContext.cmpDisplayStatus = cmpDisplayStatus;
     this.cmpApiContext.eventQueue.exec("cmpDisplayStatus", cmpDisplayStatus);
+  }
+
+  public getSignalStatus(): SignalStatus {
+    return this.cmpApiContext.signalStatus;
+  }
+
+  public setSignalStatus(signalStatus: SignalStatus) {
+    this.cmpApiContext.signalStatus = signalStatus;
+    this.cmpApiContext.eventQueue.exec("signalStatus", signalStatus);
   }
 
   public getApplicableSections(): number[] {
@@ -69,14 +79,6 @@ export class CmpApi {
 
   public setApplicableSections(applicableSections: number[]): void {
     this.cmpApiContext.applicableSections = applicableSections;
-  }
-
-  public getCurrentAPI(): string {
-    return this.cmpApiContext.currentAPI;
-  }
-
-  public setCurrentAPI(currentAPI: string): void {
-    this.cmpApiContext.currentAPI = currentAPI;
   }
 
   public setGppString(encodedGppString: string): void {

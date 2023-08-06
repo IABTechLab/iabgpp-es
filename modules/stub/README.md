@@ -47,5 +47,7 @@ Built stub will be output to ./lib
 ##### Getting queue of commands
 
 ```javascript
-console.log(__gpp("ping"));
+__gpp("ping", function (data, success) {
+  console.log("ping success: " + success + " data: " + JSON.stringify(data));
+});
 ```

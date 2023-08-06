@@ -1,7 +1,7 @@
 import { Command } from "./Command.js";
 
 export class GetSectionCommand extends Command {
-  protected respond(): any {
+  protected respond(): void {
     if (!this.parameter || this.parameter.length === 0) {
       throw new Error("<section> parameter required");
     }
@@ -11,6 +11,5 @@ export class GetSectionCommand extends Command {
       section = this.cmpApiContext.gppModel.getSection(this.parameter);
     }
     this.invokeCallback(section);
-    return section;
   }
 }

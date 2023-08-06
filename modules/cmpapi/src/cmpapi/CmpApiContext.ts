@@ -1,5 +1,5 @@
 import { CmpStatus } from "./status/CmpStatus.js";
-import { DisplayStatus } from "./status/DisplayStatus.js";
+import { CmpDisplayStatus } from "./status/CmpDisplayStatus.js";
 import { EventStatus } from "./status/EventStatus.js";
 import { EventListenerQueue } from "./EventListenerQueue.js";
 import { GppModel } from "../encoder/GppModel.js";
@@ -12,6 +12,7 @@ import { UspVaV1 } from "../encoder/section/UspVaV1.js";
 import { UspCoV1 } from "../encoder/section/UspCoV1.js";
 import { UspUtV1 } from "../encoder/section/UspUtV1.js";
 import { UspCtV1 } from "../encoder/section/UspCtV1.js";
+import { SignalStatus } from "./status/SignalStatus.js";
 
 /**
  * Class holds shareable data across cmp api and provides change event listener for GppModel.
@@ -19,39 +20,38 @@ import { UspCtV1 } from "../encoder/section/UspCtV1.js";
  * where CmpApi sets data and Commands read the data.
  */
 export class CmpApiContext {
-  public gppVersion = "1.0";
-  public apiSupport = [
-    TcfEuV2.NAME,
-    TcfCaV1.NAME,
-    UspV1.NAME,
-    UspNatV1.NAME,
-    UspCaV1.NAME,
-    UspVaV1.NAME,
-    UspCoV1.NAME,
-    UspUtV1.NAME,
-    UspCtV1.NAME,
+  public gppVersion = "1.1";
+  public supportedAPIs = [
+    TcfEuV2.ID + ":" + TcfEuV2.NAME,
+    TcfCaV1.ID + ":" + TcfCaV1.NAME,
+    UspV1.ID + ":" + UspV1.NAME,
+    UspNatV1.ID + ":" + UspNatV1.NAME,
+    UspCaV1.ID + ":" + UspCaV1.NAME,
+    UspVaV1.ID + ":" + UspVaV1.NAME,
+    UspCoV1.ID + ":" + UspCoV1.NAME,
+    UspUtV1.ID + ":" + UspUtV1.NAME,
+    UspCtV1.ID + ":" + UspCtV1.NAME,
   ];
 
   public readonly eventQueue = new EventListenerQueue(this);
   public cmpStatus: CmpStatus = CmpStatus.LOADING;
-  public cmpDisplayStatus: DisplayStatus = DisplayStatus.HIDDEN;
-  public applicableSections = [];
+  public cmpDisplayStatus: CmpDisplayStatus = CmpDisplayStatus.HIDDEN;
+  public signalStatus: SignalStatus = SignalStatus.NOT_READY;
+  public applicableSections: number[] = [];
   public gppModel: GppModel = new GppModel();
-
   public cmpId: number;
   public cmpVersion: number;
-  public currentAPI: string;
   public eventStatus: EventStatus;
 
   public reset(): void {
+    this.eventQueue.clear();
+    this.cmpStatus = CmpStatus.LOADING;
+    this.cmpDisplayStatus = CmpDisplayStatus.HIDDEN;
+    this.signalStatus = SignalStatus.NOT_READY;
+    this.applicableSections = [];
+    this.gppModel = new GppModel();
     delete this.cmpId;
     delete this.cmpVersion;
-    delete this.currentAPI;
     delete this.eventStatus;
-
-    this.gppModel = new GppModel();
-    this.cmpStatus = CmpStatus.LOADING;
-    this.cmpDisplayStatus = DisplayStatus.HIDDEN;
-    this.eventQueue.clear();
   }
 }

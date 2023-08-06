@@ -15,12 +15,12 @@ getEventStatus()
 setEventStatus(eventStatus: EventStatus)
 getCmpStatus()
 setCmpStatus(cmpStatus: CmpStatus)
-getCmpDisplayStatus(): DisplayStatus
-setCmpDisplayStatus(cmpDisplayStatus: DisplayStatus)
+getCmpDisplayStatus(): CmpDisplayStatus
+setCmpDisplayStatus(cmpDisplayStatus: CmpDisplayStatus)
 getApplicableSections(): number[]
 setApplicableSections(applicableSections: number[]): void
-getCurrentAPI(): string
-setCurrentAPI(currentAPI: string): void
+getSignalStatus(): SignalStatus
+setSignalStatus(signalStatus: SignalStatus): void
 setGppString(encodedGppString: string): void
 getGppString(): string
 setSectionString(sectionName: string, encodedSectionString: string): void

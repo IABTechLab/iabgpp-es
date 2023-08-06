@@ -1,7 +1,7 @@
 import { Command } from "./Command.js";
 
 export class GetFieldCommand extends Command {
-  protected respond(): any {
+  protected respond(): void {
     if (!this.parameter || this.parameter.length === 0) {
       throw new Error("<section>.<field> parameter required");
     }
@@ -15,6 +15,5 @@ export class GetFieldCommand extends Command {
 
     let fieldValue = this.cmpApiContext.gppModel.getFieldValue(sectionName, fieldName);
     this.invokeCallback(fieldValue);
-    return fieldValue;
   }
 }
