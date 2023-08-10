@@ -47,7 +47,8 @@ export class EventListenerQueue {
   public exec(eventName: string, data: any): void {
     this.eventQueue.forEach((eventItem: EventItem, listenerId: number): void => {
       let eventData = new EventData(eventName, listenerId, data, new PingData(this.cmpApiContext));
-      eventItem.callback(eventData);
+      let success = true;
+      eventItem.callback(eventData, success);
     });
   }
 
