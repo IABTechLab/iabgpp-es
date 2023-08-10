@@ -48,7 +48,6 @@ async getGvlFromUrl(gvlUrlConfig: GvlUrlConfig): Promise<Gvl>
 ```javascript
 __gpp("addEventListener", callback?, parameter?)
 __gpp("getField", callback?, parameter?)
-__gpp("getGPPData", callback?, parameter?)
 __gpp("getSection", callback?, parameter?)
 __gpp("hasSection", callback?, parameter?)
 __gpp("ping", callback?, parameter?)
