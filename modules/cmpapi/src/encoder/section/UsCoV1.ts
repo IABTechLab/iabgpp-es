@@ -4,14 +4,14 @@ import { EncodableBoolean } from "../datatype/EncodableBoolean.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableFixedIntegerList } from "../datatype/EncodableFixedIntegerList.js";
 import { DecodingError } from "../error/DecodingError.js";
-import { UspCoV1Field } from "../field/UspCoV1Field.js";
+import { UsCoV1Field } from "../field/UsCoV1Field.js";
 import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
 import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64UrlEncoder.js";
 
-export class UspCoV1 extends AbstractEncodableSegmentedBitStringSection {
+export class UsCoV1 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 10;
   public static readonly VERSION = 1;
-  public static readonly NAME = "uspcov1";
+  public static readonly NAME = "uscov1";
 
   private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
 
@@ -19,41 +19,41 @@ export class UspCoV1 extends AbstractEncodableSegmentedBitStringSection {
     let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
 
     // core section
-    fields.set(UspCoV1Field.VERSION.toString(), new EncodableFixedInteger(6, UspCoV1.VERSION));
-    fields.set(UspCoV1Field.SHARING_NOTICE.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UspCoV1Field.SALE_OPT_OUT_NOTICE.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UspCoV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UspCoV1Field.SALE_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UspCoV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
+    fields.set(UsCoV1Field.VERSION.toString(), new EncodableFixedInteger(6, UsCoV1.VERSION));
+    fields.set(UsCoV1Field.SHARING_NOTICE.toString(), new EncodableFixedInteger(2, 0));
+    fields.set(UsCoV1Field.SALE_OPT_OUT_NOTICE.toString(), new EncodableFixedInteger(2, 0));
+    fields.set(UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(), new EncodableFixedInteger(2, 0));
+    fields.set(UsCoV1Field.SALE_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
+    fields.set(UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
     fields.set(
-      UspCoV1Field.SENSITIVE_DATA_PROCESSING.toString(),
+      UsCoV1Field.SENSITIVE_DATA_PROCESSING.toString(),
       new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0])
     );
-    fields.set(UspCoV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UspCoV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UspCoV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UspCoV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(), new EncodableFixedInteger(2, 0));
+    fields.set(UsCoV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(), new EncodableFixedInteger(2, 0));
+    fields.set(UsCoV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 0));
+    fields.set(UsCoV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(), new EncodableFixedInteger(2, 0));
+    fields.set(UsCoV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(), new EncodableFixedInteger(2, 0));
 
     // gpc segment
-    fields.set(UspCoV1Field.GPC_SEGMENT_TYPE.toString(), new EncodableFixedInteger(2, 1));
-    fields.set(UspCoV1Field.GPC_SEGMENT_INCLUDED.toString(), new EncodableBoolean(true));
-    fields.set(UspCoV1Field.GPC.toString(), new EncodableBoolean(false));
+    fields.set(UsCoV1Field.GPC_SEGMENT_TYPE.toString(), new EncodableFixedInteger(2, 1));
+    fields.set(UsCoV1Field.GPC_SEGMENT_INCLUDED.toString(), new EncodableBoolean(true));
+    fields.set(UsCoV1Field.GPC.toString(), new EncodableBoolean(false));
 
     let coreSegment = [
-      UspCoV1Field.VERSION.toString(),
-      UspCoV1Field.SHARING_NOTICE.toString(),
-      UspCoV1Field.SALE_OPT_OUT_NOTICE.toString(),
-      UspCoV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(),
-      UspCoV1Field.SALE_OPT_OUT.toString(),
-      UspCoV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(),
-      UspCoV1Field.SENSITIVE_DATA_PROCESSING.toString(),
-      UspCoV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
-      UspCoV1Field.MSPA_COVERED_TRANSACTION.toString(),
-      UspCoV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(),
-      UspCoV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(),
+      UsCoV1Field.VERSION.toString(),
+      UsCoV1Field.SHARING_NOTICE.toString(),
+      UsCoV1Field.SALE_OPT_OUT_NOTICE.toString(),
+      UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(),
+      UsCoV1Field.SALE_OPT_OUT.toString(),
+      UsCoV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(),
+      UsCoV1Field.SENSITIVE_DATA_PROCESSING.toString(),
+      UsCoV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
+      UsCoV1Field.MSPA_COVERED_TRANSACTION.toString(),
+      UsCoV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(),
+      UsCoV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(),
     ];
 
-    let gpcSegment = [UspCoV1Field.GPC_SEGMENT_TYPE.toString(), UspCoV1Field.GPC.toString()];
+    let gpcSegment = [UsCoV1Field.GPC_SEGMENT_TYPE.toString(), UsCoV1Field.GPC.toString()];
 
     let segments = [coreSegment, gpcSegment];
 
@@ -70,7 +70,7 @@ export class UspCoV1 extends AbstractEncodableSegmentedBitStringSection {
     let encodedSegments = [];
     encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[0]));
     if (segmentBitStrings[1] && segmentBitStrings[1].length > 0) {
-      let gpcSegmentIncluded = this.fields.get(UspCoV1Field.GPC_SEGMENT_INCLUDED).getValue();
+      let gpcSegmentIncluded = this.fields.get(UsCoV1Field.GPC_SEGMENT_INCLUDED).getValue();
       if (gpcSegmentIncluded === true) {
         encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[1]));
       }
@@ -109,16 +109,16 @@ export class UspCoV1 extends AbstractEncodableSegmentedBitStringSection {
       }
     }
     this.decodeSegmentsFromBitStrings(segmentBitStrings);
-    this.fields.get(UspCoV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
+    this.fields.get(UsCoV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
   }
 
   //Overriden
   public getId(): number {
-    return UspCoV1.ID;
+    return UsCoV1.ID;
   }
 
   //Overriden
   public getName(): string {
-    return UspCoV1.NAME;
+    return UsCoV1.NAME;
   }
 }

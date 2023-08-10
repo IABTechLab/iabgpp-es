@@ -4,12 +4,12 @@ import { Sections } from "./section/Sections.js";
 import { TcfCaV1 } from "./section/TcfCaV1.js";
 import { TcfEuV2 } from "./section/TcfEuV2.js";
 import { UspV1 } from "./section/UspV1.js";
-import { UspNatV1 } from "./section/UspNatV1.js";
-import { UspCaV1 } from "./section/UspCaV1.js";
-import { UspVaV1 } from "./section/UspVaV1.js";
-import { UspCoV1 } from "./section/UspCoV1.js";
-import { UspUtV1 } from "./section/UspUtV1.js";
-import { UspCtV1 } from "./section/UspCtV1.js";
+import { UsNatV1 } from "./section/UsNatV1.js";
+import { UsCaV1 } from "./section/UsCaV1.js";
+import { UsVaV1 } from "./section/UsVaV1.js";
+import { UsCoV1 } from "./section/UsCoV1.js";
+import { UsUtV1 } from "./section/UsUtV1.js";
+import { UsCtV1 } from "./section/UsCtV1.js";
 import { InvalidFieldError } from "./error/InvalidFieldError.js";
 
 export class GppModel {
@@ -33,24 +33,24 @@ export class GppModel {
       } else if (sectionName === UspV1.NAME) {
         section = new UspV1();
         this.sections.set(UspV1.NAME, section);
-      } else if (sectionName === UspNatV1.NAME) {
-        section = new UspNatV1();
-        this.sections.set(UspNatV1.NAME, section);
-      } else if (sectionName === UspCaV1.NAME) {
-        section = new UspCaV1();
-        this.sections.set(UspCaV1.NAME, section);
-      } else if (sectionName === UspVaV1.NAME) {
-        section = new UspVaV1();
-        this.sections.set(UspVaV1.NAME, section);
-      } else if (sectionName === UspCoV1.NAME) {
-        section = new UspCoV1();
-        this.sections.set(UspCoV1.NAME, section);
-      } else if (sectionName === UspUtV1.NAME) {
-        section = new UspUtV1();
-        this.sections.set(UspUtV1.NAME, section);
-      } else if (sectionName === UspCtV1.NAME) {
-        section = new UspCtV1();
-        this.sections.set(UspCtV1.NAME, section);
+      } else if (sectionName === UsNatV1.NAME) {
+        section = new UsNatV1();
+        this.sections.set(UsNatV1.NAME, section);
+      } else if (sectionName === UsCaV1.NAME) {
+        section = new UsCaV1();
+        this.sections.set(UsCaV1.NAME, section);
+      } else if (sectionName === UsVaV1.NAME) {
+        section = new UsVaV1();
+        this.sections.set(UsVaV1.NAME, section);
+      } else if (sectionName === UsCoV1.NAME) {
+        section = new UsCoV1();
+        this.sections.set(UsCoV1.NAME, section);
+      } else if (sectionName === UsUtV1.NAME) {
+        section = new UsUtV1();
+        this.sections.set(UsUtV1.NAME, section);
+      } else if (sectionName === UsCtV1.NAME) {
+        section = new UsCtV1();
+        this.sections.set(UsCtV1.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
@@ -175,24 +175,24 @@ export class GppModel {
       } else if (sectionIds[i] === UspV1.ID) {
         let section = new UspV1(encodedSections[i + 1]);
         this.sections.set(UspV1.NAME, section);
-      } else if (sectionIds[i] === UspNatV1.ID) {
-        let section = new UspNatV1(encodedSections[i + 1]);
-        this.sections.set(UspNatV1.NAME, section);
-      } else if (sectionIds[i] === UspCaV1.ID) {
-        let section = new UspCaV1(encodedSections[i + 1]);
-        this.sections.set(UspCaV1.NAME, section);
-      } else if (sectionIds[i] === UspVaV1.ID) {
-        let section = new UspVaV1(encodedSections[i + 1]);
-        this.sections.set(UspVaV1.NAME, section);
-      } else if (sectionIds[i] === UspCoV1.ID) {
-        let section = new UspCoV1(encodedSections[i + 1]);
-        this.sections.set(UspCoV1.NAME, section);
-      } else if (sectionIds[i] === UspUtV1.ID) {
-        let section = new UspUtV1(encodedSections[i + 1]);
-        this.sections.set(UspUtV1.NAME, section);
-      } else if (sectionIds[i] === UspCtV1.ID) {
-        let section = new UspCtV1(encodedSections[i + 1]);
-        this.sections.set(UspCtV1.NAME, section);
+      } else if (sectionIds[i] === UsNatV1.ID) {
+        let section = new UsNatV1(encodedSections[i + 1]);
+        this.sections.set(UsNatV1.NAME, section);
+      } else if (sectionIds[i] === UsCaV1.ID) {
+        let section = new UsCaV1(encodedSections[i + 1]);
+        this.sections.set(UsCaV1.NAME, section);
+      } else if (sectionIds[i] === UsVaV1.ID) {
+        let section = new UsVaV1(encodedSections[i + 1]);
+        this.sections.set(UsVaV1.NAME, section);
+      } else if (sectionIds[i] === UsCoV1.ID) {
+        let section = new UsCoV1(encodedSections[i + 1]);
+        this.sections.set(UsCoV1.NAME, section);
+      } else if (sectionIds[i] === UsUtV1.ID) {
+        let section = new UsUtV1(encodedSections[i + 1]);
+        this.sections.set(UsUtV1.NAME, section);
+      } else if (sectionIds[i] === UsCtV1.ID) {
+        let section = new UsCtV1(encodedSections[i + 1]);
+        this.sections.set(UsCtV1.NAME, section);
       }
     }
   }
@@ -221,24 +221,24 @@ export class GppModel {
       } else if (sectionName === UspV1.NAME) {
         section = new UspV1();
         this.sections.set(UspV1.NAME, section);
-      } else if (sectionName === UspNatV1.NAME) {
-        section = new UspNatV1();
-        this.sections.set(UspNatV1.NAME, section);
-      } else if (sectionName === UspCaV1.NAME) {
-        section = new UspCaV1();
-        this.sections.set(UspCaV1.NAME, section);
-      } else if (sectionName === UspVaV1.NAME) {
-        section = new UspVaV1();
-        this.sections.set(UspVaV1.NAME, section);
-      } else if (sectionName === UspCoV1.NAME) {
-        section = new UspCoV1();
-        this.sections.set(UspCoV1.NAME, section);
-      } else if (sectionName === UspUtV1.NAME) {
-        section = new UspUtV1();
-        this.sections.set(UspUtV1.NAME, section);
-      } else if (sectionName === UspCtV1.NAME) {
-        section = new UspCtV1();
-        this.sections.set(UspCtV1.NAME, section);
+      } else if (sectionName === UsNatV1.NAME) {
+        section = new UsNatV1();
+        this.sections.set(UsNatV1.NAME, section);
+      } else if (sectionName === UsCaV1.NAME) {
+        section = new UsCaV1();
+        this.sections.set(UsCaV1.NAME, section);
+      } else if (sectionName === UsVaV1.NAME) {
+        section = new UsVaV1();
+        this.sections.set(UsVaV1.NAME, section);
+      } else if (sectionName === UsCoV1.NAME) {
+        section = new UsCoV1();
+        this.sections.set(UsCoV1.NAME, section);
+      } else if (sectionName === UsUtV1.NAME) {
+        section = new UsUtV1();
+        this.sections.set(UsUtV1.NAME, section);
+      } else if (sectionName === UsCtV1.NAME) {
+        section = new UsCtV1();
+        this.sections.set(UsCtV1.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);

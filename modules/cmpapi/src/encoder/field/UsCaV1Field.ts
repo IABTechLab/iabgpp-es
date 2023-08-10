@@ -1,12 +1,13 @@
-export enum UspCoV1Field {
+export enum UsCaV1Field {
   VERSION = "Version",
-  SHARING_NOTICE = "SharingNotice",
   SALE_OPT_OUT_NOTICE = "SaleOptOutNotice",
-  TARGETED_ADVERTISING_OPT_OUT_NOTICE = "TargetedAdvertisingOptOutNotice",
+  SHARING_OPT_OUT_NOTICE = "SharingOptOutNotice",
+  SENSITIVE_DATA_LIMIT_USE_NOTICE = "SensitiveDataLimitUseNotice",
   SALE_OPT_OUT = "SaleOptOut",
-  TARGETED_ADVERTISING_OPT_OUT = "TargetedAdvertisingOptOut",
+  SHARING_OPT_OUT = "SharingOptOut",
   SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing",
   KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents",
+  PERSONAL_DATA_CONSENTS = "PersonalDataConsents",
   MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction",
   MSPA_OPT_OUT_OPTION_MODE = "MspaOptOutOptionMode",
   MSPA_SERVICE_PROVIDER_MODE = "MspaServiceProviderMode",

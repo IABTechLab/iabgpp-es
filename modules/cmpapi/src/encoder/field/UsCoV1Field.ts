@@ -1,4 +1,4 @@
-export enum UspCtV1Field {
+export enum UsCoV1Field {
   VERSION = "Version",
   SHARING_NOTICE = "SharingNotice",
   SALE_OPT_OUT_NOTICE = "SaleOptOutNotice",

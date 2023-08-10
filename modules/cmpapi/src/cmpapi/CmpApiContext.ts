@@ -6,12 +6,12 @@ import { GppModel } from "../encoder/GppModel.js";
 import { TcfCaV1 } from "../encoder/section/TcfCaV1.js";
 import { TcfEuV2 } from "../encoder/section/TcfEuV2.js";
 import { UspV1 } from "../encoder/section/UspV1.js";
-import { UspNatV1 } from "../encoder/section/UspNatV1.js";
-import { UspCaV1 } from "../encoder/section/UspCaV1.js";
-import { UspVaV1 } from "../encoder/section/UspVaV1.js";
-import { UspCoV1 } from "../encoder/section/UspCoV1.js";
-import { UspUtV1 } from "../encoder/section/UspUtV1.js";
-import { UspCtV1 } from "../encoder/section/UspCtV1.js";
+import { UsNatV1 } from "../encoder/section/UsNatV1.js";
+import { UsCaV1 } from "../encoder/section/UsCaV1.js";
+import { UsVaV1 } from "../encoder/section/UsVaV1.js";
+import { UsCoV1 } from "../encoder/section/UsCoV1.js";
+import { UsUtV1 } from "../encoder/section/UsUtV1.js";
+import { UsCtV1 } from "../encoder/section/UsCtV1.js";
 import { SignalStatus } from "./status/SignalStatus.js";
 
 /**
@@ -25,12 +25,12 @@ export class CmpApiContext {
     TcfEuV2.ID + ":" + TcfEuV2.NAME,
     TcfCaV1.ID + ":" + TcfCaV1.NAME,
     UspV1.ID + ":" + UspV1.NAME,
-    UspNatV1.ID + ":" + UspNatV1.NAME,
-    UspCaV1.ID + ":" + UspCaV1.NAME,
-    UspVaV1.ID + ":" + UspVaV1.NAME,
-    UspCoV1.ID + ":" + UspCoV1.NAME,
-    UspUtV1.ID + ":" + UspUtV1.NAME,
-    UspCtV1.ID + ":" + UspCtV1.NAME,
+    UsNatV1.ID + ":" + UsNatV1.NAME,
+    UsCaV1.ID + ":" + UsCaV1.NAME,
+    UsVaV1.ID + ":" + UsVaV1.NAME,
+    UsCoV1.ID + ":" + UsCoV1.NAME,
+    UsUtV1.ID + ":" + UsUtV1.NAME,
+    UsCtV1.ID + ":" + UsCtV1.NAME,
   ];
 
   public readonly eventQueue = new EventListenerQueue(this);

@@ -26,14 +26,14 @@
     "./test/encoder/section/HeaderV1.test.ts",
     "./test/encoder/section/TcfCaV1.test.ts",
     "./test/encoder/section/TcfEuV2.test.ts",
-    "./test/encoder/section/UspCaV1.test.ts",
-    "./test/encoder/section/UspCoV1.test.ts",
-    "./test/encoder/section/UspCtV1.test.ts",
-    "./test/encoder/section/UspNatV1.test.ts",
-    "./test/encoder/section/UspUtV1.test.ts",
+    "./test/encoder/section/UsCaV1.test.ts",
+    "./test/encoder/section/UsCoV1.test.ts",
+    "./test/encoder/section/UsCtV1.test.ts",
+    "./test/encoder/section/UsNatV1.test.ts",
+    "./test/encoder/section/UsUtV1.test.ts",
     "./test/encoder/section/UspV1.test.ts",
     "./test/encoder/section/UspV1.test.ts",
-    "./test/encoder/section/UspVaV1.test.ts",
+    "./test/encoder/section/UsVaV1.test.ts",
     "./test/gvl/client/JsonHttpClient.test.ts"
   ]
 }

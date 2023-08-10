@@ -26,12 +26,12 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(false);
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
     expect(gppModel.hasSection("uspv1")).to.eql(false);
-    expect(gppModel.hasSection("uspnatv1")).to.eql(false);
-    expect(gppModel.hasSection("uspcav1")).to.eql(false);
-    expect(gppModel.hasSection("uspvav1")).to.eql(false);
-    expect(gppModel.hasSection("uspcov1")).to.eql(false);
-    expect(gppModel.hasSection("usputv1")).to.eql(false);
-    expect(gppModel.hasSection("uspctv1")).to.eql(false);
+    expect(gppModel.hasSection("usnatv1")).to.eql(false);
+    expect(gppModel.hasSection("uscav1")).to.eql(false);
+    expect(gppModel.hasSection("usvav1")).to.eql(false);
+    expect(gppModel.hasSection("uscov1")).to.eql(false);
+    expect(gppModel.hasSection("usutv1")).to.eql(false);
+    expect(gppModel.hasSection("usctv1")).to.eql(false);
 
     gppModel.setFieldValue("tcfeuv2", "Version", 2);
     gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
@@ -40,22 +40,22 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfcav1", "Created", utcDateTime);
     gppModel.setFieldValue("tcfcav1", "LastUpdated", utcDateTime);
     gppModel.setFieldValue("uspv1", "Version", 1);
-    gppModel.setFieldValue("uspnatv1", "Version", 1);
-    gppModel.setFieldValue("uspcav1", "Version", 1);
-    gppModel.setFieldValue("uspvav1", "Version", 1);
-    gppModel.setFieldValue("uspcov1", "Version", 1);
-    gppModel.setFieldValue("usputv1", "Version", 1);
-    gppModel.setFieldValue("uspctv1", "Version", 1);
+    gppModel.setFieldValue("usnatv1", "Version", 1);
+    gppModel.setFieldValue("uscav1", "Version", 1);
+    gppModel.setFieldValue("usvav1", "Version", 1);
+    gppModel.setFieldValue("uscov1", "Version", 1);
+    gppModel.setFieldValue("usutv1", "Version", 1);
+    gppModel.setFieldValue("usctv1", "Version", 1);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav1")).to.eql(true);
     expect(gppModel.hasSection("uspv1")).to.eql(true);
-    expect(gppModel.hasSection("uspnatv1")).to.eql(true);
-    expect(gppModel.hasSection("uspcav1")).to.eql(true);
-    expect(gppModel.hasSection("uspvav1")).to.eql(true);
-    expect(gppModel.hasSection("uspcov1")).to.eql(true);
-    expect(gppModel.hasSection("usputv1")).to.eql(true);
-    expect(gppModel.hasSection("uspctv1")).to.eql(true);
+    expect(gppModel.hasSection("usnatv1")).to.eql(true);
+    expect(gppModel.hasSection("uscav1")).to.eql(true);
+    expect(gppModel.hasSection("usvav1")).to.eql(true);
+    expect(gppModel.hasSection("uscov1")).to.eql(true);
+    expect(gppModel.hasSection("usutv1")).to.eql(true);
+    expect(gppModel.hasSection("usctv1")).to.eql(true);
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
@@ -361,12 +361,12 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav1")).to.eql(true);
     expect(gppModel.hasSection("uspv1")).to.eql(true);
-    expect(gppModel.hasSection("uspnatv1")).to.eql(true);
-    expect(gppModel.hasSection("uspcav1")).to.eql(true);
-    expect(gppModel.hasSection("uspvav1")).to.eql(true);
-    expect(gppModel.hasSection("uspcov1")).to.eql(true);
-    expect(gppModel.hasSection("usputv1")).to.eql(true);
-    expect(gppModel.hasSection("uspctv1")).to.eql(true);
+    expect(gppModel.hasSection("usnatv1")).to.eql(true);
+    expect(gppModel.hasSection("uscav1")).to.eql(true);
+    expect(gppModel.hasSection("usvav1")).to.eql(true);
+    expect(gppModel.hasSection("uscov1")).to.eql(true);
+    expect(gppModel.hasSection("usutv1")).to.eql(true);
+    expect(gppModel.hasSection("usctv1")).to.eql(true);
   });
 
   it("should decode uspv1 section", (): void => {

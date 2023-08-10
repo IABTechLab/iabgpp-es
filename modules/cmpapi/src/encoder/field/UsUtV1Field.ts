@@ -1,8 +1,9 @@
-export enum UspVaV1Field {
+export enum UsUtV1Field {
   VERSION = "Version",
   SHARING_NOTICE = "SharingNotice",
   SALE_OPT_OUT_NOTICE = "SaleOptOutNotice",
   TARGETED_ADVERTISING_OPT_OUT_NOTICE = "TargetedAdvertisingOptOutNotice",
+  SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE = "SensitiveDataProcessingOptOutNotice",
   SALE_OPT_OUT = "SaleOptOut",
   TARGETED_ADVERTISING_OPT_OUT = "TargetedAdvertisingOptOut",
   SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing",
