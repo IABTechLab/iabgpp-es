@@ -21,17 +21,7 @@ import { SignalStatus } from "./status/SignalStatus.js";
  */
 export class CmpApiContext {
   public gppVersion = "1.1";
-  public supportedAPIs = [
-    TcfEuV2.ID + ":" + TcfEuV2.NAME,
-    TcfCaV1.ID + ":" + TcfCaV1.NAME,
-    UspV1.ID + ":" + UspV1.NAME,
-    UsNatV1.ID + ":" + UsNatV1.NAME,
-    UsCaV1.ID + ":" + UsCaV1.NAME,
-    UsVaV1.ID + ":" + UsVaV1.NAME,
-    UsCoV1.ID + ":" + UsCoV1.NAME,
-    UsUtV1.ID + ":" + UsUtV1.NAME,
-    UsCtV1.ID + ":" + UsCtV1.NAME,
-  ];
+  public supportedAPIs = [];
 
   public readonly eventQueue = new EventListenerQueue(this);
   public cmpStatus: CmpStatus = CmpStatus.LOADING;
@@ -49,6 +39,7 @@ export class CmpApiContext {
     this.cmpDisplayStatus = CmpDisplayStatus.HIDDEN;
     this.signalStatus = SignalStatus.NOT_READY;
     this.applicableSections = [];
+    this.supportedAPIs = [];
     this.gppModel = new GppModel();
     delete this.cmpId;
     delete this.cmpVersion;

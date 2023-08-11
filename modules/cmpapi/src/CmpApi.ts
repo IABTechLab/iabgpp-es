@@ -81,6 +81,14 @@ export class CmpApi {
     this.cmpApiContext.applicableSections = applicableSections;
   }
 
+  public getSupportedAPIs(): string[] {
+    return this.cmpApiContext.supportedAPIs;
+  }
+
+  public setSupportedAPIs(supportedAPIs: string[]): void {
+    this.cmpApiContext.supportedAPIs = supportedAPIs;
+  }
+
   public setGppString(encodedGppString: string): void {
     this.cmpApiContext.gppModel.decode(encodedGppString);
   }
