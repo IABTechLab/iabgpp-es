@@ -4,7 +4,7 @@ import { CmpStatus } from "./cmpapi/status/CmpStatus.js";
 import { CmpDisplayStatus } from "./cmpapi/status/CmpDisplayStatus.js";
 import { EventStatus } from "./cmpapi/status/EventStatus.js";
 import { CallResponder } from "./cmpapi/CallResponder.js";
-import { Gvl, GvlUrlConfig } from "./Gvl.js";
+import { GVL, GVLUrlConfig } from "./GVL.js";
 import { VendorList } from "./gvl/gvlmodel/VendorList.js";
 import { Sections } from "./encoder/section/Sections.js";
 import { SignalStatus } from "./cmpapi/status/SignalStatus.js";
@@ -161,11 +161,11 @@ export class CmpApi {
     return this.cmpApiContext.gppModel.toObject();
   }
 
-  public getGvlFromVendorList(vendorList: VendorList): Gvl {
-    return Gvl.fromVendorList(vendorList);
+  public getGvlFromVendorList(vendorList: VendorList): GVL {
+    return GVL.fromVendorList(vendorList);
   }
 
-  public async getGvlFromUrl(gvlUrlConfig: GvlUrlConfig): Promise<Gvl> {
-    return Gvl.fromUrl(gvlUrlConfig);
+  public async getGvlFromUrl(gvlUrlConfig: GVLUrlConfig): Promise<GVL> {
+    return GVL.fromUrl(gvlUrlConfig);
   }
 }

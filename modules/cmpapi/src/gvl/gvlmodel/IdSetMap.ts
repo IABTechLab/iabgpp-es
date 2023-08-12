@@ -1,3 +1,2 @@
-import { IntMap } from "./IntMap.js";
-
-export type IdSetMap = IntMap<Set<number>>;
+import {IntMap} from './IntMap.js';
+export type IDSetMap = IntMap<Set<number>>

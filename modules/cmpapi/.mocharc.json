@@ -3,7 +3,8 @@
   "node-option": ["experimental-specifier-resolution=node", "loader=ts-node/esm"],
   "spec": [
     "./test/GppModel.test.ts",
-    "./test/Gvl.test.ts",
+    "./test/GVLV2.test.ts",
+    "./test/GVLV2_2.test.ts",
     "./test/encoder/datatype/EncodableBoolean.test.ts",
     "./test/encoder/datatype/EncodableDatetime.test.ts",
     "./test/encoder/datatype/EncodableFibonacciInteger.test.ts",

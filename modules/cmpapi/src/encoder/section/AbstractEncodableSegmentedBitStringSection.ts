@@ -1,4 +1,3 @@
-import { Gvl } from "../../Gvl.js";
 import { AbstractEncodableBitStringDataType } from "../datatype/AbstractEncodableBitStringDataType.js";
 import { EncodableSection } from "./EncodableSection.js";
 

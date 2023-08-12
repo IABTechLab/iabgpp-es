@@ -1,10 +1,11 @@
 import { JsonHttpClient } from "./gvl/client/JsonHttpClient.js";
-import { GvlError } from "./gvl/error/GvlError.js";
+import { GVLError } from "./gvl/error/GVLError.js";
 import { ByPurposeVendorMap } from "./gvl/gvlmodel/ByPurposeVendorMap.js";
 import { ConsentLanguages } from "./gvl/gvlmodel/ConsentLanguages.js";
+import { DataCategory } from "./gvl/gvlmodel/DataCategory.js";
 import { Declarations } from "./gvl/gvlmodel/Declarations.js";
 import { Feature } from "./gvl/gvlmodel/Feature.js";
-import { IdSetMap } from "./gvl/gvlmodel/IdSetMap.js";
+import { IDSetMap } from "./gvl/gvlmodel/IDSetMap.js";
 import { IntMap } from "./gvl/gvlmodel/IntMap.js";
 import { Purpose } from "./gvl/gvlmodel/Purpose.js";
 import { Stack } from "./gvl/gvlmodel/Stack.js";
@@ -14,7 +15,7 @@ import { VendorList } from "./gvl/gvlmodel/VendorList.js";
 type PurposeOrFeature = "purpose" | "feature";
 type PurposeSubType = "consent" | "legInt" | "flexible";
 
-export class GvlUrlConfig {
+export class GVLUrlConfig {
   /**
    * baseUrl - Entities using the vendor-list.json are required by the iab to
    * host their own copy of it to reduce the load on the iab's infrastructure
@@ -50,8 +51,8 @@ export class GvlUrlConfig {
    *
    * eg.
    * ```javascript
-   * Gvl.baseUrl = "http://www.mydomain.com/iabcmp/";
-   * Gvl.versionedFilename = "vendorlist?getVersion=[VERSION]";
+   * GVL.baseUrl = "http://www.mydomain.com/iabcmp/";
+   * GVL.versionedFilename = "vendorlist?getVersion=[VERSION]";
    * ```
    */
 
@@ -68,8 +69,8 @@ export class GvlUrlConfig {
    *
    * eg.
    * ```javascript
-   * Gvl.baseUrl = "http://www.mydomain.com/iabcmp/";
-   * Gvl.languageFilename = "purposes?getPurposes=[LANG]";
+   * GVL.baseUrl = "http://www.mydomain.com/iabcmp/";
+   * GVL.languageFilename = "purposes?getPurposes=[LANG]";
    * ```
    */
   public languageFilename: string;
@@ -81,7 +82,7 @@ export class GvlUrlConfig {
  * object and provide accessors.  Provides ways to group vendors on the list by
  * purpose and feature.
  */
-export class Gvl implements VendorList {
+export class GVL implements VendorList {
   vendors: IntMap<Vendor>;
   public static DEFAULT_LANGUAGE = "EN";
 
@@ -95,45 +96,46 @@ export class Gvl implements VendorList {
   public features: IntMap<Feature>;
   public specialFeatures: IntMap<Feature>;
   public stacks: IntMap<Stack>;
-  public language: string = Gvl.DEFAULT_LANGUAGE;
+  public dataCategories?: IntMap<DataCategory>;
+  public language: string = GVL.DEFAULT_LANGUAGE;
 
   private vendorIds: Set<number>;
   private ready = false;
   private fullVendorList: IntMap<Vendor>;
   private byPurposeVendorMap: ByPurposeVendorMap;
-  private bySpecialPurposeVendorMap: IdSetMap;
-  private byFeatureVendorMap: IdSetMap;
-  private bySpecialFeatureVendorMap: IdSetMap;
+  private bySpecialPurposeVendorMap: IDSetMap;
+  private byFeatureVendorMap: IDSetMap;
+  private bySpecialFeatureVendorMap: IDSetMap;
 
   private baseUrl: string;
   private languageFilename = "purposes-[LANG].json";
 
-  public static fromVendorList(vendorList: VendorList): Gvl {
-    let gvl = new Gvl();
+  public static fromVendorList(vendorList: VendorList): GVL {
+    let gvl = new GVL();
     gvl.populate(vendorList as Declarations);
     return gvl;
   }
 
   /**
    * **
-   * @param {GvlConfig} - Configuration containing url configuration
+   * @param {GVLConfig} - Configuration containing url configuration
    *
-   * @throws {GvlError} - If the url is http[s]://vendorlist.consensu.org/...
+   * @throws {GVLError} - If the url is http[s]://vendorlist.consensu.org/...
    * this will throw an error.  IAB Europe requires that that CMPs and Vendors
-   * cache their own copies of the Gvl to minimize load on their
+   * cache their own copies of the GVL to minimize load on their
    * infrastructure.  For more information regarding caching of the
    * vendor-list.json, please see [the TCF documentation on 'Caching the Global
    * Vendor List'
    */
-  public static async fromUrl(config: GvlUrlConfig): Promise<Gvl> {
+  public static async fromUrl(config: GVLUrlConfig): Promise<GVL> {
     let baseUrl = config.baseUrl;
 
     if (!baseUrl || baseUrl.length === 0) {
-      throw new GvlError("Invalid baseUrl: '" + baseUrl + "'");
+      throw new GVLError("Invalid baseUrl: '" + baseUrl + "'");
     }
 
     if (/^https?:\/\/vendorlist\.consensu\.org\//.test(baseUrl)) {
-      throw new GvlError(
+      throw new GVLError(
         "Invalid baseUrl!  You may not pull directly from vendorlist.consensu.org and must provide your own cache"
       );
     }
@@ -143,7 +145,7 @@ export class Gvl implements VendorList {
       baseUrl += "/";
     }
 
-    let gvl = new Gvl();
+    let gvl = new GVL();
     gvl.baseUrl = baseUrl;
 
     if (config.languageFilename) {
@@ -179,10 +181,10 @@ export class Gvl implements VendorList {
    * internal language variable
    *
    * @param {string} lang - ISO 639-1 langauge code to change language to
-   * @return {Promise<void | GvlError>} - returns the `readyPromise` and
+   * @return {Promise<void | GVLError>} - returns the `readyPromise` and
    * resolves when this GVL is populated with the data from the language file.
    */
-  public async changeLanguage(lang: string): Promise<void | GvlError> {
+  public async changeLanguage(lang: string): Promise<void | GVLError> {
     const langUpper = lang.toUpperCase();
 
     if (this.consentLanguages.has(langUpper)) {
@@ -194,17 +196,17 @@ export class Gvl implements VendorList {
         try {
           this.populate((await JsonHttpClient.fetch(url)) as VendorList);
         } catch (err) {
-          throw new GvlError("unable to load language: " + err.message);
+          throw new GVLError("unable to load language: " + err.message);
         }
       }
     } else {
-      throw new GvlError(`unsupported language ${lang}`);
+      throw new GVLError(`unsupported language ${lang}`);
     }
   }
 
   /**
    * getJson - Method for getting the JSON that was downloaded to created this
-   * `Gvl` object
+   * `GVL` object
    *
    * @return {VendorList} - The basic JSON structure without the extra
    * functionality and methods of this class.
@@ -221,6 +223,7 @@ export class Gvl implements VendorList {
         features: this.features,
         specialFeatures: this.specialFeatures,
         stacks: this.stacks,
+        dataCategories: this.dataCategories,
         vendors: this.fullVendorList,
       })
     );
@@ -240,6 +243,7 @@ export class Gvl implements VendorList {
     this.features = gvlObject.features;
     this.specialFeatures = gvlObject.specialFeatures;
     this.stacks = gvlObject.stacks;
+    this.dataCategories = gvlObject.dataCategories;
 
     if (this.isVendorList(gvlObject)) {
       this.gvlSpecificationVersion = gvlObject.gvlSpecificationVersion;
@@ -420,9 +424,9 @@ export class Gvl implements VendorList {
   }
 
   /**
-   * narrowVendorsTo - narrows vendors represented in this Gvl to the list of ids passed in
+   * narrowVendorsTo - narrows vendors represented in this GVL to the list of ids passed in
    *
-   * @param {number[]} vendorIds - list of ids to narrow this Gvl to
+   * @param {number[]} vendorIds - list of ids to narrow this GVL to
    * @return {void}
    */
   public narrowVendorsTo(vendorIds: number[]): void {
@@ -441,8 +445,8 @@ export class Gvl implements VendorList {
     return this.ready;
   }
 
-  public static isInstanceOf(questionableInstance: unknown): questionableInstance is Gvl {
+  public static isInstanceOf(questionableInstance: unknown): questionableInstance is GVL {
     const isSo = typeof questionableInstance === "object";
-    return isSo && typeof (questionableInstance as Gvl).narrowVendorsTo === "function";
+    return isSo && typeof (questionableInstance as GVL).narrowVendorsTo === "function";
   }
 }
