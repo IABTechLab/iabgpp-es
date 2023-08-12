@@ -39,8 +39,8 @@ deleteSection(sectionName: string)
 deleteSectionById(sectionId: number)
 clear()
 getObject()
-getGVLFromVendorList(vendorList: VendorList): GVL
-async getGVLFromUrl(gvlUrlConfig: GVLUrlConfig): Promise<GVL>
+getGvlFromVendorList(vendorList: VendorList): GVL
+async getGvlFromUrl(gvlUrlConfig: GVLUrlConfig): Promise<GVL>
 ```
 
 ## Commands available to consumers
