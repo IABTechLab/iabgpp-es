@@ -2,6 +2,7 @@ import { GppModel } from "../src/encoder/GppModel";
 import { expect } from "chai";
 import { HeaderV1Field } from "../src/encoder/field/HeaderV1Field";
 import { TcfCaV1Field } from "../src/encoder/field/TcfCaV1Field";
+import { LazyDecodingError } from "../src/encoder/error/LazyDecodingError";
 
 let utcDateTime = new Date("2022-01-01T00:00:00Z");
 
@@ -19,6 +20,13 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("uspv1")).to.eql(false);
     expect(gppModel.hasSection("tcfeuv2")).to.eql(false);
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
+  });
+
+  it("should throw LazyDecodingError", (): void => {
+    let gppModel = new GppModel("invalid gpp string");
+    expect(function () {
+      gppModel.getHeader();
+    }).to.throw("Undecodable Base64URL string");
   });
 
   it("should default all sections", (): void => {
