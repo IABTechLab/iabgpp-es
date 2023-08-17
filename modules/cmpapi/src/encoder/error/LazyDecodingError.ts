@@ -1,4 +1,4 @@
-import { DecodingError } from "./DecodingError";
+import { DecodingError } from "./DecodingError.js";
 
 /**
  * class for decoding errors
