@@ -1,5 +1,3 @@
-import { Gvl } from "../../Gvl.js";
-
 export interface EncodableSection {
   getId(): number;
 

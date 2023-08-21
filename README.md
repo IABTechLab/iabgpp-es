@@ -15,12 +15,12 @@ getEventStatus()
 setEventStatus(eventStatus: EventStatus)
 getCmpStatus()
 setCmpStatus(cmpStatus: CmpStatus)
-getCmpDisplayStatus(): DisplayStatus
-setCmpDisplayStatus(cmpDisplayStatus: DisplayStatus)
+getCmpDisplayStatus(): CmpDisplayStatus
+setCmpDisplayStatus(cmpDisplayStatus: CmpDisplayStatus)
 getApplicableSections(): number[]
 setApplicableSections(applicableSections: number[]): void
-getCurrentAPI(): string
-setCurrentAPI(currentAPI: string): void
+getSignalStatus(): SignalStatus
+setSignalStatus(signalStatus: SignalStatus): void
 setGppString(encodedGppString: string): void
 getGppString(): string
 setSectionString(sectionName: string, encodedSectionString: string): void
@@ -39,8 +39,8 @@ deleteSection(sectionName: string)
 deleteSectionById(sectionId: number)
 clear()
 getObject()
-getGvlFromVendorList(vendorList: VendorList): Gvl
-async getGvlFromUrl(gvlUrlConfig: GvlUrlConfig): Promise<Gvl>
+getGvlFromVendorList(vendorList: VendorList): GVL
+async getGvlFromUrl(gvlUrlConfig: GVLUrlConfig): Promise<GVL>
 ```
 
 ## Commands available to consumers
@@ -48,7 +48,6 @@ async getGvlFromUrl(gvlUrlConfig: GvlUrlConfig): Promise<Gvl>
 ```javascript
 __gpp("addEventListener", callback?, parameter?)
 __gpp("getField", callback?, parameter?)
-__gpp("getGPPData", callback?, parameter?)
 __gpp("getSection", callback?, parameter?)
 __gpp("hasSection", callback?, parameter?)
 __gpp("ping", callback?, parameter?)
@@ -144,91 +143,91 @@ __gpp("removeEventListener", callback?, parameter?)
 | uspv1        | 6          | Notice                              | 2 bit int                                                      |
 | uspv1        | 6          | OptOutSale                          | 2 bit int                                                      |
 | uspv1        | 6          | LspaCovered                         | 2 bit int                                                      |
-| uspnatv1     | 7          | Version                             | 6 bit int. Value is 1                                          |
-| uspnatv1     | 7          | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | SharingOptOutNotice                 | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | SensitiveDataProcessingOptOutNotice | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | SensitiveDataLimitUseNotice         | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | SharingOptOut                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | SensitiveDataProcessing             | 2 bit int array of size 12. 0=Not applicable, 1=Yes, 2=No      |
-| uspnatv1     | 7          | KnownChildSensitiveDataConsents     | 2 bit int array of size 2. 0=Not applicable, 1=Yes, 2=No       |
-| uspnatv1     | 7          | PersonalDataConsents                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspnatv1     | 7          | GpcSegmentType                      | 2 bit int. Value is 1                                          |
-| uspnatv1     | 7          | GpcSegmentIncluded                  | Boolean. Default is true                                       |
-| uspnatv1     | 7          | Gpc                                 | Boolean                                                        |
-| uspcav1      | 8          | Version                             | 6 bit int. Value is 1                                          |
-| uspcav1      | 8          | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcav1      | 8          | SharingOptOutNotice                 | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcav1      | 8          | SensitiveDataLimitUseNotice         | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcav1      | 8          | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcav1      | 8          | SharingOptOut                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcav1      | 8          | SensitiveDataProcessing             | 2 bit int array of size 9. 0=Not applicable, 1=Yes, 2=No       |
-| uspcav1      | 8          | KnownChildSensitiveDataConsents     | 2 bit int array of size 2. 0=Not applicable, 1=Yes, 2=No       |
-| uspcav1      | 8          | PersonalDataConsents                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcav1      | 8          | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcav1      | 8          | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcav1      | 8          | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcav1      | 8          | GpcSegmentType                      | 2 bit int. Value is 1                                          |
-| uspcav1      | 8          | GpcSegmentIncluded                  | Boolean. Default is true                                       |
-| uspcav1      | 8          | Gpc                                 | Boolean                                                        |
-| uspvav1      | 9          | Version                             | 6 bit int. Value is 1                                          |
-| uspvav1      | 9          | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspvav1      | 9          | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspvav1      | 9          | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspvav1      | 9          | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspvav1      | 9          | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspvav1      | 9          | SensitiveDataProcessing             | 2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No       |
-| uspvav1      | 9          | KnownChildSensitiveDataConsents     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspvav1      | 9          | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspvav1      | 9          | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspvav1      | 9          | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | Version                             | 6 bit int. Value is 1                                          |
-| uspcov1      | 10         | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | SensitiveDataProcessing             | 2 bit int array of size 7. 0=Not applicable, 1=Yes, 2=No       |
-| uspcov1      | 10         | KnownChildSensitiveDataConsents     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspcov1      | 10         | GpcSegmentType                      | 2 bit int. Value is 1                                          |
-| uspcov1      | 10         | GpcSegmentIncluded                  | Boolean. Deafult is true                                       |
-| uspcov1      | 10         | Gpc                                 | Boolean                                                        |
-| usputv1      | 11         | Version                             | 6 bit int. Value is 1                                          |
-| usputv1      | 11         | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usputv1      | 11         | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usputv1      | 11         | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usputv1      | 11         | SensitiveDataProcessingOptOutNotice | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usputv1      | 11         | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usputv1      | 11         | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usputv1      | 11         | SensitiveDataProcessing             | 2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No       |
-| usputv1      | 11         | KnownChildSensitiveDataConsents     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usputv1      | 11         | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usputv1      | 11         | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usputv1      | 11         | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspctv1      | 12         | Version                             | 6 bit int. Value is 1                                          |
-| uspctv1      | 12         | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspctv1      | 12         | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspctv1      | 12         | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspctv1      | 12         | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspctv1      | 12         | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspctv1      | 12         | SensitiveDataProcessing             | 2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No       |
-| uspctv1      | 12         | KnownChildSensitiveDataConsents     | 2 bit int array of size 3. 0=Not applicable, 1=Yes, 2=No       |
-| uspctv1      | 12         | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspctv1      | 12         | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspctv1      | 12         | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| uspctv1      | 12         | GpcSegmentType                      | 2 bit int. Value is 1                                          |
-| uspctv1      | 12         | GpcSegmentIncluded                  | Boolean. Default is true                                       |
-| uspctv1      | 12         | Gpc                                 | Boolean                                                        |
+| usnatv1     | 7          | Version                             | 6 bit int. Value is 1                                          |
+| usnatv1     | 7          | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | SharingOptOutNotice                 | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | SensitiveDataProcessingOptOutNotice | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | SensitiveDataLimitUseNotice         | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | SharingOptOut                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | SensitiveDataProcessing             | 2 bit int array of size 12. 0=Not applicable, 1=Yes, 2=No      |
+| usnatv1     | 7          | KnownChildSensitiveDataConsents     | 2 bit int array of size 2. 0=Not applicable, 1=Yes, 2=No       |
+| usnatv1     | 7          | PersonalDataConsents                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usnatv1     | 7          | GpcSegmentType                      | 2 bit int. Value is 1                                          |
+| usnatv1     | 7          | GpcSegmentIncluded                  | Boolean. Default is true                                       |
+| usnatv1     | 7          | Gpc                                 | Boolean                                                        |
+| uscav1      | 8          | Version                             | 6 bit int. Value is 1                                          |
+| uscav1      | 8          | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscav1      | 8          | SharingOptOutNotice                 | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscav1      | 8          | SensitiveDataLimitUseNotice         | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscav1      | 8          | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscav1      | 8          | SharingOptOut                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscav1      | 8          | SensitiveDataProcessing             | 2 bit int array of size 9. 0=Not applicable, 1=Yes, 2=No       |
+| uscav1      | 8          | KnownChildSensitiveDataConsents     | 2 bit int array of size 2. 0=Not applicable, 1=Yes, 2=No       |
+| uscav1      | 8          | PersonalDataConsents                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscav1      | 8          | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscav1      | 8          | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscav1      | 8          | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscav1      | 8          | GpcSegmentType                      | 2 bit int. Value is 1                                          |
+| uscav1      | 8          | GpcSegmentIncluded                  | Boolean. Default is true                                       |
+| uscav1      | 8          | Gpc                                 | Boolean                                                        |
+| usvav1      | 9          | Version                             | 6 bit int. Value is 1                                          |
+| usvav1      | 9          | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usvav1      | 9          | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usvav1      | 9          | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usvav1      | 9          | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usvav1      | 9          | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usvav1      | 9          | SensitiveDataProcessing             | 2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No       |
+| usvav1      | 9          | KnownChildSensitiveDataConsents     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usvav1      | 9          | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usvav1      | 9          | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usvav1      | 9          | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | Version                             | 6 bit int. Value is 1                                          |
+| uscov1      | 10         | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | SensitiveDataProcessing             | 2 bit int array of size 7. 0=Not applicable, 1=Yes, 2=No       |
+| uscov1      | 10         | KnownChildSensitiveDataConsents     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| uscov1      | 10         | GpcSegmentType                      | 2 bit int. Value is 1                                          |
+| uscov1      | 10         | GpcSegmentIncluded                  | Boolean. Deafult is true                                       |
+| uscov1      | 10         | Gpc                                 | Boolean                                                        |
+| usutv1      | 11         | Version                             | 6 bit int. Value is 1                                          |
+| usutv1      | 11         | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usutv1      | 11         | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usutv1      | 11         | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usutv1      | 11         | SensitiveDataProcessingOptOutNotice | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usutv1      | 11         | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usutv1      | 11         | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usutv1      | 11         | SensitiveDataProcessing             | 2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No       |
+| usutv1      | 11         | KnownChildSensitiveDataConsents     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usutv1      | 11         | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usutv1      | 11         | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usutv1      | 11         | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usctv1      | 12         | Version                             | 6 bit int. Value is 1                                          |
+| usctv1      | 12         | SharingNotice                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usctv1      | 12         | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usctv1      | 12         | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usctv1      | 12         | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usctv1      | 12         | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usctv1      | 12         | SensitiveDataProcessing             | 2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No       |
+| usctv1      | 12         | KnownChildSensitiveDataConsents     | 2 bit int array of size 3. 0=Not applicable, 1=Yes, 2=No       |
+| usctv1      | 12         | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usctv1      | 12         | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usctv1      | 12         | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usctv1      | 12         | GpcSegmentType                      | 2 bit int. Value is 1                                          |
+| usctv1      | 12         | GpcSegmentIncluded                  | Boolean. Default is true                                       |
+| usctv1      | 12         | Gpc                                 | Boolean                                                        |
 
 ## Example Usage / Encoder / Decoder
 

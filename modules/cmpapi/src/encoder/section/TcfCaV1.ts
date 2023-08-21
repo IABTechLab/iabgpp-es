@@ -33,7 +33,7 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(TcfCaV1Field.CONSENT_SCREEN.toString(), new EncodableFixedInteger(6, 0));
     fields.set(TcfCaV1Field.CONSENT_LANGUAGE.toString(), new EncodableFixedString(2, "EN"));
     fields.set(TcfCaV1Field.VENDOR_LIST_VERSION.toString(), new EncodableFixedInteger(12, 0));
-    fields.set(TcfCaV1Field.TCF_POLICY_VERSION.toString(), new EncodableFixedInteger(6, 2));
+    fields.set(TcfCaV1Field.TCF_POLICY_VERSION.toString(), new EncodableFixedInteger(6, 1));
     fields.set(TcfCaV1Field.USE_NON_STANDARD_STACKS.toString(), new EncodableBoolean(false));
     fields.set(
       TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT.toString(),

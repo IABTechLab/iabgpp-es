@@ -9,6 +9,7 @@
  * ```
  */
 export interface IntMap<T> {
+
   // Integer string id
   [id: string]: T;
 }

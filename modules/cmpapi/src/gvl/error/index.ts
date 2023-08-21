@@ -1,1 +1,1 @@
-export * from "./GvlError.js";
+export * from "./GVLError.js";

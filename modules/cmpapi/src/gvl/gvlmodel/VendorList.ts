@@ -1,6 +1,6 @@
-import { Declarations } from "./Declarations.js";
-import { IntMap } from "./IntMap.js";
-import { Vendor } from "./Vendor.js";
+import {IntMap} from './IntMap.js';
+import {Vendor} from './Vendor.js';
+import {Declarations} from './Declarations.js';
 
 export interface VendorList extends Declarations {
   lastUpdated: string | Date;

@@ -55,18 +55,18 @@ export class CallResponder {
    * @param {any} param
    * @param {number} version
    */
-  public apiCall(command: string, callback?: CommandCallback, parameter?: any, version?: number): any {
+  public apiCall(command: string, callback?: CommandCallback, parameter?: any, version?: number): void {
     if (typeof command !== "string") {
-      return callback(null, false);
+      callback(null, false);
     } else if (callback && typeof callback !== "function") {
       throw new Error("invalid callback function");
     } else if (this.isCustomCommand(command)) {
-      return this.customCommands[command](callback, parameter);
+      this.customCommands[command](callback, parameter);
     } else if (this.isBuiltInCommand(command)) {
-      return new CommandMap[command](this.cmpApiContext, callback, parameter).execute();
+      new CommandMap[command](this.cmpApiContext, callback, parameter).execute();
     } else {
       if (callback) {
-        return callback(null, false);
+        callback(null, false);
       }
     }
   }

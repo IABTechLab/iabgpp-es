@@ -1,5 +1,7 @@
 import { CmpApiContext } from "./CmpApiContext.js";
 import { CommandCallback } from "./command/CommandCallback.js";
+import { EventData } from "./model/EventData.js";
+import { PingData } from "./model/PingData.js";
 
 interface EventItem {
   callback: CommandCallback;
@@ -44,20 +46,9 @@ export class EventListenerQueue {
 
   public exec(eventName: string, data: any): void {
     this.eventQueue.forEach((eventItem: EventItem, listenerId: number): void => {
-      eventItem.callback({
-        eventName: eventName,
-        listenerId: listenerId,
-        data: data,
-        pingData: {
-          gppVersion: this.cmpApiContext.gppVersion,
-          cmpStatus: this.cmpApiContext.cmpStatus,
-          cmpDisplayStatus: this.cmpApiContext.cmpDisplayStatus,
-          apiSupport: this.cmpApiContext.apiSupport,
-          currentAPI: this.cmpApiContext.currentAPI,
-          cmpId: this.cmpApiContext.cmpId,
-          cmpVersion: this.cmpApiContext.cmpVersion,
-        },
-      });
+      let eventData = new EventData(eventName, listenerId, data, new PingData(this.cmpApiContext));
+      let success = true;
+      eventItem.callback(eventData, success);
     });
   }
 

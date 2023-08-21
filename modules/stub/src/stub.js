@@ -27,13 +27,31 @@ window.__gpp_stub = function () {
   var clb = b.length > 1 ? b[1] : null;
   var par = b.length > 2 ? b[2] : null;
   if (cmd === "ping") {
-    return {
-      gppVersion: "1.0", // must be “Version.Subversion”, current: “1.0”
-      cmpStatus: "stub", // possible values: stub, loading, loaded, error
-      cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-      supportedAPIs: ["tcfeuv2", "tcfcav2", "uspv1"], // list of supported APIs
-      cmpId: 31, // IAB assigned CMP ID, may be 0 during stub/loading
-    };
+    clb(
+      {
+        gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+        cmpStatus: "stub", // possible values: stub, loading, loaded, error
+        cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+        signalStatus: "not ready", // possible values: not ready, ready
+        supportedAPIs: [
+          "2:tcfeuv2",
+          "5:tcfcav1",
+          "6:uspv1",
+          "7:usnatv1",
+          "8:uscav1",
+          "9:usvav1",
+          "10:uscov1",
+          "11:usutv1",
+          "12:usctv1",
+        ], // list of supported APIs
+        cmpId: 0, // IAB assigned CMP ID, may be 0 during stub/loading
+        sectionList: [],
+        applicableSections: [],
+        gppString: "",
+        parsedSections: {},
+      },
+      true
+    );
   } else if (cmd === "addEventListener") {
     if (!("lastId" in __gpp)) {
       __gpp.lastId = 0;
@@ -45,18 +63,36 @@ window.__gpp_stub = function () {
       callback: clb,
       parameter: par,
     });
-    return {
-      eventName: "listenerRegistered",
-      listenerId: lnr, // Registered ID of the listener
-      data: true, // positive signal
-      pingData: {
-        gppVersion: "1.0",
-        cmpStatus: "stub",
-        cmpDisplayStatus: "hidden",
-        supportedAPIs: ["tcfeuv2", "tcfva", "usnat"],
-        cmpId: 31,
+    clb(
+      {
+        eventName: "listenerRegistered",
+        listenerId: lnr, // Registered ID of the listener
+        data: true, // positive signal
+        pingData: {
+          gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+          cmpStatus: "stub", // possible values: stub, loading, loaded, error
+          cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+          signalStatus: "not ready", // possible values: not ready, ready
+          supportedAPIs: [
+            "2:tcfeuv2",
+            "5:tcfcav1",
+            "6:uspv1",
+            "7:usnatv1",
+            "8:uscav1",
+            "9:usvav1",
+            "10:uscov1",
+            "11:usutv1",
+            "12:usctv1",
+          ], // list of supported APIs
+          cmpId: 0, // IAB assigned CMP ID, may be 0 during stub/loading
+          sectionList: [],
+          applicableSections: [],
+          gppString: "",
+          parsedSections: {},
+        },
       },
-    };
+      true
+    );
   } else if (cmd === "removeEventListener") {
     var success = false;
     for (var i = 0; i < __gpp.events.length; i++) {
@@ -66,38 +102,40 @@ window.__gpp_stub = function () {
         break;
       }
     }
-    return {
-      eventName: "listenerRemoved",
-      listenerId: par, // Registered ID of the listener
-      data: success, // status info
-      pingData: {
-        gppVersion: "1.0",
-        cmpStatus: "stub",
-        cmpDisplayStatus: "hidden",
-        supportedAPIs: ["tcfeuv2", "tcfva", "usnat"],
-        cmpId: 31,
+    clb(
+      {
+        eventName: "listenerRemoved",
+        listenerId: par, // Registered ID of the listener
+        data: success, // status info
+        pingData: {
+          gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+          cmpStatus: "stub", // possible values: stub, loading, loaded, error
+          cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+          signalStatus: "not ready", // possible values: not ready, ready
+          supportedAPIs: [
+            "2:tcfeuv2",
+            "5:tcfcav1",
+            "6:uspv1",
+            "7:usnatv1",
+            "8:uscav1",
+            "9:usvav1",
+            "10:uscov1",
+            "11:usutv1",
+            "12:usctv1",
+          ], // list of supported APIs
+          cmpId: 0, // IAB assigned CMP ID, may be 0 during stub/loading
+          sectionList: [],
+          applicableSections: [],
+          gppString: "",
+          parsedSections: {},
+        },
       },
-    };
-  } else if (cmd === "getGPPData") {
-    //return null; //CMPs can decide to return null during load
-    return {
-      sectionId: 3,
-      gppVersion: 1,
-      sectionList: [],
-      applicableSections: [0] /*may be filled by publisher*/,
-      gppString: "",
-      pingData: {
-        gppVersion: "1.0",
-        cmpStatus: "stub",
-        cmpDisplayStatus: "hidden",
-        supportedAPIs: ["tcfeuv2", "tcfva", "usnat"],
-        cmpId: 31,
-      },
-    };
-  }
-  //these commands must not be queued but may return null while in stub-mode
-  else if (cmd === "hasSection" || cmd === "getSection" || cmd === "getField") {
-    return null;
+      true
+    );
+  } else if (cmd === "hasSection") {
+    clb(false, true);
+  } else if (cmd === "getSection" || cmd === "getField") {
+    clb(null, true);
   }
   //queue all other commands
   else {
@@ -126,7 +164,7 @@ window.__gpp_msghandler = function (event) {
         event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
       },
       "parameter" in i ? i.parameter : null,
-      "version" in i ? i.version : 1
+      "version" in i ? i.version : "1.1"
     );
   }
 };

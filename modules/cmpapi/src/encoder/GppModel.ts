@@ -4,24 +4,45 @@ import { Sections } from "./section/Sections.js";
 import { TcfCaV1 } from "./section/TcfCaV1.js";
 import { TcfEuV2 } from "./section/TcfEuV2.js";
 import { UspV1 } from "./section/UspV1.js";
-import { UspNatV1 } from "./section/UspNatV1.js";
-import { UspCaV1 } from "./section/UspCaV1.js";
-import { UspVaV1 } from "./section/UspVaV1.js";
-import { UspCoV1 } from "./section/UspCoV1.js";
-import { UspUtV1 } from "./section/UspUtV1.js";
-import { UspCtV1 } from "./section/UspCtV1.js";
+import { UsNatV1 } from "./section/UsNatV1.js";
+import { UsCaV1 } from "./section/UsCaV1.js";
+import { UsVaV1 } from "./section/UsVaV1.js";
+import { UsCoV1 } from "./section/UsCoV1.js";
+import { UsUtV1 } from "./section/UsUtV1.js";
+import { UsCtV1 } from "./section/UsCtV1.js";
 import { InvalidFieldError } from "./error/InvalidFieldError.js";
+import { DecodingError } from "./error/DecodingError.js";
+import { LazyDecodingError } from "./error/LazyDecodingError.js";
 
 export class GppModel {
   private sections = new Map<string, EncodableSection>();
 
+  private encodedString;
+  private decoded;
+  private dirty;
+
   constructor(encodedString?: string) {
-    if (encodedString && encodedString.length > 0) {
-      this.decode(encodedString);
+    if (encodedString) {
+      this.encodedString = encodedString;
+      this.decoded = false;
+      this.dirty = false;
+    } else {
+      this.encodedString = "DBAA";
+      this.decoded = false;
+      this.dirty = false;
     }
   }
 
   public setFieldValue(sectionName: string, fieldName: string, value: any) {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     let section: EncodableSection = null;
     if (!this.sections.has(sectionName)) {
       if (sectionName === TcfCaV1.NAME) {
@@ -33,24 +54,24 @@ export class GppModel {
       } else if (sectionName === UspV1.NAME) {
         section = new UspV1();
         this.sections.set(UspV1.NAME, section);
-      } else if (sectionName === UspNatV1.NAME) {
-        section = new UspNatV1();
-        this.sections.set(UspNatV1.NAME, section);
-      } else if (sectionName === UspCaV1.NAME) {
-        section = new UspCaV1();
-        this.sections.set(UspCaV1.NAME, section);
-      } else if (sectionName === UspVaV1.NAME) {
-        section = new UspVaV1();
-        this.sections.set(UspVaV1.NAME, section);
-      } else if (sectionName === UspCoV1.NAME) {
-        section = new UspCoV1();
-        this.sections.set(UspCoV1.NAME, section);
-      } else if (sectionName === UspUtV1.NAME) {
-        section = new UspUtV1();
-        this.sections.set(UspUtV1.NAME, section);
-      } else if (sectionName === UspCtV1.NAME) {
-        section = new UspCtV1();
-        this.sections.set(UspCtV1.NAME, section);
+      } else if (sectionName === UsNatV1.NAME) {
+        section = new UsNatV1();
+        this.sections.set(UsNatV1.NAME, section);
+      } else if (sectionName === UsCaV1.NAME) {
+        section = new UsCaV1();
+        this.sections.set(UsCaV1.NAME, section);
+      } else if (sectionName === UsVaV1.NAME) {
+        section = new UsVaV1();
+        this.sections.set(UsVaV1.NAME, section);
+      } else if (sectionName === UsCoV1.NAME) {
+        section = new UsCoV1();
+        this.sections.set(UsCoV1.NAME, section);
+      } else if (sectionName === UsUtV1.NAME) {
+        section = new UsUtV1();
+        this.sections.set(UsUtV1.NAME, section);
+      } else if (sectionName === UsCtV1.NAME) {
+        section = new UsCtV1();
+        this.sections.set(UsCtV1.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
@@ -58,6 +79,7 @@ export class GppModel {
 
     if (section) {
       section.setFieldValue(fieldName, value);
+      this.dirty = true;
     } else {
       throw new InvalidFieldError(sectionName + "." + fieldName + " not found");
     }
@@ -68,6 +90,15 @@ export class GppModel {
   }
 
   public getFieldValue(sectionName: string, fieldName: string) {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     if (this.sections.has(sectionName)) {
       return this.sections.get(sectionName).getFieldValue(fieldName);
     } else {
@@ -80,6 +111,15 @@ export class GppModel {
   }
 
   public hasField(sectionName: string, fieldName: string) {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     if (this.sections.has(sectionName)) {
       return this.sections.get(sectionName).hasField(fieldName);
     } else {
@@ -92,6 +132,15 @@ export class GppModel {
   }
 
   public hasSection(sectionName: string) {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     return this.sections.has(sectionName);
   }
 
@@ -100,7 +149,17 @@ export class GppModel {
   }
 
   public deleteSection(sectionName: string) {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     this.sections.delete(sectionName);
+    this.dirty = true;
   }
 
   public deleteSectionById(sectionId: number) {
@@ -109,15 +168,36 @@ export class GppModel {
 
   public clear() {
     this.sections.clear();
+    this.encodedString = "DBAA";
+    this.decoded = false;
+    this.dirty = false;
   }
 
   public getHeader() {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     let header = new HeaderV1();
     header.setFieldValue("SectionIds", this.getSectionIds());
     return header.toObj();
   }
 
   public getSection(sectionName: string) {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     if (this.sections.has(sectionName)) {
       return this.sections.get(sectionName).toObj();
     } else {
@@ -126,6 +206,15 @@ export class GppModel {
   }
 
   public getSectionIds() {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     let sectionIds = [];
     for (let i = 0; i < Sections.SECTION_ORDER.length; i++) {
       let sectionName = Sections.SECTION_ORDER[i];
@@ -138,6 +227,19 @@ export class GppModel {
   }
 
   public encode() {
+    if (!this.dirty) {
+      return this.encodedString;
+    }
+
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     let encodedSections = [];
     let sectionIds = [];
     for (let i = 0; i < Sections.SECTION_ORDER.length; i++) {
@@ -153,11 +255,15 @@ export class GppModel {
     header.setFieldValue("SectionIds", this.getSectionIds());
     encodedSections.unshift(header.encode());
 
-    let encodedString = encodedSections.join("~");
-    return encodedString;
+    this.encodedString = encodedSections.join("~");
+    this.dirty = false;
+    return this.encodedString;
   }
 
   public decode(str: string) {
+    this.encodedString = str;
+    this.decoded = false;
+    this.dirty = true;
     this.sections.clear();
 
     let encodedSections = str.split("~");
@@ -175,29 +281,41 @@ export class GppModel {
       } else if (sectionIds[i] === UspV1.ID) {
         let section = new UspV1(encodedSections[i + 1]);
         this.sections.set(UspV1.NAME, section);
-      } else if (sectionIds[i] === UspNatV1.ID) {
-        let section = new UspNatV1(encodedSections[i + 1]);
-        this.sections.set(UspNatV1.NAME, section);
-      } else if (sectionIds[i] === UspCaV1.ID) {
-        let section = new UspCaV1(encodedSections[i + 1]);
-        this.sections.set(UspCaV1.NAME, section);
-      } else if (sectionIds[i] === UspVaV1.ID) {
-        let section = new UspVaV1(encodedSections[i + 1]);
-        this.sections.set(UspVaV1.NAME, section);
-      } else if (sectionIds[i] === UspCoV1.ID) {
-        let section = new UspCoV1(encodedSections[i + 1]);
-        this.sections.set(UspCoV1.NAME, section);
-      } else if (sectionIds[i] === UspUtV1.ID) {
-        let section = new UspUtV1(encodedSections[i + 1]);
-        this.sections.set(UspUtV1.NAME, section);
-      } else if (sectionIds[i] === UspCtV1.ID) {
-        let section = new UspCtV1(encodedSections[i + 1]);
-        this.sections.set(UspCtV1.NAME, section);
+      } else if (sectionIds[i] === UsNatV1.ID) {
+        let section = new UsNatV1(encodedSections[i + 1]);
+        this.sections.set(UsNatV1.NAME, section);
+      } else if (sectionIds[i] === UsCaV1.ID) {
+        let section = new UsCaV1(encodedSections[i + 1]);
+        this.sections.set(UsCaV1.NAME, section);
+      } else if (sectionIds[i] === UsVaV1.ID) {
+        let section = new UsVaV1(encodedSections[i + 1]);
+        this.sections.set(UsVaV1.NAME, section);
+      } else if (sectionIds[i] === UsCoV1.ID) {
+        let section = new UsCoV1(encodedSections[i + 1]);
+        this.sections.set(UsCoV1.NAME, section);
+      } else if (sectionIds[i] === UsUtV1.ID) {
+        let section = new UsUtV1(encodedSections[i + 1]);
+        this.sections.set(UsUtV1.NAME, section);
+      } else if (sectionIds[i] === UsCtV1.ID) {
+        let section = new UsCtV1(encodedSections[i + 1]);
+        this.sections.set(UsCtV1.NAME, section);
       }
     }
+
+    this.decoded = true;
+    this.dirty = false;
   }
 
   public encodeSection(sectionName: string): string {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     if (this.sections.has(sectionName)) {
       return this.sections.get(sectionName).encode();
     } else {
@@ -210,6 +328,15 @@ export class GppModel {
   }
 
   public decodeSection(sectionName: string, encodedString: string): void {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     let section: EncodableSection = null;
     if (!this.sections.has(sectionName)) {
       if (sectionName === TcfCaV1.NAME) {
@@ -221,24 +348,24 @@ export class GppModel {
       } else if (sectionName === UspV1.NAME) {
         section = new UspV1();
         this.sections.set(UspV1.NAME, section);
-      } else if (sectionName === UspNatV1.NAME) {
-        section = new UspNatV1();
-        this.sections.set(UspNatV1.NAME, section);
-      } else if (sectionName === UspCaV1.NAME) {
-        section = new UspCaV1();
-        this.sections.set(UspCaV1.NAME, section);
-      } else if (sectionName === UspVaV1.NAME) {
-        section = new UspVaV1();
-        this.sections.set(UspVaV1.NAME, section);
-      } else if (sectionName === UspCoV1.NAME) {
-        section = new UspCoV1();
-        this.sections.set(UspCoV1.NAME, section);
-      } else if (sectionName === UspUtV1.NAME) {
-        section = new UspUtV1();
-        this.sections.set(UspUtV1.NAME, section);
-      } else if (sectionName === UspCtV1.NAME) {
-        section = new UspCtV1();
-        this.sections.set(UspCtV1.NAME, section);
+      } else if (sectionName === UsNatV1.NAME) {
+        section = new UsNatV1();
+        this.sections.set(UsNatV1.NAME, section);
+      } else if (sectionName === UsCaV1.NAME) {
+        section = new UsCaV1();
+        this.sections.set(UsCaV1.NAME, section);
+      } else if (sectionName === UsVaV1.NAME) {
+        section = new UsVaV1();
+        this.sections.set(UsVaV1.NAME, section);
+      } else if (sectionName === UsCoV1.NAME) {
+        section = new UsCoV1();
+        this.sections.set(UsCoV1.NAME, section);
+      } else if (sectionName === UsUtV1.NAME) {
+        section = new UsUtV1();
+        this.sections.set(UsUtV1.NAME, section);
+      } else if (sectionName === UsCtV1.NAME) {
+        section = new UsCtV1();
+        this.sections.set(UsCtV1.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
@@ -254,6 +381,15 @@ export class GppModel {
   }
 
   public toObject() {
+    // lazily decode
+    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
+      try {
+        this.decode(this.encodedString);
+      } catch (e) {
+        throw new LazyDecodingError(e.message);
+      }
+    }
+
     let obj = {};
     for (let i = 0; i < Sections.SECTION_ORDER.length; i++) {
       let sectionName = Sections.SECTION_ORDER[i];
