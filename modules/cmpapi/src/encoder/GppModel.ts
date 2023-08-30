@@ -262,8 +262,6 @@ export class GppModel {
 
   public decode(str: string) {
     this.encodedString = str;
-    this.decoded = false;
-    this.dirty = true;
     this.sections.clear();
 
     let encodedSections = str.split("~");
