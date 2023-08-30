@@ -14,7 +14,7 @@ import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64
 
 export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 5;
-  public static readonly VERSION = 2;
+  public static readonly VERSION = 1;
   public static readonly NAME = "tcfcav1";
 
   private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
@@ -33,7 +33,7 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(TcfCaV1Field.CONSENT_SCREEN.toString(), new EncodableFixedInteger(6, 0));
     fields.set(TcfCaV1Field.CONSENT_LANGUAGE.toString(), new EncodableFixedString(2, "EN"));
     fields.set(TcfCaV1Field.VENDOR_LIST_VERSION.toString(), new EncodableFixedInteger(12, 0));
-    fields.set(TcfCaV1Field.TCF_POLICY_VERSION.toString(), new EncodableFixedInteger(6, 1));
+    fields.set(TcfCaV1Field.TCF_POLICY_VERSION.toString(), new EncodableFixedInteger(6, 2));
     fields.set(TcfCaV1Field.USE_NON_STANDARD_STACKS.toString(), new EncodableBoolean(false));
     fields.set(
       TcfCaV1Field.SPECIAL_FEATURE_EXPRESS_CONSENT.toString(),
