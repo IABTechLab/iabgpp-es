@@ -3,8 +3,8 @@ import * as sinon from "sinon";
 import { GVL, GVLUrlConfig } from "../src/GVL";
 import { XMLHttpTestTools } from "./util/XMLHttpTestTools";
 
-import vendorlistJsonV2_2 from "./vendorlist/v2.2/vendor-list.json" assert { type: "json" };
-import translationJson from "./vendorlist/v2/purposes-fr.json" assert { type: "json" };
+import vendorlistJsonV2_2 from "./vendorlist/v3.0/vendor-list.json" assert { type: "json" };
+import translationJson from "./vendorlist/v3.0/purposes-fr.json" assert { type: "json" };
 
 describe("GVL", (): void => {
   const assertPopulatedV2_2 = (gvl: GVL): void => {
