@@ -3,22 +3,22 @@ import * as sinon from "sinon";
 import { GVL, GVLUrlConfig } from "../src/GVL";
 import { XMLHttpTestTools } from "./util/XMLHttpTestTools";
 
-import vendorlistJsonV2_2 from "./vendorlist/v3.0/vendor-list.json" assert { type: "json" };
+import vendorlistJsonV3_0 from "./vendorlist/v3.0/vendor-list.json" assert { type: "json" };
 import translationJson from "./vendorlist/v3.0/purposes-fr.json" assert { type: "json" };
 
 describe("GVL", (): void => {
-  const assertPopulatedV2_2 = (gvl: GVL): void => {
+  const assertPopulatedV3_0 = (gvl: GVL): void => {
     expect(gvl.gvlSpecificationVersion, "gvl.gvlSpecificationVersion").to.deep.equal(
-      vendorlistJsonV2_2.gvlSpecificationVersion
+      vendorlistJsonV3_0.gvlSpecificationVersion
     );
-    expect(gvl.vendorListVersion, "gvl.vendorListVersion").to.deep.equal(vendorlistJsonV2_2.vendorListVersion);
-    expect(gvl.tcfPolicyVersion, "gvl.tcfPolicyVersion").to.deep.equal(vendorlistJsonV2_2.tcfPolicyVersion);
-    expect(gvl.purposes, "gvl.purposes").to.deep.equal(vendorlistJsonV2_2.purposes);
-    expect(gvl.specialPurposes, "gvl.specialPurposes").to.deep.equal(vendorlistJsonV2_2.specialPurposes);
-    expect(gvl.features, "gvl.features").to.deep.equal(vendorlistJsonV2_2.features);
-    expect(gvl.specialFeatures, "gvl.specialFeatures").to.deep.equal(vendorlistJsonV2_2.specialFeatures);
+    expect(gvl.vendorListVersion, "gvl.vendorListVersion").to.deep.equal(vendorlistJsonV3_0.vendorListVersion);
+    expect(gvl.tcfPolicyVersion, "gvl.tcfPolicyVersion").to.deep.equal(vendorlistJsonV3_0.tcfPolicyVersion);
+    expect(gvl.purposes, "gvl.purposes").to.deep.equal(vendorlistJsonV3_0.purposes);
+    expect(gvl.specialPurposes, "gvl.specialPurposes").to.deep.equal(vendorlistJsonV3_0.specialPurposes);
+    expect(gvl.features, "gvl.features").to.deep.equal(vendorlistJsonV3_0.features);
+    expect(gvl.specialFeatures, "gvl.specialFeatures").to.deep.equal(vendorlistJsonV3_0.specialFeatures);
 
-    for (let [vendorId, vendor] of Object.entries(vendorlistJsonV2_2.vendors)) {
+    for (let [vendorId, vendor] of Object.entries(vendorlistJsonV3_0.vendors)) {
       if (!vendor["deletedDate"]) {
         expect(gvl.vendors[vendorId]).to.deep.equal(vendor);
       } else {
@@ -33,10 +33,10 @@ describe("GVL", (): void => {
     expect(gvl.features, "gvl.features").to.deep.equal(translationJson.features);
     expect(gvl.specialFeatures, "gvl.specialFeatures").to.deep.equal(translationJson.specialFeatures);
     expect(gvl.stacks, "gvl.stacks").to.deep.equal(translationJson.stacks);
-    expect(gvl.purposes, "gvl.purposes").to.not.deep.equal(vendorlistJsonV2_2.purposes);
-    expect(gvl.specialPurposes, "gvl.specialPurposes").to.not.deep.equal(vendorlistJsonV2_2.specialPurposes);
-    expect(gvl.features, "gvl.features").to.not.deep.equal(vendorlistJsonV2_2.features);
-    expect(gvl.specialFeatures, "gvl.specialFeatures").to.not.deep.equal(vendorlistJsonV2_2.specialFeatures);
+    expect(gvl.purposes, "gvl.purposes").to.not.deep.equal(vendorlistJsonV3_0.purposes);
+    expect(gvl.specialPurposes, "gvl.specialPurposes").to.not.deep.equal(vendorlistJsonV3_0.specialPurposes);
+    expect(gvl.features, "gvl.features").to.not.deep.equal(vendorlistJsonV3_0.features);
+    expect(gvl.specialFeatures, "gvl.specialFeatures").to.not.deep.equal(vendorlistJsonV3_0.specialFeatures);
     expect(gvl.language, "gvl.language").to.equal(lang.toUpperCase());
   };
 
@@ -44,13 +44,13 @@ describe("GVL", (): void => {
     XMLHttpTestTools.beforeEach();
   });
 
-  it("should propogate all values with passed in json V2.2", (): void => {
-    const gvl: GVL = GVL.fromVendorList(vendorlistJsonV2_2);
+  it("should propogate all values with passed in json V3.0", (): void => {
+    const gvl: GVL = GVL.fromVendorList(vendorlistJsonV3_0);
 
-    assertPopulatedV2_2(gvl);
+    assertPopulatedV3_0(gvl);
   });
 
-  it("should get latest GVL if nothing is passed to the constructor V2.2", async (): Promise<void> => {
+  it("should get latest GVL if nothing is passed to the constructor V3.0", async (): Promise<void> => {
     let config = new GVLUrlConfig();
     config.baseUrl = "http://sweetcmp.com/";
     let promise = GVL.fromUrl(config);
@@ -59,14 +59,14 @@ describe("GVL", (): void => {
     const req: sinon.SinonFakeXMLHttpRequest = XMLHttpTestTools.requests[0];
     expect(req.method).to.equal("GET");
 
-    req.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV2_2));
+    req.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV3_0));
 
     let gvl = await promise;
 
-    assertPopulatedV2_2(gvl);
+    assertPopulatedV3_0(gvl);
   });
 
-  it('should get latest GVL if "LATEST" is passed to the constructor V2.2', async (): Promise<void> => {
+  it('should get latest GVL if "LATEST" is passed to the constructor V3.0', async (): Promise<void> => {
     let config = new GVLUrlConfig();
     config.baseUrl = "http://sweetcmp.com";
     config.version = "LATEST";
@@ -79,14 +79,14 @@ describe("GVL", (): void => {
     expect(req.method).to.equal("GET");
     expect(req.url).to.equal(`http://sweetcmp.com/vendor-list.json`);
 
-    req.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV2_2));
+    req.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV3_0));
 
     let gvl = await promise;
 
-    assertPopulatedV2_2(gvl);
+    assertPopulatedV3_0(gvl);
   });
 
-  it("should get versioned GVL if version number is passed V2.2", async (): Promise<void> => {
+  it("should get versioned GVL if version number is passed V3.0", async (): Promise<void> => {
     let version = 22;
     let config = new GVLUrlConfig();
     config.baseUrl = "http://sweetcmp.com";
@@ -100,14 +100,14 @@ describe("GVL", (): void => {
     expect(req.method).to.equal("GET");
     expect(req.url).to.equal(`http://sweetcmp.com/archives/vendor-list-v${version}.json`);
 
-    req.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV2_2));
+    req.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV3_0));
 
     let gvl = await promise;
 
-    assertPopulatedV2_2(gvl);
+    assertPopulatedV3_0(gvl);
   });
 
-  it("should get versioned GVL if version number as string is passed V2.2", async (): Promise<void> => {
+  it("should get versioned GVL if version number as string is passed V3.0", async (): Promise<void> => {
     let version = 23;
     let config = new GVLUrlConfig();
     config.baseUrl = "http://sweetcmp.com";
@@ -121,14 +121,14 @@ describe("GVL", (): void => {
     expect(req.method).to.equal("GET");
     expect(req.url).to.equal(`http://sweetcmp.com/archives/vendor-list-v${version}.json`);
 
-    req.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV2_2));
+    req.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV3_0));
 
     let gvl = await promise;
 
-    assertPopulatedV2_2(gvl);
+    assertPopulatedV3_0(gvl);
   });
 
-  it("should not request language V2.2", async (): Promise<void> => {
+  it("should not request language V3.0", async (): Promise<void> => {
     let config = new GVLUrlConfig();
     config.baseUrl = "http://sweetcmp.com";
     let promise = GVL.fromUrl(config);
@@ -136,18 +136,18 @@ describe("GVL", (): void => {
     expect(XMLHttpTestTools.requests.length).to.equal(1);
     const req1: sinon.SinonFakeXMLHttpRequest = XMLHttpTestTools.requests[0];
     expect(req1.method).to.equal("GET");
-    req1.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV2_2));
+    req1.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV3_0));
 
     let gvl = await promise;
 
-    assertPopulatedV2_2(gvl);
+    assertPopulatedV3_0(gvl);
 
     gvl.changeLanguage("EN");
 
     expect(XMLHttpTestTools.requests.length).to.equal(1);
   });
 
-  it("should request language V2.2", async (): Promise<void> => {
+  it("should request language V3.0", async (): Promise<void> => {
     let config = new GVLUrlConfig();
     config.baseUrl = "http://sweetcmp.com";
     let promise = GVL.fromUrl(config);
@@ -155,11 +155,11 @@ describe("GVL", (): void => {
     expect(XMLHttpTestTools.requests.length).to.equal(1);
     const req1: sinon.SinonFakeXMLHttpRequest = XMLHttpTestTools.requests[0];
     expect(req1.method).to.equal("GET");
-    req1.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV2_2));
+    req1.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(vendorlistJsonV3_0));
 
     let gvl = await promise;
 
-    assertPopulatedV2_2(gvl);
+    assertPopulatedV3_0(gvl);
 
     gvl.changeLanguage("FR");
 
@@ -169,20 +169,20 @@ describe("GVL", (): void => {
     req2.respond(200, XMLHttpTestTools.JSON_HEADER, JSON.stringify(translationJson));
   });
 
-  it("should narrow a group of vendors when narrowVendorsTo is called with list of ids V2.2", (): void => {
-    const gvl: GVL = GVL.fromVendorList(vendorlistJsonV2_2);
-    const onlyVendorId: string = Object.keys(vendorlistJsonV2_2.vendors)[0];
+  it("should narrow a group of vendors when narrowVendorsTo is called with list of ids V3.0", (): void => {
+    const gvl: GVL = GVL.fromVendorList(vendorlistJsonV3_0);
+    const onlyVendorId: string = Object.keys(vendorlistJsonV3_0.vendors)[0];
 
     gvl.narrowVendorsTo([parseInt(onlyVendorId, 10)]);
-    expect(gvl.vendors[onlyVendorId]).to.deep.equal(vendorlistJsonV2_2.vendors[onlyVendorId]);
+    expect(gvl.vendors[onlyVendorId]).to.deep.equal(vendorlistJsonV3_0.vendors[onlyVendorId]);
     expect(Object.keys(gvl.vendors).length).to.equal(1);
-    expect(gvl.vendors[Object.keys(vendorlistJsonV2_2.vendors)[1]]).to.be.undefined;
+    expect(gvl.vendors[Object.keys(vendorlistJsonV3_0.vendors)[1]]).to.be.undefined;
   });
 
-  it("should remove a vendor if it has a deletedDate V2.2", (): void => {
+  it("should remove a vendor if it has a deletedDate V3.0", (): void => {
     const vendorId = "1";
 
-    let gvl = GVL.fromVendorList(vendorlistJsonV2_2);
+    let gvl = GVL.fromVendorList(vendorlistJsonV3_0);
 
     const json = gvl.getJson();
     json.vendors[vendorId] = {
