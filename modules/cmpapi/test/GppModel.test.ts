@@ -1,8 +1,6 @@
 import { GppModel } from "../src/encoder/GppModel";
 import { expect } from "chai";
-import { HeaderV1Field } from "../src/encoder/field/HeaderV1Field";
 import { TcfCaV1Field } from "../src/encoder/field/TcfCaV1Field";
-import { LazyDecodingError } from "../src/encoder/error/LazyDecodingError";
 
 let utcDateTime = new Date("2022-01-01T00:00:00Z");
 
@@ -606,7 +604,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.LAST_UPDATED)).to.eql(new Date("2022-01-01T00:00:00Z"));
 
     expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.CONSENT_LANGUAGE)).to.eql("EN");
-    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.SEGMENT_TYPE)).to.eql(3);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
   it("should encode tcfeuv2 vendor consents [28]", (): void => {

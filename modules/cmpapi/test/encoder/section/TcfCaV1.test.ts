@@ -281,7 +281,7 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.LAST_UPDATED)).to.eql(new Date("1970-01-01T00:00:00Z"));
 
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.CONSENT_LANGUAGE)).to.eql("EN");
-    expect(tcfCaV2.getFieldValue(TcfCaV1Field.SEGMENT_TYPE)).to.eql(3);
+    expect(tcfCaV2.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
   it("should decode CPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao", (): void => {
@@ -418,6 +418,6 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.LAST_UPDATED)).to.eql(new Date("2022-01-01T00:00:00Z"));
 
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.CONSENT_LANGUAGE)).to.eql("EN");
-    expect(tcfCaV2.getFieldValue(TcfCaV1Field.SEGMENT_TYPE)).to.eql(3);
+    expect(tcfCaV2.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 });

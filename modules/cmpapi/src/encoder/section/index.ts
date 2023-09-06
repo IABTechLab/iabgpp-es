@@ -1,5 +1,4 @@
-export * from "./AbstractEncodableBitStringSection.js";
-export * from "./AbstractEncodableSegmentedBitStringSection.js";
+export * from "./AbstractLazilyEncodableSection.js";
 export * from "./EncodableSection.js";
 export * from "./HeaderV1.js";
 export * from "./Sections.js";
