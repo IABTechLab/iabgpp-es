@@ -1,6 +1,7 @@
 import { GppModel } from "../src/encoder/GppModel";
 import { expect } from "chai";
 import { TcfCaV1Field } from "../src/encoder/field/TcfCaV1Field";
+import { UspV1Field } from "../src/encoder/field/UspV1Field";
 
 let utcDateTime = new Date("2022-01-01T00:00:00Z");
 
@@ -706,5 +707,43 @@ describe("manifest.GppModel", (): void => {
     ]);
 
     expect(decodedModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([21, 32, 81, 128, 173, 210, 238, 755]);
+  });
+
+  it("should handle null constructor", (): void => {
+    let gppModel = new GppModel(null);
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should handle empty string constructor", (): void => {
+    let gppModel = new GppModel("");
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should decode null", (): void => {
+    let gppModel = new GppModel("DBABTA~1---");
+    expect(gppModel.encode()).to.eq("DBABTA~1---");
+
+    gppModel.decode(null);
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should decode empty string", (): void => {
+    let gppModel = new GppModel("DBABTA~1---");
+    expect(gppModel.encode()).to.eq("DBABTA~1---");
+
+    gppModel.decode("");
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
   });
 });

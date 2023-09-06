@@ -19,7 +19,7 @@ export class GppModel {
   private decoded = true;
   private dirty = false;
 
-  constructor(encodedString?: string) {
+  constructor(encodedString?: string | null) {
     if (encodedString) {
       this.decode(encodedString);
     }
@@ -336,7 +336,7 @@ export class GppModel {
     return this.encodedString;
   }
 
-  public decode(encodedString: string): void {
+  public decode(encodedString: string | null): void {
     this.encodedString = encodedString;
     this.dirty = false;
     this.decoded = false;
