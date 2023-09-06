@@ -40,7 +40,7 @@ export class UsUtV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
       new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0])
     );
     fields.put(UsUtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(), new EncodableFixedInteger(2, 0));
-    fields.put(UsUtV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 0));
+    fields.put(UsUtV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 1));
     fields.put(UsUtV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(), new EncodableFixedInteger(2, 0));
     fields.put(UsUtV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(), new EncodableFixedInteger(2, 0));
     return fields;

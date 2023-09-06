@@ -3,9 +3,9 @@ import { UsCaV1Field } from "../../../src/encoder/field/UsCaV1Field";
 import { UsCaV1 } from "../../../src/encoder/section/UsCaV1";
 
 describe("manifest.section.UsCaV1", (): void => {
-  it("should encode default to BAAAAAAA.QA", (): void => {
+  it("should encode default to BAAAAABA.QA", (): void => {
     let usCaV1 = new UsCaV1();
-    expect(usCaV1.encode()).to.eql("BAAAAAAA.QA");
+    expect(usCaV1.encode()).to.eql("BAAAAABA.QA");
   });
 
   it("should encode to BbYbGwXY.YA", (): void => {
@@ -46,10 +46,10 @@ describe("manifest.section.UsCaV1", (): void => {
     expect(usCaV1.encode()).to.eql("BUoAAABQ.YA");
   });
 
-  it("should encode to BAAAAAAA", (): void => {
+  it("should encode to BAAAAABA", (): void => {
     let usCaV1 = new UsCaV1();
     usCaV1.setFieldValue(UsCaV1Field.GPC_SEGMENT_INCLUDED, false);
-    expect(usCaV1.encode()).to.eql("BAAAAAAA");
+    expect(usCaV1.encode()).to.eql("BAAAAABA");
   });
 
   it("should decode BbYbGwXY.YA", (): void => {
@@ -70,7 +70,7 @@ describe("manifest.section.UsCaV1", (): void => {
     expect(true, usCaV1.getFieldValue(UsCaV1Field.GPC_SEGMENT_INCLUDED));
   });
 
-  it("should decode BAAAAAAA", (): void => {
+  it("should decode BAAAAABA", (): void => {
     let usCaV1 = new UsCaV1("BbYbGwXY.YA");
 
     expect(1, usCaV1.getFieldValue(UsCaV1Field.SALE_OPT_OUT_NOTICE));

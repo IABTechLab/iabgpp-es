@@ -3,9 +3,9 @@ import { UsUtV1Field } from "../../../src/encoder/field/UsUtV1Field";
 import { UsUtV1 } from "../../../src/encoder/section/UsUtV1";
 
 describe("manifest.section.UsUtV1", (): void => {
-  it("should encode default to BAAAAAAA", (): void => {
+  it("should encode default to BAAAAAQA", (): void => {
     let usUtV1 = new UsUtV1();
-    expect(usUtV1.encode()).to.eql("BAAAAAAA");
+    expect(usUtV1.encode()).to.eql("BAAAAAQA");
   });
 
   it("should encode to BbWGxvbA", (): void => {

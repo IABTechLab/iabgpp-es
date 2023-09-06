@@ -3,9 +3,9 @@ import { UsNatV1Field } from "../../../src/encoder/field/UsNatV1Field";
 import { UsNatV1 } from "../../../src/encoder/section/UsNatV1";
 
 describe("manifest.section.UsNatV1", (): void => {
-  it("should encode default to BAAAAAAAAAA.QA", (): void => {
+  it("should encode default to BAAAAAAAAQA.QA", (): void => {
     let usNatV1 = new UsNatV1();
-    expect(usNatV1.encode()).to.eql("BAAAAAAAAAA.QA");
+    expect(usNatV1.encode()).to.eql("BAAAAAAAAQA.QA");
   });
 
   it("should encode to BbbbGxsbFbA.YA", (): void => {
@@ -54,10 +54,10 @@ describe("manifest.section.UsNatV1", (): void => {
     expect(usNatV1.encode()).to.eql("BVQVAAAAAUA.YA");
   });
 
-  it("should encode default to BAAAAAAAAAA", (): void => {
+  it("should encode default to BAAAAAAAAQA", (): void => {
     let usNatV1 = new UsNatV1();
     usNatV1.setFieldValue(UsNatV1Field.GPC_SEGMENT_INCLUDED, false);
-    expect(usNatV1.encode()).to.eql("BAAAAAAAAAA");
+    expect(usNatV1.encode()).to.eql("BAAAAAAAAQA");
   });
 
   it("should decode BbbbGxsbFbA.YA", (): void => {

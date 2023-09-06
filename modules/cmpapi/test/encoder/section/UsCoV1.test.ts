@@ -3,9 +3,9 @@ import { UsCoV1Field } from "../../../src/encoder/field/UsCoV1Field";
 import { UsCoV1 } from "../../../src/encoder/section/UsCoV1";
 
 describe("manifest.section.UsCoV1", (): void => {
-  it("should encode default to BAAAAAA.QA", (): void => {
+  it("should encode default to BAAAAEA.QA", (): void => {
     let usCoV1 = new UsCoV1();
-    expect(usCoV1.encode()).to.eql("BAAAAAA.QA");
+    expect(usCoV1.encode()).to.eql("BAAAAEA.QA");
   });
 
   it("should encode to BbYbG2w.YA", (): void => {
@@ -26,10 +26,10 @@ describe("manifest.section.UsCoV1", (): void => {
     expect(usCoV1.encode()).to.eql("BbYbG2w.YA");
   });
 
-  it("should encode default to BAAAAAA", (): void => {
+  it("should encode default to BAAAAEA", (): void => {
     let usCoV1 = new UsCoV1();
     usCoV1.setFieldValue(UsCoV1Field.GPC_SEGMENT_INCLUDED, false);
-    expect(usCoV1.encode()).to.eql("BAAAAAA");
+    expect(usCoV1.encode()).to.eql("BAAAAEA");
   });
 
   it("should decode BbYbG2w.YA", (): void => {
