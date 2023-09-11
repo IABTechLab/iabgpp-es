@@ -284,8 +284,8 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
-  it("should decode CPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao", (): void => {
-    let tcfCaV2 = new TcfCaV1("CPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
+  it("should decode BPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao", (): void => {
+    let tcfCaV2 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
 
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.CMP_ID)).to.eql(50);
     expect(tcfCaV2.getFieldValue(TcfCaV1Field.CMP_VERSION)).to.eql(2);

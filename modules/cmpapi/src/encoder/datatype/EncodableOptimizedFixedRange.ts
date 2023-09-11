@@ -70,6 +70,6 @@ export class EncodableOptimizedFixedRange extends AbstractEncodableBitStringData
 
   // Overriden
   public setValue(value: number[]) {
-    super.setValue([...new Set(value)].sort((n1, n2) => n1 - n2));
+    super.setValue(Array.from(new Set(value)).sort((n1, n2) => n1 - n2));
   }
 }
