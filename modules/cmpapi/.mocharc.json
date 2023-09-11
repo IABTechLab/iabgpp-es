@@ -4,7 +4,7 @@
   "spec": [
     "./test/GppModel.test.ts",
     "./test/GVLV2.test.ts",
-    "./test/GVLV2_2.test.ts",
+    "./test/GVLV3_0.test.ts",
     "./test/encoder/datatype/EncodableBoolean.test.ts",
     "./test/encoder/datatype/EncodableDatetime.test.ts",
     "./test/encoder/datatype/EncodableFibonacciInteger.test.ts",
