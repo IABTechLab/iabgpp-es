@@ -12,4 +12,6 @@ export interface EncodableSegment {
   encode(): string;
 
   decode(encodedString: string): void;
+
+  validate(): void;
 }

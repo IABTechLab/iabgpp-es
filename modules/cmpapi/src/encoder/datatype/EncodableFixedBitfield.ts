@@ -19,7 +19,6 @@ export class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<b
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.numElements);
   }
 

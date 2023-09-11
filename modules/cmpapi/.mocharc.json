@@ -32,9 +32,8 @@
     "./test/encoder/section/UsCtV1.test.ts",
     "./test/encoder/section/UsNatV1.test.ts",
     "./test/encoder/section/UsUtV1.test.ts",
-    "./test/encoder/section/UspV1.test.ts",
-    "./test/encoder/section/UspV1.test.ts",
     "./test/encoder/section/UsVaV1.test.ts",
+    "./test/encoder/section/UspV1.test.ts",
     "./test/gvl/client/JsonHttpClient.test.ts"
   ]
 }

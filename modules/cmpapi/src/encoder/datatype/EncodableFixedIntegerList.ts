@@ -1,12 +1,13 @@
 import { FixedIntegerListEncoder } from "./encoder/FixedIntegerListEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<number[]> {
   private elementBitStringLength: number;
   private numElements: number;
 
-  constructor(elementBitStringLength: number, value: number[]) {
-    super();
+  constructor(elementBitStringLength: number, value: number[], validator?: Predicate<number[]>) {
+    super(validator);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = value.length;
     this.setValue(value);
@@ -21,7 +22,6 @@ export class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.elementBitStringLength * this.numElements);
   }
 

@@ -1,11 +1,12 @@
 import { FixedStringEncoder } from "./encoder/FixedStringEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableFixedString extends AbstractEncodableBitStringDataType<string> {
   private stringLength: number;
 
-  constructor(stringLength: number, value: string) {
-    super();
+  constructor(stringLength: number, value: string, validator?: Predicate<string>) {
+    super(validator);
     this.stringLength = stringLength;
     this.setValue(value);
   }
@@ -19,7 +20,6 @@ export class EncodableFixedString extends AbstractEncodableBitStringDataType<str
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.stringLength * 6);
   }
 }

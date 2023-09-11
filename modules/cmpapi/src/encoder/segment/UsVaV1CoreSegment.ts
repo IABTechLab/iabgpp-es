@@ -3,6 +3,8 @@ import { CompressedBase64UrlEncoder } from "../base64/CompressedBase64UrlEncoder
 import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableFixedIntegerList } from "../datatype/EncodableFixedIntegerList.js";
+import { Predicate } from "../datatype/validate/Predicate.js";
+import { ValidationError } from "../error/ValidationError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 import { USVAV1_CORE_SEGMENT_FIELD_NAMES } from "../field/UsVaV1Field.js";
 import { UsVaV1Field } from "../field/UsVaV1Field.js";
@@ -27,21 +29,71 @@ export class UsVaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
 
   // overriden
   protected initializeFields(): EncodableBitStringFields {
+    const nullableBooleanAsTwoBitIntegerValidator = new (class implements Predicate<number> {
+      test(n: number): boolean {
+        return n >= 0 && n <= 2;
+      }
+    })();
+
+    const nonNullableBooleanAsTwoBitIntegerValidator = new (class implements Predicate<number> {
+      test(n: number): boolean {
+        return n >= 1 && n <= 2;
+      }
+    })();
+    const nullableBooleanAsTwoBitIntegerListValidator = new (class implements Predicate<number[]> {
+      test(l: number[]): boolean {
+        for (let i = 0; i < l.length; i++) {
+          let n = l[i];
+          if (n < 0 || n > 2) {
+            return false;
+          }
+        }
+        return true;
+      }
+    })();
+
     let fields: EncodableBitStringFields = new EncodableBitStringFields();
     fields.put(UsVaV1Field.VERSION.toString(), new EncodableFixedInteger(6, UsVaV1.VERSION));
-    fields.put(UsVaV1Field.SHARING_NOTICE.toString(), new EncodableFixedInteger(2, 0));
-    fields.put(UsVaV1Field.SALE_OPT_OUT_NOTICE.toString(), new EncodableFixedInteger(2, 0));
-    fields.put(UsVaV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(), new EncodableFixedInteger(2, 0));
-    fields.put(UsVaV1Field.SALE_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
-    fields.put(UsVaV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
+    fields.put(
+      UsVaV1Field.SHARING_NOTICE.toString(),
+      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+    );
+    fields.put(
+      UsVaV1Field.SALE_OPT_OUT_NOTICE.toString(),
+      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+    );
+    fields.put(
+      UsVaV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(),
+      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+    );
+    fields.put(
+      UsVaV1Field.SALE_OPT_OUT.toString(),
+      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+    );
+    fields.put(
+      UsVaV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(),
+      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+    );
     fields.put(
       UsVaV1Field.SENSITIVE_DATA_PROCESSING.toString(),
-      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0])
+      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0], nullableBooleanAsTwoBitIntegerListValidator)
     );
-    fields.put(UsVaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(), new EncodableFixedInteger(2, 0));
-    fields.put(UsVaV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 1));
-    fields.put(UsVaV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(), new EncodableFixedInteger(2, 0));
-    fields.put(UsVaV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(), new EncodableFixedInteger(2, 0));
+    fields.put(
+      UsVaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
+      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+    );
+    fields.put(
+      UsVaV1Field.MSPA_COVERED_TRANSACTION.toString(),
+      new EncodableFixedInteger(2, 1, nonNullableBooleanAsTwoBitIntegerValidator)
+    );
+    fields.put(
+      UsVaV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(),
+      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+    );
+    fields.put(
+      UsVaV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(),
+      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+    );
 
     return fields;
   }
@@ -60,5 +112,111 @@ export class UsVaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
     }
     let bitString: string = this.base64UrlEncoder.decode(encodedString);
     this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+  }
+
+  // overriden
+  public validate(): void {
+    let saleOptOutNotice: number = this.fields.get(UsVaV1Field.SALE_OPT_OUT_NOTICE).getValue();
+    let saleOptOut: number = this.fields.get(UsVaV1Field.SALE_OPT_OUT).getValue();
+    let targetedAdvertisingOptOutNotice: number = this.fields
+      .get(UsVaV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE)
+      .getValue();
+    let targetedAdvertisingOptOut: number = this.fields.get(UsVaV1Field.TARGETED_ADVERTISING_OPT_OUT).getValue();
+    let mspaServiceProviderMode: number = this.fields.get(UsVaV1Field.MSPA_SERVICE_PROVIDER_MODE).getValue();
+    let mspaOptOutOptionMode: number = this.fields.get(UsVaV1Field.MSPA_OPT_OUT_OPTION_MODE).getValue();
+
+    if (saleOptOutNotice == 0) {
+      if (saleOptOut != 0) {
+        throw new ValidationError(
+          "Invalid usva sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
+        );
+      }
+    } else if (saleOptOutNotice == 1) {
+      if (saleOptOut != 1 && saleOptOut != 2) {
+        throw new ValidationError(
+          "Invalid usva sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
+        );
+      }
+    } else if (saleOptOutNotice == 2) {
+      if (saleOptOut != 1) {
+        throw new ValidationError(
+          "Invalid usva sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
+        );
+      }
+    }
+
+    if (targetedAdvertisingOptOutNotice == 0) {
+      if (targetedAdvertisingOptOut != 0) {
+        throw new ValidationError(
+          "Invalid usva targeted advertising notice / opt out combination: {" +
+            targetedAdvertisingOptOutNotice +
+            " / " +
+            targetedAdvertisingOptOut +
+            "}"
+        );
+      }
+    } else if (targetedAdvertisingOptOutNotice == 1) {
+      if (saleOptOut != 1 && saleOptOut != 2) {
+        throw new ValidationError(
+          "Invalid usva targeted advertising notice / opt out combination: {" +
+            targetedAdvertisingOptOutNotice +
+            " / " +
+            targetedAdvertisingOptOut +
+            "}"
+        );
+      }
+    } else if (targetedAdvertisingOptOutNotice == 2) {
+      if (saleOptOut != 1) {
+        throw new ValidationError(
+          "Invalid usva targeted advertising notice / opt out combination: {" +
+            targetedAdvertisingOptOutNotice +
+            " / " +
+            targetedAdvertisingOptOut +
+            "}"
+        );
+      }
+    }
+
+    if (mspaServiceProviderMode == 0) {
+      if (saleOptOutNotice != 0) {
+        throw new ValidationError(
+          "Invalid usva mspa service provider mode / sale opt out notice combination: {" +
+            mspaServiceProviderMode +
+            " / " +
+            saleOptOutNotice +
+            "}"
+        );
+      }
+    } else if (mspaServiceProviderMode == 1) {
+      if (mspaOptOutOptionMode != 2) {
+        throw new ValidationError(
+          "Invalid usva mspa service provider / opt out option modes combination: {" +
+            mspaServiceProviderMode +
+            " / " +
+            mspaServiceProviderMode +
+            "}"
+        );
+      }
+
+      if (saleOptOutNotice != 0) {
+        throw new ValidationError(
+          "Invalid usva mspa service provider mode / sale opt out notice combination: {" +
+            mspaServiceProviderMode +
+            " / " +
+            saleOptOutNotice +
+            "}"
+        );
+      }
+    } else if (mspaServiceProviderMode == 2) {
+      if (mspaOptOutOptionMode != 1) {
+        throw new ValidationError(
+          "Invalid usva mspa service provider / opt out option modes combination: {" +
+            mspaServiceProviderMode +
+            " / " +
+            mspaOptOutOptionMode +
+            "}"
+        );
+      }
+    }
   }
 }

@@ -19,7 +19,6 @@ export class EncodableFlexibleBitfield extends AbstractEncodableBitStringDataTyp
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.getLength());
   }
 

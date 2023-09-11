@@ -1,5 +1,6 @@
 import { UnencodableCharacter } from "../datatype/UnencodableCharacter.js";
 import { UnencodableInteger } from "../datatype/UnencodableInteger.js";
+import { Predicate } from "../datatype/validate/Predicate.js";
 import { DecodingError } from "../error/DecodingError.js";
 import { GenericFields } from "../field/GenericFields.js";
 import { USPV1_CORE_SEGMENT_FIELD_NAMES } from "../field/UspV1Field.js";
@@ -22,11 +23,17 @@ export class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFiel
 
   // overriden
   protected initializeFields(): GenericFields {
+    const validator = new (class implements Predicate<string> {
+      test(s: string): boolean {
+        return s === "-" || s === "Y" || s === "N";
+      }
+    })();
+
     let fields: GenericFields = new GenericFields();
     fields.put(UspV1Field.VERSION, new UnencodableInteger(UspV1.VERSION));
-    fields.put(UspV1Field.NOTICE, new UnencodableCharacter("-"));
-    fields.put(UspV1Field.OPT_OUT_SALE, new UnencodableCharacter("-"));
-    fields.put(UspV1Field.LSPA_COVERED, new UnencodableCharacter("-"));
+    fields.put(UspV1Field.NOTICE, new UnencodableCharacter("-", validator));
+    fields.put(UspV1Field.OPT_OUT_SALE, new UnencodableCharacter("-", validator));
+    fields.put(UspV1Field.LSPA_COVERED, new UnencodableCharacter("-", validator));
     return fields;
   }
 

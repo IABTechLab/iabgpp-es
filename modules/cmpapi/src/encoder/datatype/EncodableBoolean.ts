@@ -16,7 +16,6 @@ export class EncodableBoolean extends AbstractEncodableBitStringDataType<boolean
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
     return bitString.substring(fromIndex, fromIndex + 1);
   }
 }

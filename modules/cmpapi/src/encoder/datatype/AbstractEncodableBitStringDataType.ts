@@ -1,7 +1,22 @@
+import { ValidationError } from "../error/ValidationError.js";
 import { EncodableDataType } from "./EncodableDataType.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
+  protected validator: Predicate<T>;
   protected value: T;
+
+  constructor(validator?: Predicate<T>) {
+    if (validator) {
+      this.validator = validator;
+    } else {
+      this.validator = new (class implements Predicate<T> {
+        test(t: T): boolean {
+          return true;
+        }
+      })();
+    }
+  }
 
   public hasValue(): boolean {
     return this.value !== undefined && this.value !== null;
@@ -12,7 +27,11 @@ export abstract class AbstractEncodableBitStringDataType<T> implements Encodable
   }
 
   public setValue(value: T) {
-    this.value = value;
+    if (this.validator.test(value)) {
+      this.value = value;
+    } else {
+      throw new ValidationError("Invalid value '" + value + "'");
+    }
   }
 
   abstract encode(): string;

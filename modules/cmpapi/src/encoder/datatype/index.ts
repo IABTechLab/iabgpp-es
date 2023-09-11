@@ -1,4 +1,5 @@
 export * from "./encoder/index.js";
+export * from "./validate/index.js";
 export * from "./AbstractEncodableBitStringDataType.js";
 export * from "./DataType.js";
 export * from "./EncodableBoolean.js";

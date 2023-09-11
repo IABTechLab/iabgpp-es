@@ -1,9 +1,20 @@
 import { DataType } from "./DataType.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export class UnencodableCharacter implements DataType<string> {
+  protected validator: Predicate<string>;
   private value: string = null;
 
-  constructor(value: string) {
+  constructor(value: string, validator?: Predicate<string>) {
+    if (validator) {
+      this.validator = validator;
+    } else {
+      this.validator = new (class implements Predicate<string> {
+        test(v: string): boolean {
+          return true;
+        }
+      })();
+    }
     this.setValue(value);
   }
 

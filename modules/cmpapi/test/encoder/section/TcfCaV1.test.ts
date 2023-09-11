@@ -3,14 +3,14 @@ import { TcfCaV1Field } from "../../../src/encoder/field/TcfCaV1Field";
 import { TcfCaV1 } from "../../../src/encoder/section/TcfCaV1";
 
 describe("manifest.section.TcfCaV1", (): void => {
-  it("should encode default to CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
+  it("should encode default to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
     let tcfCaV2 = new TcfCaV1();
     tcfCaV2.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV2.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfCaV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAABAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    expect(tcfCaV2.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
   });
 
-  it("should encode to CPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao", (): void => {
+  it("should encode to BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao", (): void => {
     let tcfCaV2 = new TcfCaV1();
 
     tcfCaV2.setFieldValue(TcfCaV1Field.CMP_ID, 50);
@@ -144,7 +144,7 @@ describe("manifest.section.TcfCaV1", (): void => {
     tcfCaV2.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV2.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
 
-    expect(tcfCaV2.encode()).to.eql("CPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
+    expect(tcfCaV2.encode()).to.eql("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao");
   });
 
   it("should decode CAAAAAAAAAAAAAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {

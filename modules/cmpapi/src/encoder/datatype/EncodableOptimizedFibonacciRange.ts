@@ -3,10 +3,11 @@ import { FixedBitfieldEncoder } from "./encoder/FixedBitfieldEncoder.js";
 import { FixedIntegerEncoder } from "./encoder/FixedIntegerEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
 import { EncodableFibonacciIntegerRange } from "./EncodableFibonacciIntegerRange.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableOptimizedFibonacciRange extends AbstractEncodableBitStringDataType<number[]> {
-  constructor(value: number[]) {
-    super();
+  constructor(value: number[], validator?: Predicate<number[]>) {
+    super(validator);
     this.setValue(value);
   }
 

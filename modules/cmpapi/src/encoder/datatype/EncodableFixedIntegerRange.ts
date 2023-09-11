@@ -1,10 +1,11 @@
 import { FixedIntegerEncoder } from "./encoder/FixedIntegerEncoder.js";
 import { FixedIntegerRangeEncoder } from "./encoder/FixedIntegerRangeEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataType<number[]> {
-  constructor(value: number[]) {
-    super();
+  constructor(value: number[], validator?: Predicate<number[]>) {
+    super(validator);
     this.setValue(value);
   }
 
@@ -17,7 +18,6 @@ export class EncodableFixedIntegerRange extends AbstractEncodableBitStringDataTy
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: add some validation
     let count = FixedIntegerEncoder.decode(bitString.substring(fromIndex, fromIndex + 12));
     let index = fromIndex + 12;
     for (let i = 0; i < count; i++) {
