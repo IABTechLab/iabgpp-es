@@ -103,7 +103,6 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(TcfEuV2Field.PUBLISHER_COUNTRY_CODE.toString(), new EncodableFixedString(2, "AA"));
     fields.set(TcfEuV2Field.VENDOR_CONSENTS.toString(), new EncodableOptimizedFixedRange([]));
     fields.set(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS.toString(), new EncodableOptimizedFixedRange([]));
-
     fields.set(TcfEuV2Field.PUBLISHER_RESTRICTIONS.toString(), new EncodableFixedIntegerRange([]));
 
     // publisher purposes segment

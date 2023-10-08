@@ -1,4 +1,5 @@
 import { AbstractEncodableBitStringDataType } from "../datatype/AbstractEncodableBitStringDataType.js";
+import { DecodingError } from "../error/DecodingError.js";
 import { EncodableSection } from "./EncodableSection.js";
 
 export abstract class AbstractEncodableSegmentedBitStringSection implements EncodableSection {
@@ -62,23 +63,30 @@ export abstract class AbstractEncodableSegmentedBitStringSection implements Enco
 
   public decodeSegmentsFromBitStrings(segmentBitStrings: string[]) {
     for (let i = 0; i < this.segments.length && i < segmentBitStrings.length; i++) {
-      let segmentBitString = segmentBitStrings[i];
-      if (segmentBitString && segmentBitString.length > 0) {
-        let index = 0;
-        for (let j = 0; j < this.segments[i].length; j++) {
-          let fieldName = this.segments[i][j];
-          if (this.fields.has(fieldName)) {
-            try {
-              let field = this.fields.get(fieldName);
-              let substring = field.substring(segmentBitString, index);
-              field.decode(substring);
-              index += substring.length;
-            } catch (e) {
-              throw new Error("Unable to decode " + fieldName);
+      this.decodeSegmentFromBitString(this.segments[i], segmentBitStrings[i]);
+    }
+  }
+
+  private decodeSegmentFromBitString(segment: string[], segmentBitString: string) {
+    if (segmentBitString && segmentBitString.length > 0) {
+      let index = 0;
+      for (let j = 0; j < segment.length; j++) {
+        let fieldName = segment[j];
+        if (this.fields.has(fieldName)) {
+          let field = this.fields.get(fieldName);
+          try {
+            let substring = field.substring(segmentBitString, index);
+            field.decode(substring);
+            index += substring.length;
+          } catch (e) {
+            if (e.name === "SubstringError" && !field.getHardFailIfMissing()) {
+              return;
+            } else {
+              throw new DecodingError("Unable to decode field '" + fieldName + "'");
             }
-          } else {
-            throw new Error("Field not found: '" + fieldName + "'");
           }
+        } else {
+          throw new DecodingError("Field not found: '" + fieldName + "'");
         }
       }
     }

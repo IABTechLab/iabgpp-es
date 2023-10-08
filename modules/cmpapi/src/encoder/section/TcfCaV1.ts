@@ -11,6 +11,7 @@ import { DecodingError } from "../error/DecodingError.js";
 import { TcfCaV1Field } from "../field/TcfCaV1Field.js";
 import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
 import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64UrlEncoder.js";
+import { EncodableArrayOfRanges } from "../datatype/EncodableArrayOfRanges.js";
 
 export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 5;
@@ -99,6 +100,7 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     );
     fields.set(TcfCaV1Field.VENDOR_EXPRESS_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
     fields.set(TcfCaV1Field.VENDOR_IMPLIED_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
+    fields.set(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfRanges(6, 2, [], false));
 
     // publisher purposes segment
     fields.set(TcfCaV1Field.SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 3));
@@ -178,6 +180,10 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
       }, [])
     );
 
+    // disclosed vendors segment
+    fields.set(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE, new EncodableFixedInteger(3, 1));
+    fields.set(TcfCaV1Field.DISCLOSED_VENDORS, new EncodableOptimizedFixedRange([]));
+
     let coreSegment = [
       TcfCaV1Field.VERSION.toString(),
       TcfCaV1Field.CREATED.toString(),
@@ -194,6 +200,7 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
       TcfCaV1Field.PURPOSES_IMPLIED_CONSENT.toString(),
       TcfCaV1Field.VENDOR_EXPRESS_CONSENT.toString(),
       TcfCaV1Field.VENDOR_IMPLIED_CONSENT.toString(),
+      TcfCaV1Field.PUB_RESTRICTIONS.toString(),
     ];
 
     let publisherPurposesSegment = [
@@ -205,7 +212,9 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
       TcfCaV1Field.CUSTOM_PURPOSES_IMPLIED_CONSENT.toString(),
     ];
 
-    let segments = [coreSegment, publisherPurposesSegment];
+    let disclosedVendorsSegment = [TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE, TcfCaV1Field.DISCLOSED_VENDORS];
+
+    let segments = [coreSegment, publisherPurposesSegment, disclosedVendorsSegment];
 
     super(fields, segments);
 
@@ -221,6 +230,13 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[0]));
     if (segmentBitStrings[1] && segmentBitStrings[1].length > 0) {
       encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[1]));
+      if (
+        segmentBitStrings[2] &&
+        segmentBitStrings[2].length > 0 &&
+        this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS).length > 0
+      ) {
+        encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[2]));
+      }
     }
 
     return encodedSegments.join(".");
@@ -243,6 +259,10 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
         // unfortunately, the segment ordering doesn't match the segment ids
         case "000": {
           segmentBitStrings[0] = segmentBitString;
+          break;
+        }
+        case "001": {
+          segmentBitStrings[2] = segmentBitString;
           break;
         }
         case "011": {

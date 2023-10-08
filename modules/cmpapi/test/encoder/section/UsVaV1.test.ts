@@ -39,4 +39,10 @@ describe("manifest.section.UsVaV1", (): void => {
     expect(2, usVaV1.getFieldValue(UsVaV1Field.MSPA_OPT_OUT_OPTION_MODE));
     expect(3, usVaV1.getFieldValue(UsVaV1Field.MSPA_SERVICE_PROVIDER_MODE));
   });
+
+  it("should throw Error on garbage", (): void => {
+    expect(function () {
+      new UsVaV1("z").getFieldValue(UsVaV1Field.SHARING_NOTICE);
+    }).to.throw("Unable to decode field 'SharingNotice'");
+  });
 });

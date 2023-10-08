@@ -70,4 +70,10 @@ describe("manifest.section.HeaderV1", (): void => {
     let headerV1 = new HeaderV1("DBACNYA");
     expect(headerV1.getFieldValue("SectionIds")).to.eql([2, 6]);
   });
+
+  it("should throw Error on garbage", (): void => {
+    expect(function () {
+      new HeaderV1("z").getFieldValue("SectionIds");
+    }).to.throw("Unable to decode field 'Version'");
+  });
 });

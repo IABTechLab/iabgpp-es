@@ -1,28 +1,43 @@
 import { FixedIntegerListEncoder } from "./encoder/FixedIntegerListEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { EncodingError } from "../error/EncodingError.js";
+import { DecodingError } from "../error/DecodingError.js";
+import { SubstringError } from "./SubstringError.js";
+import { StringUtil } from "../util/StringUtil.js";
 
 export class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<number[]> {
   private elementBitStringLength: number;
   private numElements: number;
 
-  constructor(elementBitStringLength: number, value: number[]) {
-    super();
+  constructor(elementBitStringLength: number, value: number[], hardFailIfMissing: boolean = true) {
+    super(hardFailIfMissing);
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = value.length;
     this.setValue(value);
   }
 
   public encode(): string {
-    return FixedIntegerListEncoder.encode(this.value, this.elementBitStringLength, this.numElements);
+    try {
+      return FixedIntegerListEncoder.encode(this.value, this.elementBitStringLength, this.numElements);
+    } catch (e) {
+      throw new EncodingError(e);
+    }
   }
 
   public decode(bitString: string) {
-    this.value = FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements);
+    try {
+      this.value = FixedIntegerListEncoder.decode(bitString, this.elementBitStringLength, this.numElements);
+    } catch (e) {
+      throw new DecodingError(e);
+    }
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
-    return bitString.substring(fromIndex, fromIndex + this.elementBitStringLength * this.numElements);
+    try {
+      return StringUtil.substring(bitString, fromIndex, fromIndex + this.elementBitStringLength * this.numElements);
+    } catch (e) {
+      throw new SubstringError(e);
+    }
   }
 
   // Overriden

@@ -1,4 +1,5 @@
 export * from "./AbstractBase64UrlEncoder.js";
+export * from "./ArrayOfRangesEncoder.js";
 export * from "./BooleanEncoder.js";
 export * from "./CompressedBase64UrlEncoder.js";
 export * from "./DatetimeEncoder.js";
@@ -9,4 +10,6 @@ export * from "./FixedIntegerEncoder.js";
 export * from "./FixedIntegerListEncoder.js";
 export * from "./FixedIntegerRangeEncoder.js";
 export * from "./FixedStringEncoder.js";
+export * from "./OptimizedFibonacciRangeEncoder.js";
+export * from "./OptimizedFixedRangeEncoder.js";
 export * from "./TraditionalBase64UrlEncoder.js";
