@@ -6,16 +6,9 @@ export abstract class AbstractEncodableBitStringDataType<T> implements Encodable
   protected validator: Predicate<T>;
   protected value: T;
 
-  constructor(validator?: Predicate<T>) {
-    if (validator) {
-      this.validator = validator;
-    } else {
-      this.validator = new (class implements Predicate<T> {
-        test(t: T): boolean {
-          return true;
-        }
-      })();
-    }
+  public withValidator(validator: Predicate<T>): AbstractEncodableBitStringDataType<T> {
+    this.validator = validator;
+    return this;
   }
 
   public hasValue(): boolean {
@@ -27,7 +20,7 @@ export abstract class AbstractEncodableBitStringDataType<T> implements Encodable
   }
 
   public setValue(value: T) {
-    if (this.validator.test(value)) {
+    if (!this.validator || this.validator.test(value)) {
       this.value = value;
     } else {
       throw new ValidationError("Invalid value '" + value + "'");

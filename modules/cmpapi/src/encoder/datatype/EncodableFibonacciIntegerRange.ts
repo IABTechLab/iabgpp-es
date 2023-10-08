@@ -4,8 +4,8 @@ import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitString
 import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableFibonacciIntegerRange extends AbstractEncodableBitStringDataType<number[]> {
-  constructor(value: number[], validator?: Predicate<number[]>) {
-    super(validator);
+  constructor(value: number[]) {
+    super();
     this.setValue(value);
   }
 

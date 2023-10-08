@@ -5,8 +5,8 @@ import { Predicate } from "./validate/Predicate.js";
 export class EncodableFixedString extends AbstractEncodableBitStringDataType<string> {
   private stringLength: number;
 
-  constructor(stringLength: number, value: string, validator?: Predicate<string>) {
-    super(validator);
+  constructor(stringLength: number, value: string) {
+    super();
     this.stringLength = stringLength;
     this.setValue(value);
   }

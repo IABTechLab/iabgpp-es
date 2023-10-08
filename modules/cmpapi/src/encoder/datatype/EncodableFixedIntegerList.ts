@@ -6,8 +6,8 @@ export class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
   private elementBitStringLength: number;
   private numElements: number;
 
-  constructor(elementBitStringLength: number, value: number[], validator?: Predicate<number[]>) {
-    super(validator);
+  constructor(elementBitStringLength: number, value: number[]) {
+    super();
     this.elementBitStringLength = elementBitStringLength;
     this.numElements = value.length;
     this.setValue(value);

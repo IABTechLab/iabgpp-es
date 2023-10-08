@@ -3,8 +3,8 @@ import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitString
 import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableDatetime extends AbstractEncodableBitStringDataType<Date> {
-  constructor(value: Date, validator?: Predicate<Date>) {
-    super(validator);
+  constructor(value: Date) {
+    super();
     this.setValue(value);
   }
 

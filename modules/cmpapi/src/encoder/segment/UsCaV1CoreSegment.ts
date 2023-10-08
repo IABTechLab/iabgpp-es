@@ -56,47 +56,49 @@ export class UsCaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
     fields.put(UsCaV1Field.VERSION.toString(), new EncodableFixedInteger(6, UsCaV1.VERSION));
     fields.put(
       UsCaV1Field.SALE_OPT_OUT_NOTICE.toString(),
-      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
       UsCaV1Field.SHARING_OPT_OUT_NOTICE.toString(),
-      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
       UsCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE.toString(),
-      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
       UsCaV1Field.SALE_OPT_OUT.toString(),
-      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
       UsCaV1Field.SHARING_OPT_OUT.toString(),
-      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
       UsCaV1Field.SENSITIVE_DATA_PROCESSING.toString(),
-      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0, 0], nullableBooleanAsTwoBitIntegerListValidator)
+      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0, 0]).withValidator(
+        nullableBooleanAsTwoBitIntegerListValidator
+      )
     );
     fields.put(
       UsCaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
-      new EncodableFixedIntegerList(2, [0, 0], nullableBooleanAsTwoBitIntegerListValidator)
+      new EncodableFixedIntegerList(2, [0, 0]).withValidator(nullableBooleanAsTwoBitIntegerListValidator)
     );
     fields.put(
       UsCaV1Field.PERSONAL_DATA_CONSENTS.toString(),
-      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
       UsCaV1Field.MSPA_COVERED_TRANSACTION.toString(),
-      new EncodableFixedInteger(2, 1, nonNullableBooleanAsTwoBitIntegerValidator)
+      new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
       UsCaV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(),
-      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
       UsCaV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(),
-      new EncodableFixedInteger(2, 0, nullableBooleanAsTwoBitIntegerValidator)
+      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
 
     return fields;
