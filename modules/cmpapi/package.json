@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "./build",
-    "test": "npx mocha"
+    "test": "npx mocha --timeout 10000"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",

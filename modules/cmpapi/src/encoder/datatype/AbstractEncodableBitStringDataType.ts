@@ -3,8 +3,14 @@ import { EncodableDataType } from "./EncodableDataType.js";
 import { Predicate } from "./validate/Predicate.js";
 
 export abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
+  // this if for backwards compatibility with the newer fields
+  protected hardFailIfMissing: boolean;
   protected validator: Predicate<T>;
   protected value: T;
+
+  constructor(hardFailIfMising: boolean = true) {
+    this.hardFailIfMissing = hardFailIfMising;
+  }
 
   public withValidator(validator: Predicate<T>): AbstractEncodableBitStringDataType<T> {
     this.validator = validator;
@@ -25,6 +31,10 @@ export abstract class AbstractEncodableBitStringDataType<T> implements Encodable
     } else {
       throw new ValidationError("Invalid value '" + value + "'");
     }
+  }
+
+  public getHardFailIfMissing(): boolean {
+    return this.hardFailIfMissing;
   }
 
   abstract encode(): string;

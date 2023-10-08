@@ -3,6 +3,7 @@ import { CompressedBase64UrlEncoder } from "../base64/CompressedBase64UrlEncoder
 import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
 import { EncodableFibonacciIntegerRange } from "../datatype/EncodableFibonacciIntegerRange.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
+import { DecodingError } from "../error/DecodingError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 import { HEADER_CORE_SEGMENT_FIELD_NAMES } from "../field/HeaderV1Field.js";
 import { HeaderV1Field } from "../field/HeaderV1Field.js";
@@ -46,7 +47,11 @@ export class HeaderV1CoreSegment extends AbstractLazilyEncodableSegment<Encodabl
     if (encodedString == null || encodedString.length === 0) {
       this.fields.reset(fields);
     }
-    let bitString: string = this.base64UrlEncoder.decode(encodedString);
-    this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    try {
+      let bitString: string = this.base64UrlEncoder.decode(encodedString);
+      this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    } catch (e) {
+      throw new DecodingError("Unable to decode HeaderV1CoreSegment '" + encodedString + "'");
+    }
   }
 }

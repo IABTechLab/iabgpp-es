@@ -3,6 +3,7 @@ import { CompressedBase64UrlEncoder } from "../base64/CompressedBase64UrlEncoder
 import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
 import { EncodableBoolean } from "../datatype/EncodableBoolean.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
+import { DecodingError } from "../error/DecodingError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 import { USCAV1_GPC_SEGMENT_FIELD_NAMES } from "../field/UsCaV1Field.js";
 import { UsCaV1Field } from "../field/UsCaV1Field.js";
@@ -45,7 +46,11 @@ export class UsCaV1GpcSegment extends AbstractLazilyEncodableSegment<EncodableBi
     if (encodedString == null || encodedString.length === 0) {
       this.fields.reset(fields);
     }
-    let bitString: string = this.base64UrlEncoder.decode(encodedString);
-    this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    try {
+      let bitString: string = this.base64UrlEncoder.decode(encodedString);
+      this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    } catch (e) {
+      throw new DecodingError("Unable to decode UsCaV1GpcSegment '" + encodedString + "'");
+    }
   }
 }

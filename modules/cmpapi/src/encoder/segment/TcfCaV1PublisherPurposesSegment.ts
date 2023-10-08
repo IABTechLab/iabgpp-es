@@ -4,6 +4,7 @@ import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
 import { EncodableFixedBitfield } from "../datatype/EncodableFixedBitfield.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableFlexibleBitfield } from "../datatype/EncodableFlexibleBitfield.js";
+import { DecodingError } from "../error/DecodingError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 import { TCFCAV1_PUBLISHER_PURPOSES_SEGMENT_FIELD_NAMES } from "../field/TcfCaV1Field.js";
 import { TcfCaV1Field } from "../field/TcfCaV1Field.js";
@@ -119,7 +120,11 @@ export class TcfCaV1PublisherPurposesSegment extends AbstractLazilyEncodableSegm
     if (encodedString == null || encodedString.length === 0) {
       this.fields.reset(fields);
     }
-    let bitString: string = this.base64UrlEncoder.decode(encodedString);
-    this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    try {
+      let bitString: string = this.base64UrlEncoder.decode(encodedString);
+      this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    } catch (e) {
+      throw new DecodingError("Unable to decode TcfCaV1PublisherPurposesSegment '" + encodedString + "'");
+    }
   }
 }

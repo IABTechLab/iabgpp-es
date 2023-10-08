@@ -50,12 +50,16 @@ export class UspV1CoreSegment extends AbstractLazilyEncodableSegment<GenericFiel
   // overriden
   protected decodeSegment(encodedString: string, fields: GenericFields): void {
     if (encodedString == null || encodedString.length != 4) {
-      throw new DecodingError("Invalid uspv1 string: '" + encodedString + "'");
+      throw new DecodingError("Unable to decode UspV1CoreSegment '" + encodedString + "'");
     }
 
-    fields.get(UspV1Field.VERSION).setValue(parseInt(encodedString.substring(0, 1)));
-    fields.get(UspV1Field.NOTICE).setValue(encodedString.charAt(1));
-    fields.get(UspV1Field.OPT_OUT_SALE).setValue(encodedString.charAt(2));
-    fields.get(UspV1Field.LSPA_COVERED).setValue(encodedString.charAt(3));
+    try {
+      fields.get(UspV1Field.VERSION).setValue(parseInt(encodedString.substring(0, 1)));
+      fields.get(UspV1Field.NOTICE).setValue(encodedString.charAt(1));
+      fields.get(UspV1Field.OPT_OUT_SALE).setValue(encodedString.charAt(2));
+      fields.get(UspV1Field.LSPA_COVERED).setValue(encodedString.charAt(3));
+    } catch (e) {
+      throw new DecodingError("Unable to decode UspV1CoreSegment '" + encodedString + "'");
+    }
   }
 }

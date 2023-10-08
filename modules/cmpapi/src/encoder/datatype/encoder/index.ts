@@ -1,3 +1,4 @@
+export * from "./ArrayOfRangesEncoder.js";
 export * from "./BooleanEncoder.js";
 export * from "./DatetimeEncoder.js";
 export * from "./FibonacciIntegerEncoder.js";
@@ -7,3 +8,5 @@ export * from "./FixedIntegerEncoder.js";
 export * from "./FixedIntegerListEncoder.js";
 export * from "./FixedIntegerRangeEncoder.js";
 export * from "./FixedStringEncoder.js";
+export * from "./OptimizedFibonacciRangeEncoder.js";
+export * from "./OptimizedFixedRangeEncoder.js";

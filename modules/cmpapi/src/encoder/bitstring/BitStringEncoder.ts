@@ -1,4 +1,5 @@
 import { AbstractEncodableBitStringDataType } from "../datatype/AbstractEncodableBitStringDataType.js";
+import { DecodingError } from "../error/DecodingError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 
 export class BitStringEncoder {
@@ -31,9 +32,17 @@ export class BitStringEncoder {
       let fieldName = fieldNames[i];
       if (fields.containsKey(fieldName)) {
         let field: AbstractEncodableBitStringDataType<any> = fields.get(fieldName);
-        let substring = field.substring(bitString, index);
-        field.decode(substring);
-        index += substring.length;
+        try {
+          let substring = field.substring(bitString, index);
+          field.decode(substring);
+          index += substring.length;
+        } catch (e) {
+          if (e.name === "SubstringError" && !field.getHardFailIfMissing()) {
+            return;
+          } else {
+            throw new DecodingError("Unable to decode field '" + fieldName + "'");
+          }
+        }
       } else {
         throw new Error("Field not found: '" + fieldName + "'");
       }

@@ -304,4 +304,10 @@ describe("manifest.section.UsCoV1", (): void => {
     expect(2, usCoV1.getFieldValue(UsCoV1Field.MSPA_SERVICE_PROVIDER_MODE));
     expect(false, usCoV1.getFieldValue(UsCoV1Field.GPC_SEGMENT_INCLUDED));
   });
+
+  it("should throw Error on garbage", (): void => {
+    expect(function () {
+      new UsCoV1("z").getFieldValue(UsCoV1Field.MSPA_COVERED_TRANSACTION);
+    }).to.throw("Unable to decode UsCoV1CoreSegment 'z'");
+  });
 });

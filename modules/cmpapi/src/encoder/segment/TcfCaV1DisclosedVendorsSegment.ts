@@ -5,11 +5,11 @@ import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
 import { DecodingError } from "../error/DecodingError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
-import { TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES } from "../field/TcfEuV2Field.js";
-import { TcfEuV2Field } from "../field/TcfEuV2Field.js";
+import { TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES } from "../field/TcfCaV1Field.js";
+import { TcfCaV1Field } from "../field/TcfCaV1Field.js";
 import { AbstractLazilyEncodableSegment } from "./AbstractLazilyEncodableSegment.js";
 
-export class TcfEuV2VendorsDisclosedSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+export class TcfCaV1DisclosedVendorsSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
   private base64UrlEncoder: AbstractBase64UrlEncoder = TraditionalBase64UrlEncoder.getInstance();
   private bitStringEncoder: BitStringEncoder = BitStringEncoder.getInstance();
 
@@ -22,14 +22,14 @@ export class TcfEuV2VendorsDisclosedSegment extends AbstractLazilyEncodableSegme
 
   // overriden
   public getFieldNames(): string[] {
-    return TCFEUV2_VENDORS_DISCLOSED_SEGMENT_FIELD_NAMES;
+    return TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES;
   }
 
   // overriden
   protected initializeFields(): EncodableBitStringFields {
     let fields: EncodableBitStringFields = new EncodableBitStringFields();
-    fields.put(TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 1));
-    fields.put(TcfEuV2Field.VENDORS_DISCLOSED.toString(), new EncodableOptimizedFixedRange([]));
+    fields.put(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 1));
+    fields.put(TcfCaV1Field.DISCLOSED_VENDORS.toString(), new EncodableOptimizedFixedRange([]));
     return fields;
   }
 
@@ -49,7 +49,7 @@ export class TcfEuV2VendorsDisclosedSegment extends AbstractLazilyEncodableSegme
       let bitString: string = this.base64UrlEncoder.decode(encodedString);
       this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
     } catch (e) {
-      throw new DecodingError("Unable to decode TcfEuV2VendorsDisclosedSegment '" + encodedString + "'");
+      throw new DecodingError("Unable to decode HeaderV1CoreSegment '" + encodedString + "'");
     }
   }
 }

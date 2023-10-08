@@ -3,6 +3,7 @@ import { TraditionalBase64UrlEncoder } from "../base64/TraditionalBase64UrlEncod
 import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
+import { DecodingError } from "../error/DecodingError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 import { TCFEUV2_VENDORS_ALLOWED_SEGMENT_FIELD_NAMES } from "../field/TcfEuV2Field.js";
 import { TcfEuV2Field } from "../field/TcfEuV2Field.js";
@@ -44,7 +45,11 @@ export class TcfEuV2VendorsAllowedSegment extends AbstractLazilyEncodableSegment
     if (encodedString == null || encodedString.length === 0) {
       this.fields.reset(fields);
     }
-    let bitString: string = this.base64UrlEncoder.decode(encodedString);
-    this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    try {
+      let bitString: string = this.base64UrlEncoder.decode(encodedString);
+      this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    } catch (e) {
+      throw new DecodingError("Unable to decode TcfEuV2VendorsAllowedSegment '" + encodedString + "'");
+    }
   }
 }

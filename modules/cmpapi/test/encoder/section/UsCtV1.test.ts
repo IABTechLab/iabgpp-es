@@ -288,4 +288,26 @@ describe("manifest.section.UsCtV1", (): void => {
     expect(true, usCtV1.getFieldValue(UsCtV1Field.GPC));
     expect(true, usCtV1.getFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED));
   });
+
+  it("should decode BbYbG22w", (): void => {
+    let usCtV1 = new UsCtV1("BbYbG22w");
+
+    expect(1, usCtV1.getFieldValue(UsCtV1Field.SHARING_NOTICE));
+    expect(2, usCtV1.getFieldValue(UsCtV1Field.SALE_OPT_OUT_NOTICE));
+    expect(3, usCtV1.getFieldValue(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usCtV1.getFieldValue(UsCtV1Field.SALE_OPT_OUT));
+    expect(2, usCtV1.getFieldValue(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT));
+    expect([0, 1, 2, 3, 0, 1, 2, 3], usCtV1.getFieldValue(UsCtV1Field.SENSITIVE_DATA_PROCESSING));
+    expect([1, 2, 3], usCtV1.getFieldValue(UsCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usCtV1.getFieldValue(UsCtV1Field.MSPA_COVERED_TRANSACTION));
+    expect(2, usCtV1.getFieldValue(UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE));
+    expect(3, usCtV1.getFieldValue(UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE));
+    expect(false, usCtV1.getFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED));
+  });
+
+  it("should throw Error on garbage", (): void => {
+    expect(function () {
+      new UsCtV1("z").getFieldValue(UsCtV1Field.SALE_OPT_OUT);
+    }).to.throw("Unable to decode UsCtV1CoreSegment 'z'");
+  });
 });

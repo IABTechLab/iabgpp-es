@@ -8,6 +8,7 @@ import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableFixedIntegerRange } from "../datatype/EncodableFixedIntegerRange.js";
 import { EncodableFixedString } from "../datatype/EncodableFixedString.js";
 import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
+import { DecodingError } from "../error/DecodingError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 import { TCFEUV2_CORE_SEGMENT_FIELD_NAMES } from "../field/TcfEuV2Field.js";
 import { TcfEuV2Field } from "../field/TcfEuV2Field.js";
@@ -129,7 +130,11 @@ export class TcfEuV2CoreSegment extends AbstractLazilyEncodableSegment<Encodable
     if (encodedString == null || encodedString.length === 0) {
       this.fields.reset(fields);
     }
-    let bitString: string = this.base64UrlEncoder.decode(encodedString);
-    this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    try {
+      let bitString: string = this.base64UrlEncoder.decode(encodedString);
+      this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    } catch (e) {
+      throw new DecodingError("Unable to decode TcfEuV2CoreSegment '" + encodedString + "'");
+    }
   }
 }

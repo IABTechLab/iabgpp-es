@@ -355,4 +355,27 @@ describe("manifest.section.UsCaV1", (): void => {
     expect(true, usCaV1.getFieldValue(UsCaV1Field.GPC));
     expect(true, usCaV1.getFieldValue(UsCaV1Field.GPC_SEGMENT_INCLUDED));
   });
+
+  it("should decode BAAAAAAA", (): void => {
+    let usCaV1 = new UsCaV1("BbYbGwXY.YA");
+
+    expect(1, usCaV1.getFieldValue(UsCaV1Field.SALE_OPT_OUT_NOTICE));
+    expect(2, usCaV1.getFieldValue(UsCaV1Field.SHARING_OPT_OUT_NOTICE));
+    expect(3, usCaV1.getFieldValue(UsCaV1Field.SENSITIVE_DATA_LIMIT_USE_NOTICE));
+    expect(1, usCaV1.getFieldValue(UsCaV1Field.SALE_OPT_OUT));
+    expect(2, usCaV1.getFieldValue(UsCaV1Field.SHARING_OPT_OUT));
+    expect([0, 1, 2, 3, 0, 1, 2, 3, 0], usCaV1.getFieldValue(UsCaV1Field.SENSITIVE_DATA_PROCESSING));
+    expect([0, 1], usCaV1.getFieldValue(UsCaV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usCaV1.getFieldValue(UsCaV1Field.PERSONAL_DATA_CONSENTS));
+    expect(3, usCaV1.getFieldValue(UsCaV1Field.MSPA_COVERED_TRANSACTION));
+    expect(1, usCaV1.getFieldValue(UsCaV1Field.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usCaV1.getFieldValue(UsCaV1Field.MSPA_SERVICE_PROVIDER_MODE));
+    expect(false, usCaV1.getFieldValue(UsCaV1Field.GPC_SEGMENT_INCLUDED));
+  });
+
+  it("should throw Error on garbage", (): void => {
+    expect(function () {
+      new UsCaV1("z").getFieldValue(UsCaV1Field.PERSONAL_DATA_CONSENTS);
+    }).to.throw("Unable to decode UsCaV1CoreSegment 'z'");
+  });
 });

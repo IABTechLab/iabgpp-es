@@ -1,3 +1,4 @@
+import { DecodingError } from "../error/DecodingError.js";
 import { TcfEuV2Field } from "../field/TcfEuV2Field.js";
 import { EncodableSegment } from "../segment/EncodableSegment.js";
 import { TcfEuV2CoreSegment } from "../segment/TcfEuV2CoreSegment.js";
@@ -13,6 +14,7 @@ export class TcfEuV2 extends AbstractLazilyEncodableSection {
 
   constructor(encodedString?: string) {
     super();
+
     if (encodedString && encodedString.length > 0) {
       this.decode(encodedString);
     }
@@ -75,6 +77,8 @@ export class TcfEuV2 extends AbstractLazilyEncodableSection {
             segments[2].decode(encodedSegments[i]);
           } else if ((firstChar >= "Y" && firstChar <= "Z") || (firstChar >= "a" && firstChar <= "f")) {
             segments[1].decode(encodedSegments[i]);
+          } else {
+            throw new DecodingError("Unable to decode TcfEuV2 segment '" + encodedSegment + "'");
           }
         }
       }

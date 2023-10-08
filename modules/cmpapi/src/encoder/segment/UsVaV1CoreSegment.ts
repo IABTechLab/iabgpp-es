@@ -4,6 +4,7 @@ import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableFixedIntegerList } from "../datatype/EncodableFixedIntegerList.js";
 import { Predicate } from "../datatype/validate/Predicate.js";
+import { DecodingError } from "../error/DecodingError.js";
 import { ValidationError } from "../error/ValidationError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 import { USVAV1_CORE_SEGMENT_FIELD_NAMES } from "../field/UsVaV1Field.js";
@@ -112,8 +113,12 @@ export class UsVaV1CoreSegment extends AbstractLazilyEncodableSegment<EncodableB
     if (encodedString == null || encodedString.length === 0) {
       this.fields.reset(fields);
     }
-    let bitString: string = this.base64UrlEncoder.decode(encodedString);
-    this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    try {
+      let bitString: string = this.base64UrlEncoder.decode(encodedString);
+      this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
+    } catch (e) {
+      throw new DecodingError("Unable to decode UsVaV1CoreSegment '" + encodedString + "'");
+    }
   }
 
   // overriden

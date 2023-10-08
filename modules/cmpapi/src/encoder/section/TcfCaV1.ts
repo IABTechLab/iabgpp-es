@@ -2,7 +2,9 @@ import { TcfCaV1Field } from "../field/TcfCaV1Field.js";
 import { EncodableSegment } from "../segment/EncodableSegment.js";
 import { TcfCaV1CoreSegment } from "../segment/TcfCaV1CoreSegment.js";
 import { TcfCaV1PublisherPurposesSegment } from "../segment/TcfCaV1PublisherPurposesSegment.js";
+import { TcfCaV1DisclosedVendorsSegment } from "../segment/TcfCaV1DisclosedVendorsSegment.js";
 import { AbstractLazilyEncodableSection } from "./AbstractLazilyEncodableSection.js";
+import { DecodingError } from "../error/DecodingError.js";
 
 export class TcfCaV1 extends AbstractLazilyEncodableSection {
   public static readonly ID = 5;
@@ -11,6 +13,7 @@ export class TcfCaV1 extends AbstractLazilyEncodableSection {
 
   constructor(encodedString?: string) {
     super();
+
     if (encodedString && encodedString.length > 0) {
       this.decode(encodedString);
     }
@@ -36,6 +39,7 @@ export class TcfCaV1 extends AbstractLazilyEncodableSection {
     let segments: EncodableSegment[] = [];
     segments.push(new TcfCaV1CoreSegment());
     segments.push(new TcfCaV1PublisherPurposesSegment());
+    segments.push(new TcfCaV1DisclosedVendorsSegment());
     return segments;
   }
 
@@ -50,6 +54,7 @@ export class TcfCaV1 extends AbstractLazilyEncodableSection {
          * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
          *
          * A-H     = '000' = 0
+         * I-P     = '001' = 1
          * Y-Z,a-f = '011' = 3
          *
          * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
@@ -62,8 +67,12 @@ export class TcfCaV1 extends AbstractLazilyEncodableSection {
 
           if (firstChar >= "A" && firstChar <= "H") {
             segments[0].decode(encodedSegments[i]);
+          } else if (firstChar >= "I" && firstChar <= "P") {
+            segments[2].decode(encodedSegments[i]);
           } else if ((firstChar >= "Y" && firstChar <= "Z") || (firstChar >= "a" && firstChar <= "f")) {
             segments[1].decode(encodedSegments[i]);
+          } else {
+            throw new DecodingError("Unable to decode TcfCaV1 segment '" + encodedSegment + "'");
           }
         }
       }
@@ -75,10 +84,13 @@ export class TcfCaV1 extends AbstractLazilyEncodableSection {
   // Overriden
   protected encodeSection(segments: EncodableSegment[]): string {
     let encodedSegments: string[] = [];
-    for (let i = 0; i < segments.length; i++) {
-      let segment: EncodableSegment = segments[i];
-      encodedSegments.push(segment.encode());
+
+    encodedSegments.push(segments[0].encode());
+    encodedSegments.push(segments[1].encode());
+    if (this.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS).length > 0) {
+      encodedSegments.push(segments[2].encode());
     }
+
     return encodedSegments.join(".");
   }
 
