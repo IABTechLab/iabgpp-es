@@ -1,6 +1,7 @@
 import { AbstractBase64UrlEncoder } from "../base64/AbstractBase64UrlEncoder.js";
 import { CompressedBase64UrlEncoder } from "../base64/CompressedBase64UrlEncoder.js";
 import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
+import { EncodableArrayOfRanges } from "../datatype/EncodableArrayOfRanges.js";
 import { EncodableBoolean } from "../datatype/EncodableBoolean.js";
 import { EncodableDatetime } from "../datatype/EncodableDatetime.js";
 import { EncodableFixedBitfield } from "../datatype/EncodableFixedBitfield.js";
@@ -110,7 +111,7 @@ export class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<Encodable
     );
     fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
     fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
-    fields.put(TcfCaV1Field.PUB_RESTRICTIONS.toString(), new EncodableFixedIntegerRange([]));
+    fields.put(TcfCaV1Field.PUB_RESTRICTIONS.toString(), new EncodableArrayOfRanges(6, 2, [], false));
 
     return fields;
   }
