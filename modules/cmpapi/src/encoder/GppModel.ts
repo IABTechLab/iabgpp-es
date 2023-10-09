@@ -253,6 +253,12 @@ export class GppModel {
   }
 
   public encodeSection(sectionName: string): string {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+
     if (this.sections.has(sectionName)) {
       return this.sections.get(sectionName).encode();
     } else {
