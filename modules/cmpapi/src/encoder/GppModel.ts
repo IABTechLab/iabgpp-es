@@ -215,7 +215,7 @@ export class GppModel {
   }
 
   protected decodeModel(str: string) {
-    if (str.startsWith("D")) {
+    if (!str || str.length == 0 || str.startsWith("D")) {
       let encodedSections = str.split("~");
       let sections = new Map<string, EncodableSection>();
       if (encodedSections[0].startsWith("D")) {
@@ -255,9 +255,9 @@ export class GppModel {
       }
       return sections;
     } else if (str.startsWith("C")) {
+      // old tcfeu only string
       let sections = new Map<string, EncodableSection>();
 
-      // old tcfeu only string
       let section = new TcfEuV2(str);
       sections.set(TcfEuV2.NAME, section);
 
