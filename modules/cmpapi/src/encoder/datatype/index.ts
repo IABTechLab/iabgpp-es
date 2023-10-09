@@ -2,6 +2,7 @@ export * from "./encoder/index.js";
 export * from "./validate/index.js";
 export * from "./AbstractEncodableBitStringDataType.js";
 export * from "./DataType.js";
+export * from "./AbstractEncodableBitStringDataType.js";
 export * from "./EncodableArrayOfRanges.js";
 export * from "./EncodableBoolean.js";
 export * from "./EncodableDataType.js";

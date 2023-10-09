@@ -1,4 +1,4 @@
-import { SubstringError } from "../datatype";
+import { SubstringError } from "../datatype/SubstringError.js";
 
 export class StringUtil {
   /**

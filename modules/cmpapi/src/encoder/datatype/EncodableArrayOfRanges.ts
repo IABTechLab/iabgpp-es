@@ -1,12 +1,13 @@
-import { DecodingError, EncodingError } from "../error";
-import { StringUtil } from "../util";
-import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType";
-import { EncodableFixedIntegerRange } from "./EncodableFixedIntegerRange";
-import { EncodableOptimizedFixedRange } from "./EncodableOptimizedFixedRange";
-import { RangeEntry } from "./RangeEntry";
-import { SubstringError } from "./SubstringError";
-import { FixedIntegerEncoder } from "./encoder";
-import { OptimizedFixedRangeEncoder } from "./encoder/OptimizedFixedRangeEncoder";
+import { DecodingError } from "../error/DecodingError.js";
+import { EncodingError } from "../error/EncodingError.js";
+import { StringUtil } from "../util/StringUtil.js";
+import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { EncodableFixedIntegerRange } from "./EncodableFixedIntegerRange.js";
+import { EncodableOptimizedFixedRange } from "./EncodableOptimizedFixedRange.js";
+import { RangeEntry } from "./RangeEntry.js";
+import { SubstringError } from "./SubstringError.js";
+import { FixedIntegerEncoder } from "./encoder/FixedIntegerEncoder.js";
+import { OptimizedFixedRangeEncoder } from "./encoder/OptimizedFixedRangeEncoder.js";
 
 export class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<RangeEntry[]> {
   private keyBitStringLength: number;

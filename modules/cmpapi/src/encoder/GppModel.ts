@@ -11,6 +11,8 @@ import { UsCoV1 } from "./section/UsCoV1.js";
 import { UsUtV1 } from "./section/UsUtV1.js";
 import { UsCtV1 } from "./section/UsCtV1.js";
 import { InvalidFieldError } from "./error/InvalidFieldError.js";
+import { DecodingError } from "./error/DecodingError.js";
+import { HeaderV1Field } from "./field/HeaderV1Field.js";
 
 export class GppModel {
   private sections = new Map<string, EncodableSection>();
@@ -213,43 +215,60 @@ export class GppModel {
   }
 
   protected decodeModel(str: string) {
-    let encodedSections = str.split("~");
-    let header = new HeaderV1(encodedSections[0]);
-    let sections = new Map<string, EncodableSection>();
-
-    let sectionIds = header.getFieldValue("SectionIds");
-    for (let i = 0; i < sectionIds.length; i++) {
-      if (sectionIds[i] === TcfCaV1.ID) {
-        let section = new TcfCaV1(encodedSections[i + 1]);
-        sections.set(TcfCaV1.NAME, section);
-      } else if (sectionIds[i] === TcfEuV2.ID) {
-        let section = new TcfEuV2(encodedSections[i + 1]);
-        sections.set(TcfEuV2.NAME, section);
-      } else if (sectionIds[i] === UspV1.ID) {
-        let section = new UspV1(encodedSections[i + 1]);
-        sections.set(UspV1.NAME, section);
-      } else if (sectionIds[i] === UsNatV1.ID) {
-        let section = new UsNatV1(encodedSections[i + 1]);
-        sections.set(UsNatV1.NAME, section);
-      } else if (sectionIds[i] === UsCaV1.ID) {
-        let section = new UsCaV1(encodedSections[i + 1]);
-        sections.set(UsCaV1.NAME, section);
-      } else if (sectionIds[i] === UsVaV1.ID) {
-        let section = new UsVaV1(encodedSections[i + 1]);
-        sections.set(UsVaV1.NAME, section);
-      } else if (sectionIds[i] === UsCoV1.ID) {
-        let section = new UsCoV1(encodedSections[i + 1]);
-        sections.set(UsCoV1.NAME, section);
-      } else if (sectionIds[i] === UsUtV1.ID) {
-        let section = new UsUtV1(encodedSections[i + 1]);
-        sections.set(UsUtV1.NAME, section);
-      } else if (sectionIds[i] === UsCtV1.ID) {
-        let section = new UsCtV1(encodedSections[i + 1]);
-        sections.set(UsCtV1.NAME, section);
+    if (str.startsWith("D")) {
+      let encodedSections = str.split("~");
+      let sections = new Map<string, EncodableSection>();
+      if (encodedSections[0].startsWith("D")) {
+        //GPP String
+        let header = new HeaderV1(encodedSections[0]);
+        let sectionIds = header.getFieldValue("SectionIds");
+        for (let i = 0; i < sectionIds.length; i++) {
+          if (sectionIds[i] === TcfCaV1.ID) {
+            let section = new TcfCaV1(encodedSections[i + 1]);
+            sections.set(TcfCaV1.NAME, section);
+          } else if (sectionIds[i] === TcfEuV2.ID) {
+            let section = new TcfEuV2(encodedSections[i + 1]);
+            sections.set(TcfEuV2.NAME, section);
+          } else if (sectionIds[i] === UspV1.ID) {
+            let section = new UspV1(encodedSections[i + 1]);
+            sections.set(UspV1.NAME, section);
+          } else if (sectionIds[i] === UsNatV1.ID) {
+            let section = new UsNatV1(encodedSections[i + 1]);
+            sections.set(UsNatV1.NAME, section);
+          } else if (sectionIds[i] === UsCaV1.ID) {
+            let section = new UsCaV1(encodedSections[i + 1]);
+            sections.set(UsCaV1.NAME, section);
+          } else if (sectionIds[i] === UsVaV1.ID) {
+            let section = new UsVaV1(encodedSections[i + 1]);
+            sections.set(UsVaV1.NAME, section);
+          } else if (sectionIds[i] === UsCoV1.ID) {
+            let section = new UsCoV1(encodedSections[i + 1]);
+            sections.set(UsCoV1.NAME, section);
+          } else if (sectionIds[i] === UsUtV1.ID) {
+            let section = new UsUtV1(encodedSections[i + 1]);
+            sections.set(UsUtV1.NAME, section);
+          } else if (sectionIds[i] === UsCtV1.ID) {
+            let section = new UsCtV1(encodedSections[i + 1]);
+            sections.set(UsCtV1.NAME, section);
+          }
+        }
       }
-    }
+      return sections;
+    } else if (str.startsWith("C")) {
+      let sections = new Map<string, EncodableSection>();
 
-    return sections;
+      // old tcfeu only string
+      let section = new TcfEuV2(str);
+      sections.set(TcfEuV2.NAME, section);
+
+      let header = new HeaderV1();
+      header.setFieldValue(HeaderV1Field.SECTION_IDS, [2]);
+      sections.set(HeaderV1.NAME, section);
+
+      return sections;
+    } else {
+      throw new DecodingError("Unable to decode '" + str + "'");
+    }
   }
 
   public encodeSection(sectionName: string): string {

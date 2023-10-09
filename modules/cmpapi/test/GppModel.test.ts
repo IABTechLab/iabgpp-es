@@ -25,14 +25,14 @@ describe("manifest.GppModel", (): void => {
     let gppModel = new GppModel("invalid gpp string");
     expect(function () {
       gppModel.getHeader();
-    }).to.throw("Unable to decode HeaderV1CoreSegment 'invalid gpp string'");
+    }).to.throw("Unable to decode 'invalid gpp string'");
   });
 
   it("should throw Error on garbage", (): void => {
     let gppModel = new GppModel("z");
     expect(function () {
       gppModel.getHeader();
-    }).to.throw("Unable to decode HeaderV1CoreSegment 'z'");
+    }).to.throw("Unable to decode 'z'");
   });
 
   it("should default all sections", (): void => {
