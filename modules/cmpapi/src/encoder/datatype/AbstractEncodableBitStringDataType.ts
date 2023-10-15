@@ -1,4 +1,6 @@
-export abstract class AbstractEncodableBitStringDataType<T> {
+import { EncodableDataType } from "./EncodableDataType.js";
+
+export abstract class AbstractEncodableBitStringDataType<T> implements EncodableDataType<T> {
   protected value: T;
 
   public hasValue(): boolean {
