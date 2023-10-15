@@ -1,3 +1,6 @@
+export * from "./EncodableBitStringFields.js";
+export * from "./Fields.js";
+export * from "./GenericFields.js";
 export * from "./HeaderV1Field.js";
 export * from "./TcfCaV1Field.js";
 export * from "./TcfEuV2Field.js";

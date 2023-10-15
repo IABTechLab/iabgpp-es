@@ -30,6 +30,12 @@ describe("encoder.FixedBitfieldEncoder", (): void => {
     expect(FixedBitfieldEncoder.encode([true, true], 2)).to.eql("11");
   });
 
+  it("should throw exception", (): void => {
+    expect(function () {
+      FixedBitfieldEncoder.encode([true, true, true], 2);
+    }).to.throw();
+  });
+
   it("should decode '' to []", (): void => {
     expect(FixedBitfieldEncoder.decode("")).to.eql([]);
   });

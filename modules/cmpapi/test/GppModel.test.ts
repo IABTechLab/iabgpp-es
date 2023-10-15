@@ -1,8 +1,7 @@
 import { GppModel } from "../src/encoder/GppModel";
 import { expect } from "chai";
-import { HeaderV1Field } from "../src/encoder/field/HeaderV1Field";
 import { TcfCaV1Field } from "../src/encoder/field/TcfCaV1Field";
-import { LazyDecodingError } from "../src/encoder/error/LazyDecodingError";
+import { UspV1Field } from "../src/encoder/field/UspV1Field";
 
 let utcDateTime = new Date("2022-01-01T00:00:00Z");
 
@@ -67,7 +66,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA"
     );
   });
 
@@ -363,7 +362,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode defaults from all sections", (): void => {
     let gppString =
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAABAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA";
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
@@ -445,7 +444,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode uspv1 and tcfeuv2 and tcfcav1 sections", (): void => {
     let gppString =
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN";
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([2, 5, 6]);
@@ -606,7 +605,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.LAST_UPDATED)).to.eql(new Date("2022-01-01T00:00:00Z"));
 
     expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.CONSENT_LANGUAGE)).to.eql("EN");
-    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.SEGMENT_TYPE)).to.eql(3);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
   it("should encode tcfeuv2 vendor consents [28]", (): void => {
@@ -708,5 +707,43 @@ describe("manifest.GppModel", (): void => {
     ]);
 
     expect(decodedModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([21, 32, 81, 128, 173, 210, 238, 755]);
+  });
+
+  it("should handle null constructor", (): void => {
+    let gppModel = new GppModel(null);
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should handle empty string constructor", (): void => {
+    let gppModel = new GppModel("");
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should decode null", (): void => {
+    let gppModel = new GppModel("DBABTA~1---");
+    expect(gppModel.encode()).to.eq("DBABTA~1---");
+
+    gppModel.decode(null);
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should decode empty string", (): void => {
+    let gppModel = new GppModel("DBABTA~1---");
+    expect(gppModel.encode()).to.eq("DBABTA~1---");
+
+    gppModel.decode("");
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
   });
 });

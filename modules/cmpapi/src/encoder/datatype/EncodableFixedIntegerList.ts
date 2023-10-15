@@ -1,5 +1,6 @@
 import { FixedIntegerListEncoder } from "./encoder/FixedIntegerListEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableFixedIntegerList extends AbstractEncodableBitStringDataType<number[]> {
   private elementBitStringLength: number;
@@ -21,7 +22,6 @@ export class EncodableFixedIntegerList extends AbstractEncodableBitStringDataTyp
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
     return bitString.substring(fromIndex, fromIndex + this.elementBitStringLength * this.numElements);
   }
 
