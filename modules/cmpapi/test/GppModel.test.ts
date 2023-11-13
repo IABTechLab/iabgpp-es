@@ -709,4 +709,14 @@ describe("manifest.GppModel", (): void => {
 
     expect(decodedModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([21, 32, 81, 128, 173, 210, 238, 755]);
   });
+
+  it("should let us decode a section string, and encode correctly", (): void => {
+    const gppModel = new GppModel();
+
+    gppModel.decodeSectionById(6, "1YNN")
+
+    const gppString = gppModel.encode();
+
+    expect(gppString).to.eql("DBABTA~1YNN")
+  })
 });
