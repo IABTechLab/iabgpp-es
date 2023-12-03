@@ -314,9 +314,16 @@ export class GVL implements VendorList {
           this.bySpecialPurposeVendorMap[String(purposeId)].add(vendorId);
         });
 
-        vendor.legIntPurposes.forEach((purposeId: number): void => {
-          this.byPurposeVendorMap[String(purposeId)].legInt.add(vendorId);
-        });
+        // canada has added impConsPurposes in lieu of europe's legIntPurposes
+        if (vendor.legIntPurposes) {
+          vendor.legIntPurposes.forEach((purposeId: number): void => {
+            this.byPurposeVendorMap[String(purposeId)].legInt.add(vendorId);
+          });
+        } else if (vendor.impConsPurposes) {
+          vendor.legIntPurposes.forEach((purposeId: number): void => {
+            this.byPurposeVendorMap[String(purposeId)].legInt.add(vendorId);
+          });
+        }
 
         // could not be there
         if (vendor.flexiblePurposes) {
