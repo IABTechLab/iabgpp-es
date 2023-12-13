@@ -1,4 +1,3 @@
-export * from "./ArrayOfRangesEncoder.js";
 export * from "./BooleanEncoder.js";
 export * from "./DatetimeEncoder.js";
 export * from "./FibonacciIntegerEncoder.js";

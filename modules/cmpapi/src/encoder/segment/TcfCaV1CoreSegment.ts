@@ -6,7 +6,6 @@ import { EncodableBoolean } from "../datatype/EncodableBoolean.js";
 import { EncodableDatetime } from "../datatype/EncodableDatetime.js";
 import { EncodableFixedBitfield } from "../datatype/EncodableFixedBitfield.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
-import { EncodableFixedIntegerRange } from "../datatype/EncodableFixedIntegerRange.js";
 import { EncodableFixedString } from "../datatype/EncodableFixedString.js";
 import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
 import { DecodingError } from "../error/DecodingError.js";
