@@ -1,5 +1,4 @@
 export * from "./AbstractBase64UrlEncoder.js";
-export * from "./ArrayOfRangesEncoder.js";
 export * from "./BooleanEncoder.js";
 export * from "./CompressedBase64UrlEncoder.js";
 export * from "./DatetimeEncoder.js";
