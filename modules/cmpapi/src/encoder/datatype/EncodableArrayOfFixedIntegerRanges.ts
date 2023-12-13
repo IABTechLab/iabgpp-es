@@ -1,15 +1,13 @@
-import { DecodingError } from "../error/DecodingError.js";
-import { EncodingError } from "../error/EncodingError.js";
-import { StringUtil } from "../util/StringUtil.js";
-import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
-import { EncodableFixedIntegerRange } from "./EncodableFixedIntegerRange.js";
-import { EncodableOptimizedFixedRange } from "./EncodableOptimizedFixedRange.js";
-import { RangeEntry } from "./RangeEntry.js";
-import { SubstringError } from "./SubstringError.js";
-import { FixedIntegerEncoder } from "./encoder/FixedIntegerEncoder.js";
-import { OptimizedFixedRangeEncoder } from "./encoder/OptimizedFixedRangeEncoder.js";
+import { DecodingError, EncodingError } from "../error";
+import { StringUtil } from "../util";
+import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType";
+import { EncodableFixedIntegerRange } from "./EncodableFixedIntegerRange";
+import { RangeEntry } from "./RangeEntry";
+import { SubstringError } from "./SubstringError";
+import { FixedIntegerEncoder } from "./encoder/FixedIntegerEncoder";
+import { FixedIntegerRangeEncoder } from "./encoder/FixedIntegerRangeEncoder";
 
-export class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<RangeEntry[]> {
+export class EncodableArrayOfFixedIntegerRanges extends AbstractEncodableBitStringDataType<RangeEntry[]> {
   private keyBitStringLength: number;
   private typeBitStringLength: number;
 
@@ -34,7 +32,7 @@ export class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<R
         let entry: RangeEntry = entries[i];
         sb += FixedIntegerEncoder.encode(entry.getKey(), this.keyBitStringLength);
         sb += FixedIntegerEncoder.encode(entry.getType(), this.typeBitStringLength);
-        sb += OptimizedFixedRangeEncoder.encode(entry.getIds());
+        sb += FixedIntegerRangeEncoder.encode(entry.getIds());
       }
       return sb;
     } catch (e) {
@@ -54,8 +52,8 @@ export class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<R
         let type = FixedIntegerEncoder.decode(StringUtil.substring(bitString, index, index + this.typeBitStringLength));
         index += this.typeBitStringLength;
 
-        let substring = new EncodableOptimizedFixedRange([]).substring(bitString, index);
-        let ids = OptimizedFixedRangeEncoder.decode(substring);
+        let substring = new EncodableFixedIntegerRange([]).substring(bitString, index);
+        let ids = FixedIntegerRangeEncoder.decode(substring);
         index += substring.length;
 
         entries.push(new RangeEntry(key, type, ids));
@@ -75,21 +73,17 @@ export class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<R
 
       let index = fromIndex + sb.length;
       for (let i = 0; i < size; i++) {
-        sb += StringUtil.substring(bitString, index, index + 8);
-        index += 8;
+        let keySubstring = StringUtil.substring(bitString, index, index + this.keyBitStringLength);
+        index += keySubstring.length;
+        sb += keySubstring;
 
-        let substring = null;
-        let max = FixedIntegerEncoder.decode(StringUtil.substring(bitString, index, index + 16));
-        if (bitString.charAt(index + 16) == "1") {
-          substring =
-            StringUtil.substring(bitString, index, index + 17) +
-            new EncodableFixedIntegerRange([]).substring(bitString, index + 17);
-        } else {
-          substring = StringUtil.substring(bitString, index, index + 17 + max);
-        }
-        index += substring.length();
+        let typeSubstring = StringUtil.substring(bitString, index, index + this.typeBitStringLength);
+        index += typeSubstring.length;
+        sb += typeSubstring;
 
-        sb += substring;
+        let rangeSubstring = new EncodableFixedIntegerRange([]).substring(bitString, index);
+        index += rangeSubstring.length;
+        sb += rangeSubstring;
       }
       return sb;
     } catch (e) {
