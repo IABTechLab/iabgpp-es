@@ -1,6 +1,6 @@
 export * from "./encoder/index.js";
 export * from "./AbstractEncodableBitStringDataType.js";
-export * from "./EncodableArrayOfRanges.js";
+export * from "./EncodableArrayOfFixedIntegerRanges.js";
 export * from "./EncodableBoolean.js";
 export * from "./EncodableDatetime.js";
 export * from "./EncodableFibonacciInteger.js";

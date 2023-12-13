@@ -11,7 +11,7 @@ import { DecodingError } from "../error/DecodingError.js";
 import { TcfEuV2Field } from "../field/TcfEuV2Field.js";
 import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
 import { TraditionalBase64UrlEncoder } from "../datatype/encoder/TraditionalBase64UrlEncoder.js";
-import { EncodableArrayOfRanges } from "../datatype/EncodableArrayOfRanges.js";
+import { EncodableArrayOfFixedIntegerRanges } from "../datatype/EncodableArrayOfFixedIntegerRanges.js";
 
 export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 2;
@@ -103,7 +103,7 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
     fields.set(TcfEuV2Field.PUBLISHER_COUNTRY_CODE.toString(), new EncodableFixedString(2, "AA"));
     fields.set(TcfEuV2Field.VENDOR_CONSENTS.toString(), new EncodableOptimizedFixedRange([]));
     fields.set(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS.toString(), new EncodableOptimizedFixedRange([]));
-    fields.set(TcfEuV2Field.PUBLISHER_RESTRICTIONS.toString(), new EncodableArrayOfRanges(6, 2, [], false));
+    fields.set(TcfEuV2Field.PUBLISHER_RESTRICTIONS.toString(), new EncodableArrayOfFixedIntegerRanges(6, 2, [], false));
 
     // publisher purposes segment
     fields.set(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 3));

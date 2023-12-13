@@ -11,7 +11,7 @@ import { DecodingError } from "../error/DecodingError.js";
 import { TcfCaV1Field } from "../field/TcfCaV1Field.js";
 import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
 import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64UrlEncoder.js";
-import { EncodableArrayOfRanges } from "../datatype/EncodableArrayOfRanges.js";
+import { EncodableArrayOfFixedIntegerRanges } from "../datatype/EncodableArrayOfFixedIntegerRanges.js";
 
 export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 5;
@@ -100,7 +100,7 @@ export class TcfCaV1 extends AbstractEncodableSegmentedBitStringSection {
     );
     fields.set(TcfCaV1Field.VENDOR_EXPRESS_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
     fields.set(TcfCaV1Field.VENDOR_IMPLIED_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
-    fields.set(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfRanges(6, 2, [], false));
+    fields.set(TcfCaV1Field.PUB_RESTRICTIONS, new EncodableArrayOfFixedIntegerRanges(6, 2, [], false));
 
     // publisher purposes segment
     fields.set(TcfCaV1Field.SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 3));
