@@ -1,11 +1,11 @@
 import { AbstractBase64UrlEncoder } from "../base64/AbstractBase64UrlEncoder.js";
 import { TraditionalBase64UrlEncoder } from "../base64/TraditionalBase64UrlEncoder.js";
 import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
+import { EncodableArrayOfRanges } from "../datatype/EncodableArrayOfRanges.js";
 import { EncodableBoolean } from "../datatype/EncodableBoolean.js";
 import { EncodableDatetime } from "../datatype/EncodableDatetime.js";
 import { EncodableFixedBitfield } from "../datatype/EncodableFixedBitfield.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
-import { EncodableFixedIntegerRange } from "../datatype/EncodableFixedIntegerRange.js";
 import { EncodableFixedString } from "../datatype/EncodableFixedString.js";
 import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
 import { DecodingError } from "../error/DecodingError.js";
@@ -114,7 +114,7 @@ export class TcfEuV2CoreSegment extends AbstractLazilyEncodableSegment<Encodable
     fields.put(TcfEuV2Field.VENDOR_CONSENTS.toString(), new EncodableOptimizedFixedRange([]));
     fields.put(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS.toString(), new EncodableOptimizedFixedRange([]));
 
-    fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS.toString(), new EncodableFixedIntegerRange([]));
+    fields.put(TcfEuV2Field.PUBLISHER_RESTRICTIONS.toString(), new EncodableArrayOfRanges(6, 2, [], false));
     return fields;
   }
 

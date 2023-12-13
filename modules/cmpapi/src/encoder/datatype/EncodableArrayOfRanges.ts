@@ -90,9 +90,8 @@ export class EncodableArrayOfRanges extends AbstractEncodableBitStringDataType<R
         index += substring.length();
 
         sb += substring;
-
-        return sb;
       }
+      return sb;
     } catch (e) {
       throw new SubstringError(e);
     }
