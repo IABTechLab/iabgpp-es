@@ -9,4 +9,6 @@ export * from "./FixedIntegerEncoder.js";
 export * from "./FixedIntegerListEncoder.js";
 export * from "./FixedIntegerRangeEncoder.js";
 export * from "./FixedStringEncoder.js";
+export * from "./OptimizedFibonacciRangeEncoder.js";
+export * from "./OptimizedFixedRangeEncoder.js";
 export * from "./TraditionalBase64UrlEncoder.js";

@@ -22,11 +22,18 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
   });
 
-  it("should throw LazyDecodingError", (): void => {
+  it("should throw Error on invalid gpp string", (): void => {
     let gppModel = new GppModel("invalid gpp string");
     expect(function () {
       gppModel.getHeader();
     }).to.throw("Undecodable Base64URL string");
+  });
+
+  it("should throw Error on garbage", (): void => {
+    let gppModel = new GppModel("z");
+    expect(function () {
+      gppModel.getHeader();
+    }).to.throw("Unable to decode field 'Version'");
   });
 
   it("should default all sections", (): void => {
@@ -67,7 +74,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
     );
   });
 
@@ -346,7 +353,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN"
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN"
     );
 
     expect(gppString.split("~").length).to.eql(4);

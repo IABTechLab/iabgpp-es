@@ -64,4 +64,10 @@ describe("manifest.section.UsCtV1", (): void => {
     expect(3, uspCtV1.getFieldValue(UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE));
     expect(false, uspCtV1.getFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED));
   });
+
+  it("should throw Error on garbage", (): void => {
+    expect(function () {
+      new UsCtV1("z").getFieldValue(UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE);
+    }).to.throw("Unable to decode field 'MspaOptOutOptionMode'");
+  });
 });
