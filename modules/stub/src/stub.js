@@ -46,7 +46,7 @@ window.__gpp_stub = function () {
         ], // list of supported APIs
         cmpId: 0, // IAB assigned CMP ID, may be 0 during stub/loading
         sectionList: [],
-        applicableSections: [],
+        applicableSections: [0],
         gppString: "",
         parsedSections: {},
       },
@@ -86,7 +86,7 @@ window.__gpp_stub = function () {
           ], // list of supported APIs
           cmpId: 0, // IAB assigned CMP ID, may be 0 during stub/loading
           sectionList: [],
-          applicableSections: [],
+          applicableSections: [0],
           gppString: "",
           parsedSections: {},
         },
@@ -125,7 +125,7 @@ window.__gpp_stub = function () {
           ], // list of supported APIs
           cmpId: 0, // IAB assigned CMP ID, may be 0 during stub/loading
           sectionList: [],
-          applicableSections: [],
+          applicableSections: [0],
           gppString: "",
           parsedSections: {},
         },
