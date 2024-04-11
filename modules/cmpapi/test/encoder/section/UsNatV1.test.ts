@@ -102,4 +102,10 @@ describe("manifest.section.UsNatV1", (): void => {
     expect(3, usNatV1.getFieldValue(UsNatV1Field.MSPA_SERVICE_PROVIDER_MODE));
     expect(false, usNatV1.getFieldValue(UsNatV1Field.GPC_SEGMENT_INCLUDED));
   });
+
+  it("should throw Error on garbage", (): void => {
+    expect(function () {
+      new UsNatV1("z").getFieldValue(UsNatV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE);
+    }).to.throw("Unable to decode segment 'z'");
+  });
 });

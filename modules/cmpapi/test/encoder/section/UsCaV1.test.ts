@@ -86,4 +86,10 @@ describe("manifest.section.UsCaV1", (): void => {
     expect(2, usCaV1.getFieldValue(UsCaV1Field.MSPA_SERVICE_PROVIDER_MODE));
     expect(false, usCaV1.getFieldValue(UsCaV1Field.GPC_SEGMENT_INCLUDED));
   });
+
+  it("should throw Error on garbage", (): void => {
+    expect(function () {
+      new UsCaV1("z").getFieldValue(UsCaV1Field.PERSONAL_DATA_CONSENTS);
+    }).to.throw("Unable to decode segment 'z'");
+  });
 });
