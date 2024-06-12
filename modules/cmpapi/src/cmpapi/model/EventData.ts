@@ -1,4 +1,4 @@
-import { PingData } from "./PingData";
+import { PingData } from "./PingData.js";
 
 export class EventData {
   public eventName: string;

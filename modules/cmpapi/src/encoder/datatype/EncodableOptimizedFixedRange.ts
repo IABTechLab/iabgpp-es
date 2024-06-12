@@ -3,6 +3,7 @@ import { FixedIntegerEncoder } from "./encoder/FixedIntegerEncoder.js";
 import { FixedIntegerRangeEncoder } from "./encoder/FixedIntegerRangeEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
 import { EncodableFixedIntegerRange } from "./EncodableFixedIntegerRange.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableOptimizedFixedRange extends AbstractEncodableBitStringDataType<number[]> {
   constructor(value: number[]) {

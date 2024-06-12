@@ -1,5 +1,6 @@
 import { DatetimeEncoder } from "./encoder/DatetimeEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableDatetime extends AbstractEncodableBitStringDataType<Date> {
   constructor(value: Date) {
@@ -16,7 +17,6 @@ export class EncodableDatetime extends AbstractEncodableBitStringDataType<Date> 
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
     return bitString.substring(fromIndex, fromIndex + 36);
   }
 }

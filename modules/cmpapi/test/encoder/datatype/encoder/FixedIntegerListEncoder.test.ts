@@ -74,6 +74,12 @@ describe("encoder.FixedIntegerListEncoder", (): void => {
     expect(FixedIntegerListEncoder.encode([3, 3], 2, 2)).to.eql("1111");
   });
 
+  it("should throw exception", (): void => {
+    expect(function () {
+      FixedIntegerListEncoder.encode([3, 3], 1, 1);
+    }).to.throw();
+  });
+
   it("should decode '' to [0, 0]", (): void => {
     expect(FixedIntegerListEncoder.decode("", 2, 2)).to.eql([0, 0]);
   });

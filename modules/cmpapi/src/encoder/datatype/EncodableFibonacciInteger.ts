@@ -1,5 +1,6 @@
 import { FibonacciIntegerEncoder } from "./encoder/FibonacciIntegerEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { Predicate } from "./validate/Predicate.js";
 
 export class EncodableFibonacciInteger extends AbstractEncodableBitStringDataType<number> {
   constructor(value: number) {
