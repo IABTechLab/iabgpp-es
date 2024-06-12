@@ -1,118 +1,19 @@
-import { AbstractEncodableBitStringDataType } from "../datatype/AbstractEncodableBitStringDataType.js";
-import { AbstractEncodableSegmentedBitStringSection } from "./AbstractEncodableSegmentedBitStringSection.js";
-import { EncodableBoolean } from "../datatype/EncodableBoolean.js";
-import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
-import { EncodableFixedIntegerList } from "../datatype/EncodableFixedIntegerList.js";
-import { DecodingError } from "../error/DecodingError.js";
 import { UsCtV1Field } from "../field/UsCtV1Field.js";
-import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
-import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64UrlEncoder.js";
+import { EncodableSegment } from "../segment/EncodableSegment.js";
+import { UsCtV1CoreSegment } from "../segment/UsCtV1CoreSegment.js";
+import { UsCtV1GpcSegment } from "../segment/UsCtV1GpcSegment.js";
+import { AbstractLazilyEncodableSection } from "./AbstractLazilyEncodableSection.js";
 
-export class UsCtV1 extends AbstractEncodableSegmentedBitStringSection {
+export class UsCtV1 extends AbstractLazilyEncodableSection {
   public static readonly ID = 12;
   public static readonly VERSION = 1;
   public static readonly NAME = "usctv1";
 
-  private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
-
   constructor(encodedString?: string) {
-    let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
-
-    // core section
-    fields.set(UsCtV1Field.VERSION.toString(), new EncodableFixedInteger(6, UsCtV1.VERSION));
-    fields.set(UsCtV1Field.SHARING_NOTICE.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UsCtV1Field.SALE_OPT_OUT_NOTICE.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UsCtV1Field.SALE_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(
-      UsCtV1Field.SENSITIVE_DATA_PROCESSING.toString(),
-      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0])
-    );
-    fields.set(
-      UsCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
-      new EncodableFixedIntegerList(2, [0, 0, 0])
-    );
-    fields.set(UsCtV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(), new EncodableFixedInteger(2, 0));
-    fields.set(UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(), new EncodableFixedInteger(2, 0));
-
-    // gpc segment
-    fields.set(UsCtV1Field.GPC_SEGMENT_TYPE.toString(), new EncodableFixedInteger(2, 1));
-    fields.set(UsCtV1Field.GPC_SEGMENT_INCLUDED.toString(), new EncodableBoolean(true));
-    fields.set(UsCtV1Field.GPC.toString(), new EncodableBoolean(false));
-
-    let coreSegment = [
-      UsCtV1Field.VERSION.toString(),
-      UsCtV1Field.SHARING_NOTICE.toString(),
-      UsCtV1Field.SALE_OPT_OUT_NOTICE.toString(),
-      UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(),
-      UsCtV1Field.SALE_OPT_OUT.toString(),
-      UsCtV1Field.TARGETED_ADVERTISING_OPT_OUT.toString(),
-      UsCtV1Field.SENSITIVE_DATA_PROCESSING.toString(),
-      UsCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
-      UsCtV1Field.MSPA_COVERED_TRANSACTION.toString(),
-      UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(),
-      UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(),
-    ];
-
-    let gpcSegment = [UsCtV1Field.GPC_SEGMENT_TYPE.toString(), UsCtV1Field.GPC.toString()];
-
-    let segments = [coreSegment, gpcSegment];
-
-    super(fields, segments);
-
+    super();
     if (encodedString && encodedString.length > 0) {
       this.decode(encodedString);
     }
-  }
-
-  //Overriden
-  public encode(): string {
-    let segmentBitStrings = this.encodeSegmentsToBitStrings();
-    let encodedSegments = [];
-    encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[0]));
-    if (segmentBitStrings[1] && segmentBitStrings[1].length > 0) {
-      let gpcSegmentIncluded = this.fields.get(UsCtV1Field.GPC_SEGMENT_INCLUDED).getValue();
-      if (gpcSegmentIncluded === true) {
-        encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[1]));
-      }
-    }
-
-    return encodedSegments.join(".");
-  }
-
-  //Overriden
-  public decode(encodedSection: string): void {
-    let encodedSegments = encodedSection.split(".");
-    let segmentBitStrings = [];
-    let gpcSegmentIncluded = false;
-    for (let i = 0; i < encodedSegments.length; i++) {
-      /**
-       * first char will contain 6 bits, we only need the first 2.
-       * There is no segment type for the CORE string. Instead the first 6 bits are reserved for the
-       * encoding version, but because we're only on a maximum of encoding version 2 the first 2 bits in
-       * the core segment will evaluate to 0.
-       */
-      let segmentBitString = this.base64UrlEncoder.decode(encodedSegments[i]);
-      switch (segmentBitString.substring(0, 2)) {
-        // unfortuCtely, the segment ordering doesn't match the segment ids
-        case "00": {
-          segmentBitStrings[0] = segmentBitString;
-          break;
-        }
-        case "01": {
-          gpcSegmentIncluded = true;
-          segmentBitStrings[1] = segmentBitString;
-          break;
-        }
-        default: {
-          throw new DecodingError("Unable to decode segment '" + encodedSegments[i] + "'");
-        }
-      }
-    }
-    this.decodeSegmentsFromBitStrings(segmentBitStrings);
-    this.fields.get(UsCtV1Field.GPC_SEGMENT_INCLUDED).setValue(gpcSegmentIncluded);
   }
 
   //Overriden
@@ -123,5 +24,54 @@ export class UsCtV1 extends AbstractEncodableSegmentedBitStringSection {
   //Overriden
   public getName(): string {
     return UsCtV1.NAME;
+  }
+
+  //Override
+  public getVersion(): number {
+    return UsCtV1.VERSION;
+  }
+
+  //Overriden
+  protected initializeSegments(): EncodableSegment[] {
+    let segments: EncodableSegment[] = [];
+    segments.push(new UsCtV1CoreSegment());
+    segments.push(new UsCtV1GpcSegment());
+    return segments;
+  }
+
+  //Overriden
+  protected decodeSection(encodedString: string): EncodableSegment[] {
+    let segments: EncodableSegment[] = this.initializeSegments();
+
+    if (encodedString != null && encodedString.length !== 0) {
+      let encodedSegments = encodedString.split(".");
+
+      if (encodedSegments.length > 0) {
+        segments[0].decode(encodedSegments[0]);
+      }
+
+      if (encodedSegments.length > 1) {
+        segments[1].setFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED, true);
+        segments[1].decode(encodedSegments[1]);
+      } else {
+        segments[1].setFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED, false);
+      }
+    }
+
+    return segments;
+  }
+
+  // Overriden
+  protected encodeSection(segments: EncodableSegment[]): string {
+    let encodedSegments: string[] = [];
+
+    if (segments.length >= 1) {
+      encodedSegments.push(segments[0].encode());
+      if (segments.length >= 2 && segments[1].getFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED) === true) {
+        encodedSegments.push(segments[1].encode());
+      }
+    }
+
+    return encodedSegments.join(".");
   }
 }
