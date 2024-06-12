@@ -4,7 +4,8 @@ import { VendorUrl } from "./VendorUrl.js";
 
 export interface Vendor extends GVLMapItem {
   purposes: number[];
-  legIntPurposes: number[];
+  legIntPurposes?: number[];
+  impConsPurposes?: number[]; // canada has added impConsPurposes in lieu of europe's legIntPurposes
   flexiblePurposes: number[];
   specialPurposes: number[];
   features: number[];
