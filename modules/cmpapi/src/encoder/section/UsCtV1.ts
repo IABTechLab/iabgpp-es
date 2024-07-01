@@ -11,7 +11,7 @@ import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64
 export class UsCtV1 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 12;
   public static readonly VERSION = 1;
-  public static readonly NAME = "usctv1";
+  public static readonly NAME = "usct";
 
   private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
 
@@ -29,10 +29,7 @@ export class UsCtV1 extends AbstractEncodableSegmentedBitStringSection {
       UsCtV1Field.SENSITIVE_DATA_PROCESSING.toString(),
       new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0])
     );
-    fields.set(
-      UsCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
-      new EncodableFixedIntegerList(2, [0, 0, 0])
-    );
+    fields.set(UsCtV1Field.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(), new EncodableFixedIntegerList(2, [0, 0, 0]));
     fields.set(UsCtV1Field.MSPA_COVERED_TRANSACTION.toString(), new EncodableFixedInteger(2, 0));
     fields.set(UsCtV1Field.MSPA_OPT_OUT_OPTION_MODE.toString(), new EncodableFixedInteger(2, 0));
     fields.set(UsCtV1Field.MSPA_SERVICE_PROVIDER_MODE.toString(), new EncodableFixedInteger(2, 0));
