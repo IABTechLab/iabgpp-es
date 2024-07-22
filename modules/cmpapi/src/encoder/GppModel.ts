@@ -222,33 +222,46 @@ export class GppModel {
         //GPP String
         let header = new HeaderV1(encodedSections[0]);
         let sectionIds = header.getFieldValue("SectionIds");
+
+        if (sectionIds.length !== encodedSections.length - 1) {
+          throw new DecodingError(
+            "Unable to decode '" +
+              str +
+              "'. The number of sections does not match the number of sections defined in the header."
+          );
+        }
+
         for (let i = 0; i < sectionIds.length; i++) {
+          let encodedSection = encodedSections[i + 1];
+          if (encodedSection.trim() === "") {
+            throw new DecodingError("Unable to decode '" + str + "'. Section " + (i + 1) + " is blank.");
+          }
           if (sectionIds[i] === TcfCaV1.ID) {
-            let section = new TcfCaV1(encodedSections[i + 1]);
+            let section = new TcfCaV1(encodedSection);
             sections.set(TcfCaV1.NAME, section);
           } else if (sectionIds[i] === TcfEuV2.ID) {
-            let section = new TcfEuV2(encodedSections[i + 1]);
+            let section = new TcfEuV2(encodedSection);
             sections.set(TcfEuV2.NAME, section);
           } else if (sectionIds[i] === UspV1.ID) {
-            let section = new UspV1(encodedSections[i + 1]);
+            let section = new UspV1(encodedSection);
             sections.set(UspV1.NAME, section);
           } else if (sectionIds[i] === UsNatV1.ID) {
-            let section = new UsNatV1(encodedSections[i + 1]);
+            let section = new UsNatV1(encodedSection);
             sections.set(UsNatV1.NAME, section);
           } else if (sectionIds[i] === UsCaV1.ID) {
-            let section = new UsCaV1(encodedSections[i + 1]);
+            let section = new UsCaV1(encodedSection);
             sections.set(UsCaV1.NAME, section);
           } else if (sectionIds[i] === UsVaV1.ID) {
-            let section = new UsVaV1(encodedSections[i + 1]);
+            let section = new UsVaV1(encodedSection);
             sections.set(UsVaV1.NAME, section);
           } else if (sectionIds[i] === UsCoV1.ID) {
-            let section = new UsCoV1(encodedSections[i + 1]);
+            let section = new UsCoV1(encodedSection);
             sections.set(UsCoV1.NAME, section);
           } else if (sectionIds[i] === UsUtV1.ID) {
-            let section = new UsUtV1(encodedSections[i + 1]);
+            let section = new UsUtV1(encodedSection);
             sections.set(UsUtV1.NAME, section);
           } else if (sectionIds[i] === UsCtV1.ID) {
-            let section = new UsCtV1(encodedSections[i + 1]);
+            let section = new UsCtV1(encodedSection);
             sections.set(UsCtV1.NAME, section);
           }
         }
