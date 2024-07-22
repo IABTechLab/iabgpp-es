@@ -215,7 +215,7 @@ export class GppModel {
   }
 
   protected decodeModel(str: string) {
-    if (!str || str.length == 0 || str.startsWith("D")) {
+    if (!str || str.length == 0 || str.startsWith("DB")) {
       let encodedSections = str.split("~");
       let sections = new Map<string, EncodableSection>();
       if (encodedSections[0].startsWith("D")) {
