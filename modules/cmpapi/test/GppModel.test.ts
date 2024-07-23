@@ -34,12 +34,12 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(false);
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
     expect(gppModel.hasSection("uspv1")).to.eql(false);
-    expect(gppModel.hasSection("usnatv1")).to.eql(false);
-    expect(gppModel.hasSection("uscav1")).to.eql(false);
-    expect(gppModel.hasSection("usvav1")).to.eql(false);
-    expect(gppModel.hasSection("uscov1")).to.eql(false);
-    expect(gppModel.hasSection("usutv1")).to.eql(false);
-    expect(gppModel.hasSection("usctv1")).to.eql(false);
+    expect(gppModel.hasSection("usnat")).to.eql(false);
+    expect(gppModel.hasSection("usca")).to.eql(false);
+    expect(gppModel.hasSection("usva")).to.eql(false);
+    expect(gppModel.hasSection("usco")).to.eql(false);
+    expect(gppModel.hasSection("usut")).to.eql(false);
+    expect(gppModel.hasSection("usct")).to.eql(false);
 
     gppModel.setFieldValue("tcfeuv2", "Version", 2);
     gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
@@ -48,22 +48,22 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfcav1", "Created", utcDateTime);
     gppModel.setFieldValue("tcfcav1", "LastUpdated", utcDateTime);
     gppModel.setFieldValue("uspv1", "Version", 1);
-    gppModel.setFieldValue("usnatv1", "Version", 1);
-    gppModel.setFieldValue("uscav1", "Version", 1);
-    gppModel.setFieldValue("usvav1", "Version", 1);
-    gppModel.setFieldValue("uscov1", "Version", 1);
-    gppModel.setFieldValue("usutv1", "Version", 1);
-    gppModel.setFieldValue("usctv1", "Version", 1);
+    gppModel.setFieldValue("usnat", "Version", 1);
+    gppModel.setFieldValue("usca", "Version", 1);
+    gppModel.setFieldValue("usva", "Version", 1);
+    gppModel.setFieldValue("usco", "Version", 1);
+    gppModel.setFieldValue("usut", "Version", 1);
+    gppModel.setFieldValue("usct", "Version", 1);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav1")).to.eql(true);
     expect(gppModel.hasSection("uspv1")).to.eql(true);
-    expect(gppModel.hasSection("usnatv1")).to.eql(true);
-    expect(gppModel.hasSection("uscav1")).to.eql(true);
-    expect(gppModel.hasSection("usvav1")).to.eql(true);
-    expect(gppModel.hasSection("uscov1")).to.eql(true);
-    expect(gppModel.hasSection("usutv1")).to.eql(true);
-    expect(gppModel.hasSection("usctv1")).to.eql(true);
+    expect(gppModel.hasSection("usnat")).to.eql(true);
+    expect(gppModel.hasSection("usca")).to.eql(true);
+    expect(gppModel.hasSection("usva")).to.eql(true);
+    expect(gppModel.hasSection("usco")).to.eql(true);
+    expect(gppModel.hasSection("usut")).to.eql(true);
+    expect(gppModel.hasSection("usct")).to.eql(true);
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
@@ -75,7 +75,7 @@ describe("manifest.GppModel", (): void => {
     let gppModel = new GppModel();
     expect(gppModel.hasSection("uspv1")).to.eql(false);
     expect(gppModel.hasSection("tcfeuv2")).to.eql(false);
-    expect(gppModel.hasSection("tcfcav1")).to.eql(false);
+    expect(gppModel.hasSection("tcfca")).to.eql(false);
 
     gppModel.setFieldValue("uspv1", "Notice", "Y");
     gppModel.setFieldValue("uspv1", "OptOutSale", "N");
@@ -369,12 +369,12 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav1")).to.eql(true);
     expect(gppModel.hasSection("uspv1")).to.eql(true);
-    expect(gppModel.hasSection("usnatv1")).to.eql(true);
-    expect(gppModel.hasSection("uscav1")).to.eql(true);
-    expect(gppModel.hasSection("usvav1")).to.eql(true);
-    expect(gppModel.hasSection("uscov1")).to.eql(true);
-    expect(gppModel.hasSection("usutv1")).to.eql(true);
-    expect(gppModel.hasSection("usctv1")).to.eql(true);
+    expect(gppModel.hasSection("usnat")).to.eql(true);
+    expect(gppModel.hasSection("usca")).to.eql(true);
+    expect(gppModel.hasSection("usva")).to.eql(true);
+    expect(gppModel.hasSection("usco")).to.eql(true);
+    expect(gppModel.hasSection("usut")).to.eql(true);
+    expect(gppModel.hasSection("usct")).to.eql(true);
   });
 
   it("should decode uspv1 section", (): void => {
