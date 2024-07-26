@@ -7,6 +7,10 @@ import { UsVaV1 } from "./UsVaV1.js";
 import { UsCoV1 } from "./UsCoV1.js";
 import { UsUtV1 } from "./UsUtV1.js";
 import { UsCtV1 } from "./UsCtV1.js";
+import { UsFlV1 } from "./UsFlV1.js";
+import { UsMtV1 } from "./UsMtV1.js";
+import { UsOrV1 } from "./UsOrV1.js";
+import { UsTxV1 } from "./UsTxV1.js";
 
 export class Sections {
   public static SECTION_ID_NAME_MAP = new Map([
@@ -19,6 +23,10 @@ export class Sections {
     [UsCoV1.ID, UsCoV1.NAME],
     [UsUtV1.ID, UsUtV1.NAME],
     [UsCtV1.ID, UsCtV1.NAME],
+    [UsFlV1.ID, UsFlV1.NAME],
+    [UsMtV1.ID, UsMtV1.NAME],
+    [UsOrV1.ID, UsOrV1.NAME],
+    [UsTxV1.ID, UsTxV1.NAME],
   ]);
   public static SECTION_ORDER = [
     TcfEuV2.NAME,
@@ -30,5 +38,9 @@ export class Sections {
     UsCoV1.NAME,
     UsUtV1.NAME,
     UsCtV1.NAME,
+    UsFlV1.NAME,
+    UsMtV1.NAME,
+    UsOrV1.NAME,
+    UsTxV1.NAME,
   ];
 }

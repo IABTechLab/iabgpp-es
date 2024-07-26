@@ -22,6 +22,12 @@ describe("encoder.FixedIntegerEncoder", (): void => {
     expect(FixedIntegerEncoder.encode(7, 8)).to.eql("00000111");
   });
 
+  it("should throw exception", (): void => {
+    expect(function () {
+      FixedIntegerEncoder.encode(8, 1);
+    }).to.throw();
+  });
+
   it("should decode '' to 0", (): void => {
     expect(FixedIntegerEncoder.decode("")).to.eql(0);
   });

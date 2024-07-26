@@ -1,6 +1,6 @@
-import { FixedIntegerEncoder } from "./FixedIntegerEncoder.js";
-import { DecodingError } from "../../error/DecodingError.js";
-import { EncodingError } from "../../error/EncodingError.js";
+import { FixedIntegerEncoder } from "../datatype/encoder/FixedIntegerEncoder.js";
+import { DecodingError } from "../error/DecodingError.js";
+import { EncodingError } from "../error/EncodingError.js";
 
 export abstract class AbstractBase64UrlEncoder {
   protected abstract pad(bitString: string): string;
@@ -52,7 +52,7 @@ export abstract class AbstractBase64UrlEncoder {
   public decode(str: string): string {
     // should contain only characters from the base64url set
     if (!/^[A-Za-z0-9\-_]*$/.test(str)) {
-      throw new DecodingError("Undecodable Base64URL string");
+      throw new DecodingError("Undecodable Base64URL string '" + str + "'");
     }
 
     let bitString = "";

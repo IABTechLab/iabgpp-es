@@ -1,6 +1,7 @@
-import { CmpApiContext } from "../CmpApiContext";
-import { CmpStatus, CmpDisplayStatus } from "../status";
-import { SignalStatus } from "../status/SignalStatus";
+import { CmpApiContext } from "../CmpApiContext.js";
+import { CmpStatus } from "../status/CmpStatus.js";
+import { CmpDisplayStatus } from "../status/CmpDisplayStatus.js";
+import { SignalStatus } from "../status/SignalStatus.js";
 
 export class PingData {
   public gppVersion: string;

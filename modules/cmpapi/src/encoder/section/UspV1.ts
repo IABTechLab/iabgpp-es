@@ -1,78 +1,18 @@
-import { InvalidFieldError } from "../error/InvalidFieldError.js";
-import { UspV1Field } from "../field/UspV1Field.js";
-import { EncodableSection } from "./EncodableSection.js";
+import { EncodableSegment } from "../segment/EncodableSegment.js";
+import { UspV1CoreSegment } from "../segment/UspV1CoreSegment.js";
+import { AbstractLazilyEncodableSection } from "./AbstractLazilyEncodableSection.js";
 
 // Deprecated
-export class UspV1 implements EncodableSection {
+export class UspV1 extends AbstractLazilyEncodableSection {
   public static readonly ID = 6;
   public static readonly VERSION = 1;
   public static readonly NAME = "uspv1";
 
-  protected fields: Map<String, any>;
-
   constructor(encodedString?: string) {
-    this.fields = new Map<String, any>();
-    this.fields.set(UspV1Field.VERSION.toString(), UspV1.VERSION);
-    this.fields.set(UspV1Field.NOTICE.toString(), "-");
-    this.fields.set(UspV1Field.OPT_OUT_SALE.toString(), "-");
-    this.fields.set(UspV1Field.LSPA_COVERED.toString(), "-");
-
+    super();
     if (encodedString && encodedString.length > 0) {
       this.decode(encodedString);
     }
-  }
-
-  //Overriden
-  public hasField(fieldName: string): boolean {
-    return this.fields.has(fieldName);
-  }
-
-  //Overriden
-  public getFieldValue(fieldName: string): any {
-    if (this.fields.has(fieldName)) {
-      return this.fields.get(fieldName);
-    } else {
-      return null;
-    }
-  }
-
-  //Overriden
-  public setFieldValue(fieldName: string, value: any): void {
-    if (this.fields.has(fieldName)) {
-      this.fields.set(fieldName, value);
-    } else {
-      throw new InvalidFieldError(fieldName + " not found");
-    }
-  }
-
-  //Overriden
-  public toObj(): any {
-    let obj = {};
-    for (const fieldName of this.fields.keys()) {
-      let value = this.fields.get(fieldName);
-      obj[fieldName.toString()] = value;
-    }
-
-    return obj;
-  }
-
-  //Overriden
-  public encode() {
-    let str = "";
-    str += this.getFieldValue(UspV1Field.VERSION.toString());
-    str += this.getFieldValue(UspV1Field.NOTICE.toString());
-    str += this.getFieldValue(UspV1Field.OPT_OUT_SALE.toString());
-    str += this.getFieldValue(UspV1Field.LSPA_COVERED.toString());
-    return str;
-  }
-
-  //Overriden
-  public decode(encodedString: string) {
-    //TODO: validate
-    this.setFieldValue(UspV1Field.VERSION.toString(), parseInt(encodedString.charAt(0)));
-    this.setFieldValue(UspV1Field.NOTICE.toString(), encodedString.charAt(1));
-    this.setFieldValue(UspV1Field.OPT_OUT_SALE.toString(), encodedString.charAt(2));
-    this.setFieldValue(UspV1Field.LSPA_COVERED.toString(), encodedString.charAt(3));
   }
 
   //Overriden
@@ -83,5 +23,44 @@ export class UspV1 implements EncodableSection {
   //Overriden
   public getName(): string {
     return UspV1.NAME;
+  }
+
+  //Override
+  public getVersion(): number {
+    return UspV1.VERSION;
+  }
+
+  //Overriden
+  protected initializeSegments(): EncodableSegment[] {
+    let segments: EncodableSegment[] = [];
+    segments.push(new UspV1CoreSegment());
+    return segments;
+  }
+
+  //Overriden
+  protected decodeSection(encodedString: string): EncodableSegment[] {
+    let segments: EncodableSegment[] = this.initializeSegments();
+
+    if (encodedString != null && encodedString.length !== 0) {
+      let encodedSegments = encodedString.split(".");
+
+      for (let i = 0; i < segments.length; i++) {
+        if (encodedSegments.length > i) {
+          segments[i].decode(encodedSegments[i]);
+        }
+      }
+    }
+
+    return segments;
+  }
+
+  // Overriden
+  protected encodeSection(segments: EncodableSegment[]): string {
+    let encodedSegments: string[] = [];
+    for (let i = 0; i < segments.length; i++) {
+      let segment: EncodableSegment = segments[i];
+      encodedSegments.push(segment.encode());
+    }
+    return encodedSegments.join(".");
   }
 }
