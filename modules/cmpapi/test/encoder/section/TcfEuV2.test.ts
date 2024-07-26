@@ -643,4 +643,16 @@ describe("manifest.section.TcfEuV2", (): void => {
     expect(tcfEuV2.getFieldValue("VendorConsents")).to.eql([2, 6, 8, 12, 18, 23, 25, 37, 42]);
     expect(tcfEuV2.getFieldValue("VendorLegitimateInterests")).to.eql([2, 6, 8, 12, 18, 23, 37, 42]);
   });
+
+  it("should throw Error on garbage 1", (): void => {
+    expect(function () {
+      new TcfEuV2("A").getFieldValue("PolicyVersion");
+    }).to.throw("Unable to decode TcfEuV2CoreSegment 'A'");
+  });
+
+  it("should throw Error on garbage 2", (): void => {
+    expect(function () {
+      new TcfEuV2("z").getFieldValue("IsServiceSpecific");
+    }).to.throw("Unable to decode TcfEuV2 segment 'z'");
+  });
 });

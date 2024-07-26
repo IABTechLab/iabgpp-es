@@ -1,315 +1,22 @@
-import { AbstractEncodableBitStringDataType } from "../datatype/AbstractEncodableBitStringDataType.js";
-import { EncodableBoolean } from "../datatype/EncodableBoolean.js";
-import { EncodableDatetime } from "../datatype/EncodableDatetime.js";
-import { EncodableFlexibleBitfield } from "../datatype/EncodableFlexibleBitfield.js";
-import { EncodableFixedBitfield } from "../datatype/EncodableFixedBitfield.js";
-import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
-import { EncodableFixedString } from "../datatype/EncodableFixedString.js";
-import { AbstractEncodableSegmentedBitStringSection } from "./AbstractEncodableSegmentedBitStringSection.js";
-import { EncodableFixedIntegerRange } from "../datatype/EncodableFixedIntegerRange.js";
-import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
 import { DecodingError } from "../error/DecodingError.js";
 import { TcfEuV2Field } from "../field/TcfEuV2Field.js";
-import { AbstractBase64UrlEncoder } from "../datatype/encoder/AbstractBase64UrlEncoder.js";
-import { TraditionalBase64UrlEncoder } from "../datatype/encoder/TraditionalBase64UrlEncoder.js";
+import { EncodableSegment } from "../segment/EncodableSegment.js";
+import { TcfEuV2CoreSegment } from "../segment/TcfEuV2CoreSegment.js";
+import { TcfEuV2PublisherPurposesSegment } from "../segment/TcfEuV2PublisherPurposesSegment.js";
+import { TcfEuV2VendorsAllowedSegment } from "../segment/TcfEuV2VendorsAllowedSegment.js";
+import { TcfEuV2VendorsDisclosedSegment } from "../segment/TcfEuV2VendorsDisclosedSegment.js";
+import { AbstractLazilyEncodableSection } from "./AbstractLazilyEncodableSection.js";
 
-export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
+export class TcfEuV2 extends AbstractLazilyEncodableSection {
   public static readonly ID = 2;
   public static readonly VERSION = 2;
   public static readonly NAME = "tcfeuv2";
 
-  private base64UrlEncoder: AbstractBase64UrlEncoder = new TraditionalBase64UrlEncoder();
-
   constructor(encodedString?: string) {
-    let fields = new Map<string, AbstractEncodableBitStringDataType<any>>();
-
-    let date = new Date();
-
-    // core section
-    fields.set(TcfEuV2Field.VERSION.toString(), new EncodableFixedInteger(6, TcfEuV2.VERSION));
-    fields.set(TcfEuV2Field.CREATED.toString(), new EncodableDatetime(date));
-    fields.set(TcfEuV2Field.LAST_UPDATED.toString(), new EncodableDatetime(date));
-    fields.set(TcfEuV2Field.CMP_ID.toString(), new EncodableFixedInteger(12, 0));
-    fields.set(TcfEuV2Field.CMP_VERSION.toString(), new EncodableFixedInteger(12, 0));
-    fields.set(TcfEuV2Field.CONSENT_SCREEN.toString(), new EncodableFixedInteger(6, 0));
-    fields.set(TcfEuV2Field.CONSENT_LANGUAGE.toString(), new EncodableFixedString(2, "EN"));
-    fields.set(TcfEuV2Field.VENDOR_LIST_VERSION.toString(), new EncodableFixedInteger(12, 0));
-    fields.set(TcfEuV2Field.POLICY_VERSION.toString(), new EncodableFixedInteger(6, 2));
-    fields.set(TcfEuV2Field.IS_SERVICE_SPECIFIC.toString(), new EncodableBoolean(false));
-    fields.set(TcfEuV2Field.USE_NON_STANDARD_STACKS.toString(), new EncodableBoolean(false));
-    fields.set(
-      TcfEuV2Field.SPECIAL_FEATURE_OPTINS.toString(),
-      new EncodableFixedBitfield([false, false, false, false, false, false, false, false, false, false, false, false])
-    );
-    fields.set(
-      TcfEuV2Field.PURPOSE_CONSENTS.toString(),
-      new EncodableFixedBitfield([
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-      ])
-    );
-    fields.set(
-      TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS.toString(),
-      new EncodableFixedBitfield([
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-      ])
-    );
-    fields.set(TcfEuV2Field.PURPOSE_ONE_TREATMENT.toString(), new EncodableBoolean(false));
-    fields.set(TcfEuV2Field.PUBLISHER_COUNTRY_CODE.toString(), new EncodableFixedString(2, "AA"));
-    fields.set(TcfEuV2Field.VENDOR_CONSENTS.toString(), new EncodableOptimizedFixedRange([]));
-    fields.set(TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS.toString(), new EncodableOptimizedFixedRange([]));
-
-    fields.set(TcfEuV2Field.PUBLISHER_RESTRICTIONS.toString(), new EncodableFixedIntegerRange([]));
-
-    // publisher purposes segment
-    fields.set(TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 3));
-    fields.set(
-      TcfEuV2Field.PUBLISHER_CONSENTS.toString(),
-      new EncodableFixedBitfield([
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-      ])
-    );
-    fields.set(
-      TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS.toString(),
-      new EncodableFixedBitfield([
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-      ])
-    );
-
-    let numCustomPurposes = new EncodableFixedInteger(6, 0);
-    fields.set(TcfEuV2Field.NUM_CUSTOM_PURPOSES.toString(), numCustomPurposes);
-
-    fields.set(
-      TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS.toString(),
-      new EncodableFlexibleBitfield(() => {
-        return numCustomPurposes.getValue();
-      }, [])
-    );
-
-    fields.set(
-      TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS.toString(),
-      new EncodableFlexibleBitfield(() => {
-        return numCustomPurposes.getValue();
-      }, [])
-    );
-
-    fields.set(TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 2));
-    fields.set(TcfEuV2Field.VENDORS_ALLOWED.toString(), new EncodableOptimizedFixedRange([]));
-
-    fields.set(TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 1));
-    fields.set(TcfEuV2Field.VENDORS_DISCLOSED.toString(), new EncodableOptimizedFixedRange([]));
-
-    let coreSegment = [
-      TcfEuV2Field.VERSION.toString(),
-      TcfEuV2Field.CREATED.toString(),
-      TcfEuV2Field.LAST_UPDATED.toString(),
-      TcfEuV2Field.CMP_ID.toString(),
-      TcfEuV2Field.CMP_VERSION.toString(),
-      TcfEuV2Field.CONSENT_SCREEN.toString(),
-      TcfEuV2Field.CONSENT_LANGUAGE.toString(),
-      TcfEuV2Field.VENDOR_LIST_VERSION.toString(),
-      TcfEuV2Field.POLICY_VERSION.toString(),
-      TcfEuV2Field.IS_SERVICE_SPECIFIC.toString(),
-      TcfEuV2Field.USE_NON_STANDARD_STACKS.toString(),
-      TcfEuV2Field.SPECIAL_FEATURE_OPTINS.toString(),
-      TcfEuV2Field.PURPOSE_CONSENTS.toString(),
-      TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS.toString(),
-      TcfEuV2Field.PURPOSE_ONE_TREATMENT.toString(),
-      TcfEuV2Field.PUBLISHER_COUNTRY_CODE.toString(),
-      TcfEuV2Field.VENDOR_CONSENTS.toString(),
-      TcfEuV2Field.VENDOR_LEGITIMATE_INTERESTS.toString(),
-      TcfEuV2Field.PUBLISHER_RESTRICTIONS.toString(),
-    ];
-
-    let publisherPurposesSegment = [
-      TcfEuV2Field.PUBLISHER_PURPOSES_SEGMENT_TYPE.toString(),
-      TcfEuV2Field.PUBLISHER_CONSENTS.toString(),
-      TcfEuV2Field.PUBLISHER_LEGITIMATE_INTERESTS.toString(),
-      TcfEuV2Field.NUM_CUSTOM_PURPOSES.toString(),
-      TcfEuV2Field.PUBLISHER_CUSTOM_CONSENTS.toString(),
-      TcfEuV2Field.PUBLISHER_CUSTOM_LEGITIMATE_INTERESTS.toString(),
-    ];
-
-    let vendorsAllowedSegment = [
-      TcfEuV2Field.VENDORS_ALLOWED_SEGMENT_TYPE.toString(),
-      TcfEuV2Field.VENDORS_ALLOWED.toString(),
-    ];
-
-    let vendorsDisclosedSegment = [
-      TcfEuV2Field.VENDORS_DISCLOSED_SEGMENT_TYPE.toString(),
-      TcfEuV2Field.VENDORS_DISCLOSED.toString(),
-    ];
-
-    let segments = [coreSegment, publisherPurposesSegment, vendorsAllowedSegment, vendorsDisclosedSegment];
-
-    super(fields, segments);
+    super();
 
     if (encodedString && encodedString.length > 0) {
       this.decode(encodedString);
-    }
-  }
-
-  //Overriden
-  public encode(): string {
-    let segmentBitStrings = this.encodeSegmentsToBitStrings();
-    let encodedSegments = [];
-    encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[0]));
-    if (this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC.toString())) {
-      if (segmentBitStrings[1] && segmentBitStrings[1].length > 0) {
-        encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[1]));
-      }
-    } else {
-      if (segmentBitStrings[2] && segmentBitStrings[2].length > 0) {
-        encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[2]));
-      }
-
-      if (segmentBitStrings[3] && segmentBitStrings[3].length > 0) {
-        encodedSegments.push(this.base64UrlEncoder.encode(segmentBitStrings[3]));
-      }
-    }
-
-    return encodedSegments.join(".");
-  }
-
-  //Overriden
-  public decode(encodedSection: string): void {
-    let encodedSegments = encodedSection.split(".");
-    let segmentBitStrings = [];
-    for (let i = 0; i < encodedSegments.length; i++) {
-      /**
-       * first char will contain 6 bits, we only need the first 3. In version 1
-       * and 2 of the TC string there is no segment type for the CORE string.
-       * Instead the first 6 bits are reserved for the encoding version, but
-       * because we're only on a maximum of encoding version 2 the first 3 bits
-       * in the core segment will evaluate to 0.
-       */
-      let segmentBitString = this.base64UrlEncoder.decode(encodedSegments[i]);
-      switch (segmentBitString.substring(0, 3)) {
-        // unfortunately, the segment ordering doesn't match the segment ids
-        case "000": {
-          segmentBitStrings[0] = segmentBitString;
-          break;
-        }
-        case "001": {
-          segmentBitStrings[3] = segmentBitString;
-          break;
-        }
-        case "010": {
-          segmentBitStrings[2] = segmentBitString;
-          break;
-        }
-        case "011": {
-          segmentBitStrings[1] = segmentBitString;
-          break;
-        }
-        default: {
-          throw new DecodingError("Unable to decode segment '" + encodedSegments[i] + "'");
-        }
-      }
-    }
-    this.decodeSegmentsFromBitStrings(segmentBitStrings);
-  }
-
-  //Overriden
-  public setFieldValue(fieldName: string, value: any): void {
-    super.setFieldValue(fieldName, value);
-    if (fieldName !== TcfEuV2Field.CREATED.toString() && fieldName !== TcfEuV2Field.LAST_UPDATED.toString()) {
-      const date = new Date();
-      const utcDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-
-      this.setFieldValue(TcfEuV2Field.CREATED.toString(), utcDate);
-      this.setFieldValue(TcfEuV2Field.LAST_UPDATED.toString(), utcDate);
     }
   }
 
@@ -321,5 +28,98 @@ export class TcfEuV2 extends AbstractEncodableSegmentedBitStringSection {
   //Overriden
   public getName(): string {
     return TcfEuV2.NAME;
+  }
+
+  //Override
+  public getVersion(): number {
+    return TcfEuV2.VERSION;
+  }
+
+  //Overriden
+  protected initializeSegments(): EncodableSegment[] {
+    let segments: EncodableSegment[] = [];
+    segments.push(new TcfEuV2CoreSegment());
+    segments.push(new TcfEuV2PublisherPurposesSegment());
+    segments.push(new TcfEuV2VendorsAllowedSegment());
+    segments.push(new TcfEuV2VendorsDisclosedSegment());
+    return segments;
+  }
+
+  //Overriden
+  protected decodeSection(encodedString: string): EncodableSegment[] {
+    let segments: EncodableSegment[] = this.initializeSegments();
+
+    if (encodedString != null && encodedString.length !== 0) {
+      let encodedSegments = encodedString.split(".");
+      for (let i = 0; i < encodedSegments.length; i++) {
+        /**
+         * The first 3 bits contain the segment id. Rather than decode the entire string, just check the first character.
+         *
+         * A-H     = '000' = 0
+         * I-P     = '001' = 1
+         * Q-X     = '010' = 2
+         * Y-Z,a-f = '011' = 3
+         *
+         * Note that there is no segment id field for the core segment. Instead the first 6 bits are reserved
+         * for the encoding version which only coincidentally works here because the version value is less than 8.
+         */
+
+        let encodedSegment: string = encodedSegments[i];
+        if (encodedSegment.length !== 0) {
+          let firstChar: string = encodedSegment.charAt(0);
+
+          // unfortunately, the segment ordering doesn't match the segment ids
+          if (firstChar >= "A" && firstChar <= "H") {
+            segments[0].decode(encodedSegments[i]);
+          } else if (firstChar >= "I" && firstChar <= "P") {
+            segments[3].decode(encodedSegments[i]);
+          } else if (firstChar >= "Q" && firstChar <= "X") {
+            segments[2].decode(encodedSegments[i]);
+          } else if ((firstChar >= "Y" && firstChar <= "Z") || (firstChar >= "a" && firstChar <= "f")) {
+            segments[1].decode(encodedSegments[i]);
+          } else {
+            throw new DecodingError("Unable to decode TcfEuV2 segment '" + encodedSegment + "'");
+          }
+        }
+      }
+    }
+
+    return segments;
+  }
+
+  // Overriden
+  protected encodeSection(segments: EncodableSegment[]): string {
+    let encodedSegments: string[] = [];
+    if (segments.length >= 1) {
+      encodedSegments.push(segments[0].encode());
+
+      let isServiceSpecific: boolean = this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
+      if (isServiceSpecific) {
+        if (segments.length >= 2) {
+          encodedSegments.push(segments[1].encode());
+        }
+      } else {
+        if (segments.length >= 2) {
+          encodedSegments.push(segments[2].encode());
+
+          if (segments.length >= 3) {
+            encodedSegments.push(segments[3].encode());
+          }
+        }
+      }
+    }
+    return encodedSegments.join(".");
+  }
+
+  //Overriden
+  public setFieldValue(fieldName: string, value: any): void {
+    super.setFieldValue(fieldName, value);
+
+    if (fieldName !== TcfEuV2Field.CREATED && fieldName !== TcfEuV2Field.LAST_UPDATED) {
+      let date = new Date();
+
+      super.setFieldValue(TcfEuV2Field.CREATED, date);
+      super.setFieldValue(TcfEuV2Field.LAST_UPDATED, date);
+    }
   }
 }

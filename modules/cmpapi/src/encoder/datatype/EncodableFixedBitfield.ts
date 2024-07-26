@@ -1,26 +1,41 @@
 import { FixedBitfieldEncoder } from "./encoder/FixedBitfieldEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { EncodingError } from "../error/EncodingError.js";
+import { DecodingError } from "../error/DecodingError.js";
+import { SubstringError } from "./SubstringError.js";
+import { StringUtil } from "../util/StringUtil.js";
 
 export class EncodableFixedBitfield extends AbstractEncodableBitStringDataType<boolean[]> {
   private numElements: number;
 
-  constructor(value: boolean[]) {
-    super();
+  constructor(value: boolean[], hardFailIfMissing: boolean = true) {
+    super(hardFailIfMissing);
     this.numElements = value.length;
     this.setValue(value);
   }
 
   public encode(): string {
-    return FixedBitfieldEncoder.encode(this.value, this.numElements);
+    try {
+      return FixedBitfieldEncoder.encode(this.value, this.numElements);
+    } catch (e) {
+      throw new EncodingError(e);
+    }
   }
 
   public decode(bitString: string) {
-    this.value = FixedBitfieldEncoder.decode(bitString);
+    try {
+      this.value = FixedBitfieldEncoder.decode(bitString);
+    } catch (e) {
+      throw new DecodingError(e);
+    }
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
-    return bitString.substring(fromIndex, fromIndex + this.numElements);
+    try {
+      return StringUtil.substring(bitString, fromIndex, fromIndex + this.numElements);
+    } catch (e) {
+      throw new SubstringError(e);
+    }
   }
 
   // Overriden

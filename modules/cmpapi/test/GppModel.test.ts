@@ -1,8 +1,7 @@
 import { GppModel } from "../src/encoder/GppModel";
 import { expect } from "chai";
-import { HeaderV1Field } from "../src/encoder/field/HeaderV1Field";
 import { TcfCaV1Field } from "../src/encoder/field/TcfCaV1Field";
-import { LazyDecodingError } from "../src/encoder/error/LazyDecodingError";
+import { UspV1Field } from "../src/encoder/field/UspV1Field";
 
 let utcDateTime = new Date("2022-01-01T00:00:00Z");
 
@@ -22,11 +21,18 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
   });
 
-  it("should throw LazyDecodingError", (): void => {
+  it("should throw Error on invalid gpp string", (): void => {
     let gppModel = new GppModel("invalid gpp string");
     expect(function () {
       gppModel.getHeader();
-    }).to.throw("Undecodable Base64URL string");
+    }).to.throw("Unable to decode 'invalid gpp string'");
+  });
+
+  it("should throw Error on garbage", (): void => {
+    let gppModel = new GppModel("z");
+    expect(function () {
+      gppModel.getHeader();
+    }).to.throw("Unable to decode 'z'");
   });
 
   it("should default all sections", (): void => {
@@ -67,7 +73,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA"
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA"
     );
   });
 
@@ -346,7 +352,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN"
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN"
     );
 
     expect(gppString.split("~").length).to.eql(4);
@@ -363,7 +369,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode defaults from all sections", (): void => {
     let gppString =
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAABAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAAA.QA~BAAAAAAA.QA~BAAAAAA~BAAAAAA.QA~BAAAAAAA~BAAAAAAA.QA";
+      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
@@ -445,7 +451,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode uspv1 and tcfeuv2 and tcfcav1 sections", (): void => {
     let gppString =
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdBgf_gfgAfgfgBgABABAAABAB4AACAC.fHHHA4444ao~1YNN";
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACADwAAEAE.fHHHA4444ao~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([2, 5, 6]);
@@ -606,7 +612,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.LAST_UPDATED)).to.eql(new Date("2022-01-01T00:00:00Z"));
 
     expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.CONSENT_LANGUAGE)).to.eql("EN");
-    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.SEGMENT_TYPE)).to.eql(3);
+    expect(gppModel.getFieldValue("tcfcav1", TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
   it("should encode tcfeuv2 vendor consents [28]", (): void => {
@@ -708,5 +714,63 @@ describe("manifest.GppModel", (): void => {
     ]);
 
     expect(decodedModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([21, 32, 81, 128, 173, 210, 238, 755]);
+  });
+
+  it("should handle null constructor", (): void => {
+    let gppModel = new GppModel(null);
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should handle empty string constructor", (): void => {
+    let gppModel = new GppModel("");
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should decode null", (): void => {
+    let gppModel = new GppModel("DBABTA~1---");
+    expect(gppModel.encode()).to.eq("DBABTA~1---");
+
+    gppModel.decode(null);
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should decode empty string", (): void => {
+    let gppModel = new GppModel("DBABTA~1---");
+    expect(gppModel.encode()).to.eq("DBABTA~1---");
+
+    gppModel.decode("");
+    expect(gppModel.encode()).to.eq("DBAA");
+
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+  });
+
+  it("should fail to decode missing sections", (): void => {
+    let gppModel = new GppModel(
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao"
+    );
+    expect(function () {
+      gppModel.getHeader();
+    }).to.throw(
+      "Unable to decode 'DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao'. The number of sections does not match the number of sections defined in the header."
+    );
+  });
+
+  it("should fail to decode blank sections", (): void => {
+    let gppModel = new GppModel("DBACOeA~~1YNN");
+    expect(function () {
+      gppModel.getHeader();
+    }).to.throw(
+      "Unable to decode 'DBACOeA~~1YNN'. The number of sections does not match the number of sections defined in the header."
+    );
   });
 });
