@@ -7,7 +7,7 @@ import { UsNatV1GpcSegment } from "../segment/UsNatV1GpcSegment.js";
 export class UsNatV1 extends AbstractLazilyEncodableSection {
   public static readonly ID = 7;
   public static readonly VERSION = 1;
-  public static readonly NAME = "usnatv1";
+  public static readonly NAME = "usnat";
 
   constructor(encodedString?: string) {
     super();

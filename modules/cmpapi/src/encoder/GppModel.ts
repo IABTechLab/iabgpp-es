@@ -10,6 +10,10 @@ import { UsVaV1 } from "./section/UsVaV1.js";
 import { UsCoV1 } from "./section/UsCoV1.js";
 import { UsUtV1 } from "./section/UsUtV1.js";
 import { UsCtV1 } from "./section/UsCtV1.js";
+import { UsFlV1 } from "./section/UsFlV1.js";
+import { UsMtV1 } from "./section/UsMtV1.js";
+import { UsOrV1 } from "./section/UsOrV1.js";
+import { UsTxV1 } from "./section/UsTxV1.js";
 import { InvalidFieldError } from "./error/InvalidFieldError.js";
 import { DecodingError } from "./error/DecodingError.js";
 import { HeaderV1Field } from "./field/HeaderV1Field.js";
@@ -63,6 +67,18 @@ export class GppModel {
       } else if (sectionName === UsCtV1.NAME) {
         section = new UsCtV1();
         this.sections.set(UsCtV1.NAME, section);
+      } else if (sectionName === UsFlV1.NAME) {
+        section = new UsFlV1();
+        this.sections.set(UsFlV1.NAME, section);
+      } else if (sectionName === UsMtV1.NAME) {
+        section = new UsMtV1();
+        this.sections.set(UsMtV1.NAME, section);
+      } else if (sectionName === UsOrV1.NAME) {
+        section = new UsOrV1();
+        this.sections.set(UsOrV1.NAME, section);
+      } else if (sectionName === UsTxV1.NAME) {
+        section = new UsTxV1();
+        this.sections.set(UsTxV1.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
@@ -250,6 +266,18 @@ export class GppModel {
           } else if (sectionIds[i] === UsCtV1.ID) {
             let section = new UsCtV1(encodedSections[i + 1]);
             sections.set(UsCtV1.NAME, section);
+          } else if (sectionIds[i] === UsFlV1.ID) {
+            let section = new UsFlV1(encodedSections[i + 1]);
+            sections.set(UsFlV1.NAME, section);
+          } else if (sectionIds[i] === UsMtV1.ID) {
+            let section = new UsMtV1(encodedSections[i + 1]);
+            sections.set(UsMtV1.NAME, section);
+          } else if (sectionIds[i] === UsOrV1.ID) {
+            let section = new UsOrV1(encodedSections[i + 1]);
+            sections.set(UsOrV1.NAME, section);
+          } else if (sectionIds[i] === UsTxV1.ID) {
+            let section = new UsTxV1(encodedSections[i + 1]);
+            sections.set(UsTxV1.NAME, section);
           }
         }
       }
@@ -319,6 +347,18 @@ export class GppModel {
       } else if (sectionName === UsCtV1.NAME) {
         section = new UsCtV1();
         this.sections.set(UsCtV1.NAME, section);
+      } else if (sectionName === UsFlV1.NAME) {
+        section = new UsFlV1();
+        this.sections.set(UsFlV1.NAME, section);
+      } else if (sectionName === UsMtV1.NAME) {
+        section = new UsMtV1();
+        this.sections.set(UsMtV1.NAME, section);
+      } else if (sectionName === UsOrV1.NAME) {
+        section = new UsOrV1();
+        this.sections.set(UsOrV1.NAME, section);
+      } else if (sectionName === UsTxV1.NAME) {
+        section = new UsTxV1();
+        this.sections.set(UsTxV1.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);

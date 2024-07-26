@@ -1,13 +1,13 @@
-import { UsCtV1Field } from "../field/UsCtV1Field.js";
+import { UsTxV1Field } from "../field/UsTxV1Field.js";
 import { EncodableSegment } from "../segment/EncodableSegment.js";
-import { UsCtV1CoreSegment } from "../segment/UsCtV1CoreSegment.js";
-import { UsCtV1GpcSegment } from "../segment/UsCtV1GpcSegment.js";
+import { UsTxV1CoreSegment } from "../segment/UsTxV1CoreSegment.js";
+import { UsTxV1GpcSegment } from "../segment/UsTxV1GpcSegment.js";
 import { AbstractLazilyEncodableSection } from "./AbstractLazilyEncodableSection.js";
 
-export class UsCtV1 extends AbstractLazilyEncodableSection {
-  public static readonly ID = 12;
+export class UsTxV1 extends AbstractLazilyEncodableSection {
+  public static readonly ID = 16;
   public static readonly VERSION = 1;
-  public static readonly NAME = "usct";
+  public static readonly NAME = "ustx";
 
   constructor(encodedString?: string) {
     super();
@@ -18,24 +18,24 @@ export class UsCtV1 extends AbstractLazilyEncodableSection {
 
   //Overriden
   public getId(): number {
-    return UsCtV1.ID;
+    return UsTxV1.ID;
   }
 
   //Overriden
   public getName(): string {
-    return UsCtV1.NAME;
+    return UsTxV1.NAME;
   }
 
   //Override
   public getVersion(): number {
-    return UsCtV1.VERSION;
+    return UsTxV1.VERSION;
   }
 
   //Overriden
   protected initializeSegments(): EncodableSegment[] {
     let segments: EncodableSegment[] = [];
-    segments.push(new UsCtV1CoreSegment());
-    segments.push(new UsCtV1GpcSegment());
+    segments.push(new UsTxV1CoreSegment());
+    segments.push(new UsTxV1GpcSegment());
     return segments;
   }
 
@@ -51,10 +51,10 @@ export class UsCtV1 extends AbstractLazilyEncodableSection {
       }
 
       if (encodedSegments.length > 1) {
-        segments[1].setFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED, true);
+        segments[1].setFieldValue(UsTxV1Field.GPC_SEGMENT_INCLUDED, true);
         segments[1].decode(encodedSegments[1]);
       } else {
-        segments[1].setFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED, false);
+        segments[1].setFieldValue(UsTxV1Field.GPC_SEGMENT_INCLUDED, false);
       }
     }
 
@@ -67,7 +67,7 @@ export class UsCtV1 extends AbstractLazilyEncodableSection {
 
     if (segments.length >= 1) {
       encodedSegments.push(segments[0].encode());
-      if (segments.length >= 2 && segments[1].getFieldValue(UsCtV1Field.GPC_SEGMENT_INCLUDED) === true) {
+      if (segments.length >= 2 && segments[1].getFieldValue(UsTxV1Field.GPC_SEGMENT_INCLUDED) === true) {
         encodedSegments.push(segments[1].encode());
       }
     }
