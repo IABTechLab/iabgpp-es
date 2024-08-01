@@ -11,7 +11,7 @@ import { CompressedBase64UrlEncoder } from "../datatype/encoder/CompressedBase64
 export class UsCoV1 extends AbstractEncodableSegmentedBitStringSection {
   public static readonly ID = 10;
   public static readonly VERSION = 1;
-  public static readonly NAME = "uscov1";
+  public static readonly NAME = "usco";
 
   private base64UrlEncoder: AbstractBase64UrlEncoder = new CompressedBase64UrlEncoder();
 
