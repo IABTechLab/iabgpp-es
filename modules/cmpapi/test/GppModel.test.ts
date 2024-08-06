@@ -75,7 +75,7 @@ describe("manifest.GppModel", (): void => {
     let gppModel = new GppModel();
     expect(gppModel.hasSection("uspv1")).to.eql(false);
     expect(gppModel.hasSection("tcfeuv2")).to.eql(false);
-    expect(gppModel.hasSection("tcfcav1")).to.eql(false);
+    expect(gppModel.hasSection("tcfca")).to.eql(false);
 
     gppModel.setFieldValue("uspv1", "Notice", "Y");
     gppModel.setFieldValue("uspv1", "OptOutSale", "N");
