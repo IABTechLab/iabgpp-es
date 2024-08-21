@@ -7,7 +7,7 @@ import { UsCoV1GpcSegment } from "../segment/UsCoV1GpcSegment.js";
 export class UsCoV1 extends AbstractLazilyEncodableSection {
   public static readonly ID = 10;
   public static readonly VERSION = 1;
-  public static readonly NAME = "uscov1";
+  public static readonly NAME = "usco";
 
   constructor(encodedString?: string) {
     super();

@@ -5,7 +5,7 @@ import { AbstractLazilyEncodableSection } from "./AbstractLazilyEncodableSection
 export class UsVaV1 extends AbstractLazilyEncodableSection {
   public static readonly ID = 9;
   public static readonly VERSION = 1;
-  public static readonly NAME = "usvav1";
+  public static readonly NAME = "usva";
 
   constructor(encodedString?: string) {
     super();
