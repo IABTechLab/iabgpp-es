@@ -1,11 +1,9 @@
-import { DecodingError } from "./DecodingError.js";
-
 /**
  * class for decoding errors
  *
- * @extends {DecodingError}
+ * @extends {Error}
  */
-class LazyDecodingError extends DecodingError {
+class ValidationError extends Error {
   /**
    * constructor - constructs an DecodingError
    *
@@ -14,8 +12,8 @@ class LazyDecodingError extends DecodingError {
    */
   public constructor(msg: string) {
     super(msg);
-    this.name = "LazyDecodingError";
+    this.name = "ValidationError";
   }
 }
 
-export { LazyDecodingError };
+export { ValidationError };

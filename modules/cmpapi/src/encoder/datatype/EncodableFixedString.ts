@@ -1,25 +1,40 @@
 import { FixedStringEncoder } from "./encoder/FixedStringEncoder.js";
 import { AbstractEncodableBitStringDataType } from "./AbstractEncodableBitStringDataType.js";
+import { EncodingError } from "../error/EncodingError.js";
+import { DecodingError } from "../error/DecodingError.js";
+import { SubstringError } from "./SubstringError.js";
+import { StringUtil } from "../util/StringUtil.js";
 
 export class EncodableFixedString extends AbstractEncodableBitStringDataType<string> {
   private stringLength: number;
 
-  constructor(stringLength: number, value: string) {
-    super();
+  constructor(stringLength: number, value: string, hardFailIfMissing: boolean = true) {
+    super(hardFailIfMissing);
     this.stringLength = stringLength;
     this.setValue(value);
   }
 
   public encode(): string {
-    return FixedStringEncoder.encode(this.value, this.stringLength);
+    try {
+      return FixedStringEncoder.encode(this.value, this.stringLength);
+    } catch (e) {
+      throw new EncodingError(e);
+    }
   }
 
   public decode(bitString: string) {
-    this.value = FixedStringEncoder.decode(bitString);
+    try {
+      this.value = FixedStringEncoder.decode(bitString);
+    } catch (e) {
+      throw new DecodingError(e);
+    }
   }
 
   public substring(bitString: string, fromIndex: number): string {
-    //TODO: validate
-    return bitString.substring(fromIndex, fromIndex + this.stringLength * 6);
+    try {
+      return StringUtil.substring(bitString, fromIndex, fromIndex + this.stringLength * 6);
+    } catch (e) {
+      throw new SubstringError(e);
+    }
   }
 }
