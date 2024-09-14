@@ -231,14 +231,27 @@ export class GppModel {
   }
 
   protected decodeModel(str: string) {
-    if (!str || str.length == 0 || str.startsWith("D")) {
+    if (!str || str.length == 0 || str.startsWith("DB")) {
       let encodedSections = str.split("~");
       let sections = new Map<string, EncodableSection>();
       if (encodedSections[0].startsWith("D")) {
         //GPP String
         let header = new HeaderV1(encodedSections[0]);
         let sectionIds = header.getFieldValue("SectionIds");
+
+        if (sectionIds.length !== encodedSections.length - 1) {
+          throw new DecodingError(
+            "Unable to decode '" +
+              str +
+              "'. The number of sections does not match the number of sections defined in the header."
+          );
+        }
+
         for (let i = 0; i < sectionIds.length; i++) {
+          let encodedSection = encodedSections[i + 1];
+          if (encodedSection.trim() === "") {
+            throw new DecodingError("Unable to decode '" + str + "'. Section " + (i + 1) + " is blank.");
+          }
           if (sectionIds[i] === TcfCaV1.ID) {
             let section = new TcfCaV1(encodedSections[i + 1]);
             sections.set(TcfCaV1.NAME, section);

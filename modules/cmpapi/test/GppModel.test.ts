@@ -765,4 +765,24 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
     expect(gppModel.encode()).to.eq("DBABTA~1Y--");
   });
+
+  it("should fail to decode missing sections", (): void => {
+    let gppModel = new GppModel(
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao"
+    );
+    expect(function () {
+      gppModel.getHeader();
+    }).to.throw(
+      "Unable to decode 'DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao'. The number of sections does not match the number of sections defined in the header."
+    );
+  });
+
+  it("should fail to decode blank sections", (): void => {
+    let gppModel = new GppModel("DBACOeA~~1YNN");
+    expect(function () {
+      gppModel.getHeader();
+    }).to.throw(
+      "Unable to decode 'DBACOeA~~1YNN'. The number of sections does not match the number of sections defined in the header."
+    );
+  });
 });
