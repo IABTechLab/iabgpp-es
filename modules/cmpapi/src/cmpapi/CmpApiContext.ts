@@ -6,12 +6,12 @@ import { GppModel } from "../encoder/GppModel.js";
 import { TcfCaV1 } from "../encoder/section/TcfCaV1.js";
 import { TcfEuV2 } from "../encoder/section/TcfEuV2.js";
 import { UspV1 } from "../encoder/section/UspV1.js";
-import { UsNatV1 } from "../encoder/section/UsNatV1.js";
-import { UsCaV1 } from "../encoder/section/UsCaV1.js";
-import { UsVaV1 } from "../encoder/section/UsVaV1.js";
-import { UsCoV1 } from "../encoder/section/UsCoV1.js";
-import { UsUtV1 } from "../encoder/section/UsUtV1.js";
-import { UsCtV1 } from "../encoder/section/UsCtV1.js";
+import { UsNat } from "../encoder/section/UsNat.js";
+import { UsCa } from "../encoder/section/UsCa.js";
+import { UsVa } from "../encoder/section/UsVa.js";
+import { UsCo } from "../encoder/section/UsCo.js";
+import { UsUt } from "../encoder/section/UsUt.js";
+import { UsCt } from "../encoder/section/UsCt.js";
 import { SignalStatus } from "./status/SignalStatus.js";
 
 /**
