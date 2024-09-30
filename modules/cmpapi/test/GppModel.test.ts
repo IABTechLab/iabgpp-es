@@ -46,6 +46,10 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("usco")).to.eql(false);
     expect(gppModel.hasSection("usut")).to.eql(false);
     expect(gppModel.hasSection("usct")).to.eql(false);
+    expect(gppModel.hasSection("usfl")).to.eql(false);
+    expect(gppModel.hasSection("usmt")).to.eql(false);
+    expect(gppModel.hasSection("usor")).to.eql(false);
+    expect(gppModel.hasSection("ustx")).to.eql(false);
 
     gppModel.setFieldValue("tcfeuv2", "Version", 2);
     gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
@@ -60,6 +64,10 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("usco", "Version", 1);
     gppModel.setFieldValue("usut", "Version", 1);
     gppModel.setFieldValue("usct", "Version", 1);
+    gppModel.setFieldValue("usfl", "Version", 1);
+    gppModel.setFieldValue("usmt", "Version", 1);
+    gppModel.setFieldValue("usor", "Version", 1);
+    gppModel.setFieldValue("ustx", "Version", 1);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav1")).to.eql(true);
@@ -70,10 +78,14 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("usco")).to.eql(true);
     expect(gppModel.hasSection("usut")).to.eql(true);
     expect(gppModel.hasSection("usct")).to.eql(true);
+    expect(gppModel.hasSection("usfl")).to.eql(true);
+    expect(gppModel.hasSection("usmt")).to.eql(true);
+    expect(gppModel.hasSection("usor")).to.eql(true);
+    expect(gppModel.hasSection("ustx")).to.eql(true);
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA"
+      "DBACOZY~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA"
     );
   });
 
