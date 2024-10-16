@@ -10,7 +10,7 @@ export * from "./UsCt.js";
 export * from "./UsFl.js";
 export * from "./UsMt.js";
 export * from "./UsNat.js";
-export * from "./UsMt.js";
+export * from "./UsOr.js";
 export * from "./UsTx.js";
 export * from "./UsUt.js";
 export * from "./UspV1.js";
