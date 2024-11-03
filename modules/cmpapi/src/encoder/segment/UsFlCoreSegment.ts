@@ -137,29 +137,29 @@ export class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
     let mspaOptOutOptionMode: number = this.fields.get(UsFlField.MSPA_OPT_OUT_OPTION_MODE).getValue();
 
     if (saleOptOutNotice == 0) {
-      if (saleOptOut != 0) {
+      if (saleOptOut == 1 || saleOptOut == 2) {
         throw new ValidationError(
-          "Invalid usva sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
+          "Invalid usfl sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
         );
       }
     } else if (saleOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
+      if (saleOptOut == 0) {
         throw new ValidationError(
-          "Invalid usva sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
+          "Invalid usfl sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
         );
       }
     } else if (saleOptOutNotice == 2) {
-      if (saleOptOut != 1) {
+      if (saleOptOut == 0 || saleOptOut == 2) {
         throw new ValidationError(
-          "Invalid usva sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
+          "Invalid usfl sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
         );
       }
     }
 
     if (targetedAdvertisingOptOutNotice == 0) {
-      if (targetedAdvertisingOptOut != 0) {
+      if (targetedAdvertisingOptOut == 1 || targetedAdvertisingOptOut == 2) {
         throw new ValidationError(
-          "Invalid usva targeted advertising notice / opt out combination: {" +
+          "Invalid usfl targeted advertising notice / opt out combination: {" +
             targetedAdvertisingOptOutNotice +
             " / " +
             targetedAdvertisingOptOut +
@@ -167,9 +167,9 @@ export class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
         );
       }
     } else if (targetedAdvertisingOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
+      if (targetedAdvertisingOptOut == 0) {
         throw new ValidationError(
-          "Invalid usva targeted advertising notice / opt out combination: {" +
+          "Invalid usfl targeted advertising notice / opt out combination: {" +
             targetedAdvertisingOptOutNotice +
             " / " +
             targetedAdvertisingOptOut +
@@ -177,9 +177,9 @@ export class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
         );
       }
     } else if (targetedAdvertisingOptOutNotice == 2) {
-      if (saleOptOut != 1) {
+      if (targetedAdvertisingOptOut == 0 || targetedAdvertisingOptOut == 2) {
         throw new ValidationError(
-          "Invalid usva targeted advertising notice / opt out combination: {" +
+          "Invalid usfl targeted advertising notice / opt out combination: {" +
             targetedAdvertisingOptOutNotice +
             " / " +
             targetedAdvertisingOptOut +
@@ -189,9 +189,9 @@ export class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
     }
 
     if (mspaServiceProviderMode == 0) {
-      if (saleOptOutNotice != 0) {
+      if (saleOptOutNotice == 1 || saleOptOutNotice == 2) {
         throw new ValidationError(
-          "Invalid usva mspa service provider mode / sale opt out notice combination: {" +
+          "Invalid usfl mspa service provider mode / sale opt out notice combination: {" +
             mspaServiceProviderMode +
             " / " +
             saleOptOutNotice +
@@ -199,9 +199,9 @@ export class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
         );
       }
     } else if (mspaServiceProviderMode == 1) {
-      if (mspaOptOutOptionMode != 2) {
+      if (mspaOptOutOptionMode == 0 || mspaOptOutOptionMode == 1) {
         throw new ValidationError(
-          "Invalid usva mspa service provider / opt out option modes combination: {" +
+          "Invalid usfl mspa service provider / opt out option modes combination: {" +
             mspaServiceProviderMode +
             " / " +
             mspaServiceProviderMode +
@@ -209,9 +209,9 @@ export class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
         );
       }
 
-      if (saleOptOutNotice != 0) {
+      if (saleOptOutNotice == 1 || saleOptOutNotice == 2) {
         throw new ValidationError(
-          "Invalid usva mspa service provider mode / sale opt out notice combination: {" +
+          "Invalid usfl mspa service provider mode / sale opt out notice combination: {" +
             mspaServiceProviderMode +
             " / " +
             saleOptOutNotice +
@@ -219,9 +219,9 @@ export class UsFlCoreSegment extends AbstractLazilyEncodableSegment<EncodableBit
         );
       }
     } else if (mspaServiceProviderMode == 2) {
-      if (mspaOptOutOptionMode != 1) {
+      if (mspaOptOutOptionMode == 0 || mspaOptOutOptionMode == 2) {
         throw new ValidationError(
-          "Invalid usva mspa service provider / opt out option modes combination: {" +
+          "Invalid usfl mspa service provider / opt out option modes combination: {" +
             mspaServiceProviderMode +
             " / " +
             mspaOptOutOptionMode +

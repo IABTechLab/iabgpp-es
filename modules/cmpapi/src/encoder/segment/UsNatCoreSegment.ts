@@ -142,7 +142,6 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
 
   // overriden
   public validate(): void {
-    let sharingNotice: number = this.fields.get(UsNatField.SHARING_NOTICE).getValue();
     let sharingOptOutNotice: number = this.fields.get(UsNatField.SHARING_OPT_OUT_NOTICE).getValue();
     let sharingOptOut: number = this.fields.get(UsNatField.SHARING_OPT_OUT).getValue();
     let saleOptOutNotice: number = this.fields.get(UsNatField.SALE_OPT_OUT_NOTICE).getValue();
@@ -153,42 +152,22 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
     let targetedAdvertisingOptOut: number = this.fields.get(UsNatField.TARGETED_ADVERTISING_OPT_OUT).getValue();
     let mspaServiceProviderMode: number = this.fields.get(UsNatField.MSPA_SERVICE_PROVIDER_MODE).getValue();
     let mspaOptOutOptionMode: number = this.fields.get(UsNatField.MSPA_OPT_OUT_OPTION_MODE).getValue();
-    let sensitiveDataLimtUserNotice: number = this.fields.get(UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE).getValue();
-
-    if (sharingNotice == 0) {
-      if (sharingOptOut != 0) {
-        throw new ValidationError(
-          "Invalid usnat sharing notice / opt out combination: {" + sharingNotice + " / " + sharingOptOut + "}"
-        );
-      }
-    } else if (sharingNotice == 1) {
-      if (sharingOptOut != 1 && sharingOptOut != 2) {
-        throw new ValidationError(
-          "Invalid usnat sharing notice / opt out combination: {" + sharingNotice + " / " + sharingOptOut + "}"
-        );
-      }
-    } else if (sharingNotice == 2) {
-      if (sharingOptOut != 1) {
-        throw new ValidationError(
-          "Invalid usnat sharing notice / opt out combination: {" + sharingNotice + " / " + sharingOptOut + "}"
-        );
-      }
-    }
+    let sensitiveDataLimitUseNotice: number = this.fields.get(UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE).getValue();
 
     if (sharingOptOutNotice == 0) {
-      if (sharingOptOut != 0) {
+      if (sharingOptOut == 1 || sharingOptOut == 2) {
         throw new ValidationError(
           "Invalid usnat sharing notice / opt out combination: {" + sharingOptOutNotice + " / " + sharingOptOut + "}"
         );
       }
     } else if (sharingOptOutNotice == 1) {
-      if (sharingOptOut != 1 && sharingOptOut != 2) {
+      if (sharingOptOut == 0) {
         throw new ValidationError(
           "Invalid usnat sharing notice / opt out combination: {" + sharingOptOutNotice + " / " + sharingOptOut + "}"
         );
       }
     } else if (sharingOptOutNotice == 2) {
-      if (sharingOptOut != 1) {
+      if (sharingOptOut == 0 || sharingOptOut == 2) {
         throw new ValidationError(
           "Invalid usnat sharing notice / opt out combination: {" + sharingOptOutNotice + " / " + sharingOptOut + "}"
         );
@@ -196,19 +175,19 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
     }
 
     if (saleOptOutNotice == 0) {
-      if (saleOptOut != 0) {
+      if (saleOptOut == 1 || saleOptOut == 2) {
         throw new ValidationError(
           "Invalid usnat sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
         );
       }
     } else if (saleOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
+      if (saleOptOut == 0) {
         throw new ValidationError(
           "Invalid usnat sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
         );
       }
     } else if (saleOptOutNotice == 2) {
-      if (saleOptOut != 1) {
+      if (saleOptOut == 0 || saleOptOut == 2) {
         throw new ValidationError(
           "Invalid usnat sale notice / opt out combination: {" + saleOptOutNotice + " / " + saleOptOut + "}"
         );
@@ -216,7 +195,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
     }
 
     if (targetedAdvertisingOptOutNotice == 0) {
-      if (targetedAdvertisingOptOut != 0) {
+      if (targetedAdvertisingOptOut == 1 || targetedAdvertisingOptOut == 2) {
         throw new ValidationError(
           "Invalid usnat targeted advertising notice / opt out combination: {" +
             targetedAdvertisingOptOutNotice +
@@ -226,7 +205,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
         );
       }
     } else if (targetedAdvertisingOptOutNotice == 1) {
-      if (saleOptOut != 1 && saleOptOut != 2) {
+      if (targetedAdvertisingOptOut == 0) {
         throw new ValidationError(
           "Invalid usnat targeted advertising notice / opt out combination: {" +
             targetedAdvertisingOptOutNotice +
@@ -236,7 +215,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
         );
       }
     } else if (targetedAdvertisingOptOutNotice == 2) {
-      if (saleOptOut != 1) {
+      if (targetedAdvertisingOptOut == 0 || targetedAdvertisingOptOut == 2) {
         throw new ValidationError(
           "Invalid usnat targeted advertising notice / opt out combination: {" +
             targetedAdvertisingOptOutNotice +
@@ -248,7 +227,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
     }
 
     if (mspaServiceProviderMode == 0) {
-      if (saleOptOutNotice != 0) {
+      if (saleOptOutNotice == 1 || saleOptOutNotice == 2) {
         throw new ValidationError(
           "Invalid usnat mspa service provider mode / sale opt out notice combination: {" +
             mspaServiceProviderMode +
@@ -258,7 +237,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
         );
       }
 
-      if (sharingOptOutNotice != 0) {
+      if (sharingOptOutNotice == 1 || sharingOptOutNotice == 2) {
         throw new ValidationError(
           "Invalid usnat mspa service provider mode / sharing opt out notice combination: {" +
             mspaServiceProviderMode +
@@ -268,17 +247,17 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
         );
       }
 
-      if (sensitiveDataLimtUserNotice != 0) {
+      if (sensitiveDataLimitUseNotice == 1 || sensitiveDataLimitUseNotice == 2) {
         throw new ValidationError(
           "Invalid usnat mspa service provider mode / sensitive data limit use notice combination: {" +
             mspaServiceProviderMode +
             " / " +
-            sensitiveDataLimtUserNotice +
+            sensitiveDataLimitUseNotice +
             "}"
         );
       }
     } else if (mspaServiceProviderMode == 1) {
-      if (mspaOptOutOptionMode != 2) {
+      if (mspaOptOutOptionMode == 0 || mspaOptOutOptionMode == 1) {
         throw new ValidationError(
           "Invalid usnat mspa service provider / opt out option modes combination: {" +
             mspaServiceProviderMode +
@@ -288,7 +267,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
         );
       }
 
-      if (saleOptOutNotice != 0) {
+      if (saleOptOutNotice == 1 || saleOptOutNotice == 2) {
         throw new ValidationError(
           "Invalid usnat mspa service provider mode / sale opt out notice combination: {" +
             mspaServiceProviderMode +
@@ -298,7 +277,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
         );
       }
 
-      if (sharingOptOutNotice != 0) {
+      if (sharingOptOutNotice == 1 || sharingOptOutNotice == 2) {
         throw new ValidationError(
           "Invalid usnat mspa service provider mode / sharing opt out notice combination: {" +
             mspaServiceProviderMode +
@@ -308,17 +287,17 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
         );
       }
 
-      if (sensitiveDataLimtUserNotice != 0) {
+      if (sensitiveDataLimitUseNotice == 1 || sensitiveDataLimitUseNotice == 2) {
         throw new ValidationError(
           "Invalid usnat mspa service provider mode / sensitive data limit use notice combination: {" +
             mspaServiceProviderMode +
             " / " +
-            sensitiveDataLimtUserNotice +
+            sensitiveDataLimitUseNotice +
             "}"
         );
       }
     } else if (mspaServiceProviderMode == 2) {
-      if (mspaOptOutOptionMode != 1) {
+      if (mspaOptOutOptionMode == 0 || mspaOptOutOptionMode == 2) {
         throw new ValidationError(
           "Invalid usnat mspa service provider / opt out option modes combination: {" +
             mspaServiceProviderMode +

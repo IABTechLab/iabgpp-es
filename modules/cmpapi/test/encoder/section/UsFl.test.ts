@@ -74,202 +74,6 @@ describe("manifest.section.UsFl", (): void => {
     }).to.throw();
   });
 
-  it("should validate sale", (): void => {
-    let usFl = new UsFl();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 0);
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT, 1);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 0);
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT, 2);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 1);
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT, 0);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 2);
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT, 0);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 2);
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT, 2);
-      usFl.encode();
-    }).to.throw();
-
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 0);
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT, 0);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 1);
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT, 1);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 1);
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT, 2);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 2);
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT, 1);
-    usFl.encode();
-  });
-
-  it("should validate targeted advertising", (): void => {
-    let usFl = new UsFl();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 0);
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, 1);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 0);
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, 2);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 1);
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, 0);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 2);
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, 0);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 2);
-      usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, 2);
-      usFl.encode();
-    }).to.throw();
-
-    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 0);
-    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, 0);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 1);
-    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, 1);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 1);
-    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, 2);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, 2);
-    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, 1);
-    usFl.encode();
-  });
-
-  it("should validate mspa", (): void => {
-    let usFl = new UsFl();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 0);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 1);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 2);
-      usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 0);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 2);
-      usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 2);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 1);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 0);
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 2);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 1);
-      usFl.encode();
-    }).to.throw();
-
-    expect(function () {
-      usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 1);
-      usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 2);
-      usFl.encode();
-    }).to.throw();
-
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 0);
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 0);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 1);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 2);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 1);
-    usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 2);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 1);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, 0);
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 0);
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 0);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 1);
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 0);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 0);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 1);
-    usFl.encode();
-
-    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, 2);
-    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, 2);
-    usFl.encode();
-  });
-
   it("should decode BVWSSZlY", (): void => {
     let usFl = new UsFl("BVWSSZlY");
 
@@ -291,4 +95,140 @@ describe("manifest.section.UsFl", (): void => {
       new UsFl("z").getFieldValue(UsFlField.PROCESSING_NOTICE);
     }).to.throw("Unable to decode UsFlCoreSegment 'z'");
   });
+
+  it("validate", (): void => {
+    testValidate(0, 0, 0, 0, true);
+    testValidate(0, 0, 0, 1, true);
+    testValidate(0, 0, 0, 2, true);
+    testValidate(0, 0, 1, 0, false);
+    testValidate(0, 0, 1, 1, false);
+    testValidate(0, 0, 1, 2, true);
+    testValidate(0, 0, 2, 0, false);
+    testValidate(0, 0, 2, 1, true);
+    testValidate(0, 0, 2, 2, false);
+    testValidate(0, 1, 0, 0, false);
+    testValidate(0, 1, 0, 1, false);
+    testValidate(0, 1, 0, 2, false);
+    testValidate(0, 1, 1, 0, false);
+    testValidate(0, 1, 1, 1, false);
+    testValidate(0, 1, 1, 2, false);
+    testValidate(0, 1, 2, 0, false);
+    testValidate(0, 1, 2, 1, false);
+    testValidate(0, 1, 2, 2, false);
+    testValidate(0, 2, 0, 0, false);
+    testValidate(0, 2, 0, 1, false);
+    testValidate(0, 2, 0, 2, false);
+    testValidate(0, 2, 1, 0, false);
+    testValidate(0, 2, 1, 1, false);
+    testValidate(0, 2, 1, 2, false);
+    testValidate(0, 2, 2, 0, false);
+    testValidate(0, 2, 2, 1, false);
+    testValidate(0, 2, 2, 2, false);
+    testValidate(1, 0, 0, 0, false);
+    testValidate(1, 0, 0, 1, false);
+    testValidate(1, 0, 0, 2, false);
+    testValidate(1, 0, 1, 0, false);
+    testValidate(1, 0, 1, 1, false);
+    testValidate(1, 0, 1, 2, false);
+    testValidate(1, 0, 2, 0, false);
+    testValidate(1, 0, 2, 1, false);
+    testValidate(1, 0, 2, 2, false);
+    testValidate(1, 1, 0, 0, false);
+    testValidate(1, 1, 0, 1, false);
+    testValidate(1, 1, 0, 2, false);
+    testValidate(1, 1, 1, 0, false);
+    testValidate(1, 1, 1, 1, false);
+    testValidate(1, 1, 1, 2, false);
+    testValidate(1, 1, 2, 0, false);
+    testValidate(1, 1, 2, 1, true);
+    testValidate(1, 1, 2, 2, false);
+    testValidate(1, 2, 0, 0, false);
+    testValidate(1, 2, 0, 1, false);
+    testValidate(1, 2, 0, 2, false);
+    testValidate(1, 2, 1, 0, false);
+    testValidate(1, 2, 1, 1, false);
+    testValidate(1, 2, 1, 2, false);
+    testValidate(1, 2, 2, 0, false);
+    testValidate(1, 2, 2, 1, true);
+    testValidate(1, 2, 2, 2, false);
+    testValidate(2, 0, 0, 0, false);
+    testValidate(2, 0, 0, 1, false);
+    testValidate(2, 0, 0, 2, false);
+    testValidate(2, 0, 1, 0, false);
+    testValidate(2, 0, 1, 1, false);
+    testValidate(2, 0, 1, 2, false);
+    testValidate(2, 0, 2, 0, false);
+    testValidate(2, 0, 2, 1, false);
+    testValidate(2, 0, 2, 2, false);
+    testValidate(2, 1, 0, 0, false);
+    testValidate(2, 1, 0, 1, false);
+    testValidate(2, 1, 0, 2, false);
+    testValidate(2, 1, 1, 0, false);
+    testValidate(2, 1, 1, 1, false);
+    testValidate(2, 1, 1, 2, false);
+    testValidate(2, 1, 2, 0, false);
+    testValidate(2, 1, 2, 1, true);
+    testValidate(2, 1, 2, 2, false);
+    testValidate(2, 2, 0, 0, false);
+    testValidate(2, 2, 0, 1, false);
+    testValidate(2, 2, 0, 2, false);
+    testValidate(2, 2, 1, 0, false);
+    testValidate(2, 2, 1, 1, false);
+    testValidate(2, 2, 1, 2, false);
+    testValidate(2, 2, 2, 0, false);
+    testValidate(2, 2, 2, 1, false);
+    testValidate(2, 2, 2, 2, false);
+  });
+
+  function testValidate(
+    saleOptOutNotice: number,
+    saleOptOut: number,
+    mspaServiceProviderMode: number,
+    mspaOptOutOptionMode: number,
+    valid: boolean
+  ) {
+    let usFl = new UsFl();
+    usFl.setFieldValue(UsFlField.SALE_OPT_OUT_NOTICE, saleOptOutNotice);
+    usFl.setFieldValue(UsFlField.SALE_OPT_OUT, saleOptOut);
+    usFl.setFieldValue(UsFlField.MSPA_SERVICE_PROVIDER_MODE, mspaServiceProviderMode);
+    usFl.setFieldValue(UsFlField.MSPA_OPT_OUT_OPTION_MODE, mspaOptOutOptionMode);
+
+    if (valid) {
+      usFl.encode();
+    } else {
+      expect(function () {
+        usFl.encode();
+      }).to.throw();
+    }
+  }
+
+  it("validate targeted advertising", (): void => {
+    testValidateTargetedAdvertising(0, 0, true);
+    testValidateTargetedAdvertising(0, 1, false);
+    testValidateTargetedAdvertising(0, 2, false);
+    testValidateTargetedAdvertising(1, 0, false);
+    testValidateTargetedAdvertising(1, 1, true);
+    testValidateTargetedAdvertising(1, 2, true);
+    testValidateTargetedAdvertising(2, 0, false);
+    testValidateTargetedAdvertising(2, 1, true);
+    testValidateTargetedAdvertising(2, 2, false);
+  });
+
+  function testValidateTargetedAdvertising(
+    targetedAdvertisingOptOutNotice: number,
+    targetedAdvertisingOptOut: number,
+    valid: boolean
+  ) {
+    let usFl = new UsFl();
+    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT_NOTICE, targetedAdvertisingOptOutNotice);
+    usFl.setFieldValue(UsFlField.TARGETED_ADVERTISING_OPT_OUT, targetedAdvertisingOptOut);
+
+    if (valid) {
+      usFl.encode();
+    } else {
+      expect(function () {
+        usFl.encode();
+      }).to.throw();
+    }
+  }
 });
