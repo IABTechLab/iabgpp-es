@@ -156,8 +156,8 @@ __gpp("removeEventListener", callback?, parameter?)
 | usnat        | 7          | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
 | usnat        | 7          | SharingOptOut                       | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
 | usnat        | 7          | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
-| usnat        | 7          | SensitiveDataProcessing             | 2 bit int array of size 12. 0=Not applicable, 1=Yes, 2=No      |
-| usnat        | 7          | KnownChildSensitiveDataConsents     | 2 bit int array of size 2. 0=Not applicable, 1=Yes, 2=No       |
+| usnat        | 7          | SensitiveDataProcessing             | 2 bit int array of size 16. 0=Not applicable, 1=Yes, 2=No      |
+| usnat        | 7          | KnownChildSensitiveDataConsents     | 2 bit int array of size 3. 0=Not applicable, 1=Yes, 2=No       |
 | usnat        | 7          | PersonalDataConsents                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
 | usnat        | 7          | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
 | usnat        | 7          | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
