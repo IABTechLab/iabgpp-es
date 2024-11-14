@@ -93,13 +93,13 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
     );
     fields.put(
       UsNatField.SENSITIVE_DATA_PROCESSING.toString(),
-      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]).withValidator(
+      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]).withValidator(
         nullableBooleanAsTwoBitIntegerListValidator
       )
     );
     fields.put(
       UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
-      new EncodableFixedIntegerList(2, [0, 0]).withValidator(nullableBooleanAsTwoBitIntegerListValidator)
+      new EncodableFixedIntegerList(2, [0, 0, 0]).withValidator(nullableBooleanAsTwoBitIntegerListValidator)
     );
     fields.put(
       UsNatField.PERSONAL_DATA_CONSENTS.toString(),
