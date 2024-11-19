@@ -331,6 +331,12 @@ export class GppModel {
   }
 
   public decodeSection(sectionName: string, encodedString: string): void {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+
     let section: EncodableSection = null;
     if (!this.sections.has(sectionName)) {
       if (sectionName === TcfCaV1.NAME) {
@@ -379,6 +385,7 @@ export class GppModel {
 
     if (section) {
       section.decode(encodedString);
+      this.dirty = true;
     }
   }
 
