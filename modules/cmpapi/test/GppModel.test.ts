@@ -50,6 +50,12 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("usmt")).to.eql(false);
     expect(gppModel.hasSection("usor")).to.eql(false);
     expect(gppModel.hasSection("ustx")).to.eql(false);
+    expect(gppModel.hasSection("usde")).to.eql(false);
+    expect(gppModel.hasSection("usia")).to.eql(false);
+    expect(gppModel.hasSection("usne")).to.eql(false);
+    expect(gppModel.hasSection("usnh")).to.eql(false);
+    expect(gppModel.hasSection("usnj")).to.eql(false);
+    expect(gppModel.hasSection("ustn")).to.eql(false);
 
     gppModel.setFieldValue("tcfeuv2", "Version", 2);
     gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
@@ -68,6 +74,12 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("usmt", "Version", 1);
     gppModel.setFieldValue("usor", "Version", 1);
     gppModel.setFieldValue("ustx", "Version", 1);
+    gppModel.setFieldValue("usde", "Version", 1);
+    gppModel.setFieldValue("usia", "Version", 1);
+    gppModel.setFieldValue("usne", "Version", 1);
+    gppModel.setFieldValue("usnh", "Version", 1);
+    gppModel.setFieldValue("usnj", "Version", 1);
+    gppModel.setFieldValue("ustn", "Version", 1);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
     expect(gppModel.hasSection("tcfcav1")).to.eql(true);
@@ -82,10 +94,16 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("usmt")).to.eql(true);
     expect(gppModel.hasSection("usor")).to.eql(true);
     expect(gppModel.hasSection("ustx")).to.eql(true);
+    expect(gppModel.hasSection("usde")).to.eql(true);
+    expect(gppModel.hasSection("usia")).to.eql(true);
+    expect(gppModel.hasSection("usne")).to.eql(true);
+    expect(gppModel.hasSection("usnh")).to.eql(true);
+    expect(gppModel.hasSection("usnj")).to.eql(true);
+    expect(gppModel.hasSection("ustn")).to.eql(true);
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOZY~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA"
+      "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA"
     );
   });
 
@@ -381,7 +399,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode defaults from all sections", (): void => {
     let gppString =
-      "DBACOaw~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA";
+      "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
@@ -393,6 +411,16 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("usco")).to.eql(true);
     expect(gppModel.hasSection("usut")).to.eql(true);
     expect(gppModel.hasSection("usct")).to.eql(true);
+    expect(gppModel.hasSection("usfl")).to.eql(true);
+    expect(gppModel.hasSection("usmt")).to.eql(true);
+    expect(gppModel.hasSection("usor")).to.eql(true);
+    expect(gppModel.hasSection("ustx")).to.eql(true);
+    expect(gppModel.hasSection("usde")).to.eql(true);
+    expect(gppModel.hasSection("usia")).to.eql(true);
+    expect(gppModel.hasSection("usne")).to.eql(true);
+    expect(gppModel.hasSection("usnh")).to.eql(true);
+    expect(gppModel.hasSection("usnj")).to.eql(true);
+    expect(gppModel.hasSection("ustn")).to.eql(true);
   });
 
   it("should decode uspv1 section", (): void => {
