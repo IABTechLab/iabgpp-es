@@ -7,12 +7,12 @@ import { Predicate } from "../datatype/validate/Predicate.js";
 import { DecodingError } from "../error/DecodingError.js";
 import { ValidationError } from "../error/ValidationError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
-import { USNAT_CORE_SEGMENT_FIELD_NAMES } from "../field/UsNatField.js";
-import { UsNatField } from "../field/UsNatField.js";
-import { UsNat } from "../section/UsNat.js";
+import { USDE_CORE_SEGMENT_FIELD_NAMES } from "../field/UsDeField.js";
+import { UsDeField } from "../field/UsDeField.js";
+import { UsDe } from "../section/UsDe.js";
 import { AbstractLazilyEncodableSegment } from "./AbstractLazilyEncodableSegment.js";
 
-export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
+export class UsDeCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
   private base64UrlEncoder: AbstractBase64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
   private bitStringEncoder: BitStringEncoder = BitStringEncoder.getInstance();
 
@@ -25,7 +25,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
 
   // overriden
   public getFieldNames(): string[] {
-    return USNAT_CORE_SEGMENT_FIELD_NAMES;
+    return USDE_CORE_SEGMENT_FIELD_NAMES;
   }
 
   // overriden
@@ -54,67 +54,51 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
     })();
 
     let fields: EncodableBitStringFields = new EncodableBitStringFields();
-    fields.put(UsNatField.VERSION.toString(), new EncodableFixedInteger(6, UsNat.VERSION));
+    fields.put(UsDeField.VERSION.toString(), new EncodableFixedInteger(6, UsDe.VERSION));
     fields.put(
-      UsNatField.SHARING_NOTICE.toString(),
+      UsDeField.PROCESSING_NOTICE.toString(),
       new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
-      UsNatField.SALE_OPT_OUT_NOTICE.toString(),
+      UsDeField.SALE_OPT_OUT_NOTICE.toString(),
       new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
-      UsNatField.SHARING_OPT_OUT_NOTICE.toString(),
+      UsDeField.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(),
       new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
-      UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE.toString(),
+      UsDeField.SALE_OPT_OUT.toString(),
       new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
-      UsNatField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE.toString(),
+      UsDeField.TARGETED_ADVERTISING_OPT_OUT.toString(),
       new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
-      UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE.toString(),
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
-    );
-    fields.put(
-      UsNatField.SALE_OPT_OUT.toString(),
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
-    );
-    fields.put(
-      UsNatField.SHARING_OPT_OUT.toString(),
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
-    );
-    fields.put(
-      UsNatField.TARGETED_ADVERTISING_OPT_OUT.toString(),
-      new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
-    );
-    fields.put(
-      UsNatField.SENSITIVE_DATA_PROCESSING.toString(),
-      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]).withValidator(
+      UsDeField.SENSITIVE_DATA_PROCESSING.toString(),
+      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0, 0, 0, 0, 0]).withValidator(
         nullableBooleanAsTwoBitIntegerListValidator
       )
     );
     fields.put(
-      UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
-      new EncodableFixedIntegerList(2, [0, 0, 0]).withValidator(nullableBooleanAsTwoBitIntegerListValidator)
+      UsDeField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS.toString(),
+      new EncodableFixedIntegerList(2, [0, 0, 0, 0, 0]).withValidator(nullableBooleanAsTwoBitIntegerListValidator)
     );
     fields.put(
-      UsNatField.PERSONAL_DATA_CONSENTS.toString(),
+      UsDeField.ADDITIONAL_DATA_PROCESSING_CONSENT.toString(),
       new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
-      UsNatField.MSPA_COVERED_TRANSACTION.toString(),
+      UsDeField.MSPA_COVERED_TRANSACTION.toString(),
       new EncodableFixedInteger(2, 1).withValidator(nonNullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
-      UsNatField.MSPA_OPT_OUT_OPTION_MODE.toString(),
+      UsDeField.MSPA_OPT_OUT_OPTION_MODE.toString(),
       new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     fields.put(
-      UsNatField.MSPA_SERVICE_PROVIDER_MODE.toString(),
+      UsDeField.MSPA_SERVICE_PROVIDER_MODE.toString(),
       new EncodableFixedInteger(2, 0).withValidator(nullableBooleanAsTwoBitIntegerValidator)
     );
     return fields;
@@ -136,7 +120,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
       let bitString: string = this.base64UrlEncoder.decode(encodedString);
       this.bitStringEncoder.decode(bitString, this.getFieldNames(), fields);
     } catch (e) {
-      throw new DecodingError("Unable to decode UsNatCoreSegment '" + encodedString + "'");
+      throw new DecodingError("Unable to decode UsDeCoreSegment '" + encodedString + "'");
     }
   }
 }
