@@ -2,6 +2,7 @@ import { expect } from "chai";
 import * as sinon from "sinon";
 import { GVL, GVLUrlConfig } from "../src/GVL";
 import { XMLHttpTestTools } from "./util/XMLHttpTestTools";
+import { ConsentLanguages } from "../src/gvl/gvlmodel/ConsentLanguages";
 
 import vendorlistJsonV2_2 from "./vendorlist/v2.2/vendor-list.json" assert { type: "json" };
 import translationJson from "./vendorlist/v2/purposes-fr.json" assert { type: "json" };
@@ -206,4 +207,11 @@ describe("GVL", (): void => {
     const gvl2: GVL = GVL.fromVendorList(json);
     expect(gvl2.vendors[vendorId], `gvl2.vendors["${vendorId}"]`).to.be.undefined;
   });
+
+  it("number of language translations should match", (): void => {
+    const langSet =  new ConsentLanguages(); 
+    expect(langSet.size).equal(49);
+    expect(langSet.has("VI")).equal(true);
+  });
+
 });
