@@ -2,6 +2,9 @@ import { GppModel } from "../src/encoder/GppModel";
 import { expect } from "chai";
 import { TcfCaV1Field } from "../src/encoder/field/TcfCaV1Field";
 import { UspV1Field } from "../src/encoder/field/UspV1Field";
+import { UspV1 } from "../src/encoder/section/UspV1";
+import { UsNat } from "../src/encoder/section/UsNat";
+import { UsNatField } from "../src/encoder/field/UsNatField";
 
 let utcDateTime = new Date("2022-01-01T00:00:00Z");
 
@@ -704,6 +707,58 @@ describe("manifest.GppModel", (): void => {
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([1, 173, 722]);
+  });
+
+  it("should decode DBABTA~1YYN", (): void => {
+    let gppString = "DBABTA~1YYN";
+    let gppModel = new GppModel(gppString);
+    gppModel.getFieldValue(UspV1.NAME, UspV1Field.VERSION);
+  });
+
+  it("should decode DBABLA~BVQqAAAAAgA.QA", (): void => {
+    let gppString = "DBABLA~BVQqAAAAAgA.QA";
+    let gppModel = new GppModel(gppString);
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+  });
+
+  it("should decode DBABLA~BAAAAAAAAQA.QA", (): void => {
+    let gppString = "DBABLA~BAAAAAAAAQA.QA";
+    let gppModel = new GppModel(gppString);
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ]);
+    expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([0, 0, 0]);
+  });
+
+  it("should decode DBABLA~BAAAAAAAAABA.QA", (): void => {
+    let gppString = "DBABLA~BAAAAAAAAABA.QA";
+    let gppModel = new GppModel(gppString);
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ]);
+    expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([0, 0, 0]);
+  });
+
+  it("should decode DBABLA~BAAAAAABEQA.QA", (): void => {
+    let gppString = "DBABLA~BAAAAAABEQA.QA";
+    let gppModel = new GppModel(gppString);
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+    ]);
+    expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([0, 1, 0]);
+  });
+
+  it("should decode DBABLA~BAAAAAAAAQRA.QA", (): void => {
+    let gppString = "DBABLA~BAAAAAAAAQRA.QA";
+    let gppModel = new GppModel(gppString);
+    gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
+    expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    ]);
+    expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([0, 0, 1]);
   });
 
   it("should decode and encode consistently", (): void => {
