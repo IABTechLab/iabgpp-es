@@ -105,4 +105,8 @@ export abstract class AbstractLazilyEncodableSection implements EncodableSection
     this.dirty = false;
     this.decoded = false;
   }
+
+  public setIsDirty(status: boolean): void {
+    this.dirty = status;
+  }
 }

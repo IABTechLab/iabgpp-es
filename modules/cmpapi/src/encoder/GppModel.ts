@@ -111,6 +111,7 @@ export class GppModel {
     if (section) {
       section.setFieldValue(fieldName, value);
       this.dirty = true;
+      section.setIsDirty(true);
     } else {
       throw new InvalidFieldError(sectionName + "." + fieldName + " not found");
     }
