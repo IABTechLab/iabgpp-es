@@ -14,4 +14,6 @@ export interface EncodableSection {
   encode(): string;
 
   decode(encodedString: string): void;
+
+  setIsDirty(status: boolean): void;
 }

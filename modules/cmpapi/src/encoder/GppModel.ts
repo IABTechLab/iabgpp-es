@@ -111,6 +111,7 @@ export class GppModel {
     if (section) {
       section.setFieldValue(fieldName, value);
       this.dirty = true;
+      section.setIsDirty(true);
     } else {
       throw new InvalidFieldError(sectionName + "." + fieldName + " not found");
     }
@@ -242,6 +243,7 @@ export class GppModel {
       let sectionName = Sections.SECTION_ORDER[i];
       if (sections.has(sectionName)) {
         let section = sections.get(sectionName);
+        section.setIsDirty(true);
         encodedSections.push(section.encode());
         sectionIds.push(section.getId());
       }
