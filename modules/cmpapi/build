@@ -9,6 +9,7 @@ FILES=$(find lib/cjs -name "*.js")
 
 for FILE in $FILES; do
 
+  echo "Minifying $FILE"
   npx terser $FILE --ecma 5 -m -c -o $FILE
 
 done

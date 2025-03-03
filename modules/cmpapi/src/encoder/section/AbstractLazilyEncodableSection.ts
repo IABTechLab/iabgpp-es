@@ -102,6 +102,7 @@ export abstract class AbstractLazilyEncodableSection implements EncodableSection
 
   public decode(encodedString: string): void {
     this.encodedString = encodedString;
+    this.segments = this.decodeSection(this.encodedString);
     this.dirty = false;
     this.decoded = false;
   }
