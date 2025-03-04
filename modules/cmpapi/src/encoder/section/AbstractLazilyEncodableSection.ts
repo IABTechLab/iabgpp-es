@@ -80,14 +80,7 @@ export abstract class AbstractLazilyEncodableSection implements EncodableSection
 
   //Overriden
   public toObj(): any {
-    let obj = {};
-    for (let i = 0; i < this.segments.length; i++) {
-      let segmentObject = this.segments[i].toObj();
-      for (const [fieldName, value] of Object.entries(segmentObject)) {
-        obj[fieldName] = value;
-      }
-    }
-    return obj;
+    return this.segments.map((s) => s.toObj());
   }
 
   public encode(): string {
