@@ -64,6 +64,8 @@ jobs:
         if: ${{steps.check.outputs.version_changed == 'true'}}
         run: |
           git status
+          git config user.email "mayank@iabtechlab.com"
+          git config user.name "Mayank Mishra"
           VERSION="${{ github.event.inputs.environment }}"
           echo "Release v  $VERSION"
           #Stage the files
