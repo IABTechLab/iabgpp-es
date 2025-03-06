@@ -34,9 +34,9 @@ jobs:
           jq --arg ver "$VERSION" '.version = $ver' package.json > temp.json && mv temp.json package.json
           jq --arg ver "$VERSION" '.version = $ver' modules/cmpapi/package.json > temp.json && mv temp.json modules/cmpapi/package.json
           jq --arg ver "$VERSION" '.version = $ver' modules/stub/package.json > temp.json && mv temp.json modules/stub/package.json
-       - name: Check input version TAG
-         id: check
-         run: |
+      - name: Check input version TAG
+        id: check
+        run: |
           git status
           VERSION="${{ github.event.inputs.environment }}"
           echo "Release v  $VERSION"
