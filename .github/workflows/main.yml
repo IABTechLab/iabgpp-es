@@ -53,10 +53,10 @@ jobs:
           npm --version
           cd modules/stub
           pwd
-          npm publish --access public   #actual release to NPM repository
+          # npm publish --access public   #actual release to NPM repository
           cd ../cmpapi
           pwd
-          npm publish --access public   #actual release to NPM repository
+          # npm publish --access public   #actual release to NPM repository
           
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -67,10 +67,10 @@ jobs:
           VERSION="${{ github.event.inputs.environment }}"
           echo "Release v  $VERSION"
           #Stage the files
-          git add .
-          git commit -m "Release v $VERSION"
-          git tag "$VERSION"
-          git push --tags                   #actual tag push to GitHub Repo
-          git push origin master            #actual push to GitHub Repo
+          #git add .
+          #git commit -m "Release v $VERSION"
+          #git tag "$VERSION"
+          #git push --tags                   #actual tag push to GitHub Repo
+          #git push origin master            #actual push to GitHub Repo
         env:
           GITHUB_TOKEN: ${{secrets.PAT}}
