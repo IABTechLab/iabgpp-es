@@ -73,6 +73,6 @@ jobs:
            git commit -m "Release v $VERSION"
            git tag "$VERSION"
            git push --tags                   #actual tag push to GitHub Repo
-          #git push origin master            #actual push to GitHub Repo
+           git push origin master            #actual push to GitHub Repo
         env:
           GITHUB_TOKEN: ${{secrets.PAT}}
