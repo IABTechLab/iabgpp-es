@@ -382,3 +382,7 @@ __gpp("removeEventListener", callback?, parameter?)
 ## Example Usage / Encoder / Decoder
 
 [https://iabgpp.com](https://iabgpp.com)
+
+## Contributing
+
+Here you can find the [contributing guide](CONTRIBUTING.md) to help maintain and update the library.
