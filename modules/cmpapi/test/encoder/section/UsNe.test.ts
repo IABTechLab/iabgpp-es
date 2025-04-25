@@ -3,12 +3,12 @@ import { UsNeField } from "../../../src/encoder/field/UsNeField";
 import { UsNe } from "../../../src/encoder/section/UsNe";
 
 describe("manifest.section.UsNe", (): void => {
-  it("should encode default to BAAAAAQA.QA", (): void => {
+  it("should encode default to BAAAAAQ.Q", (): void => {
     let usNe = new UsNe();
-    expect(usNe.encode()).to.eql("BAAAAAQA.QA");
+    expect(usNe.encode()).to.eql("BAAAAAQ.Q");
   });
 
-  it("should encode to BVWSSVWA.YA", (): void => {
+  it("should encode to BVWSSVW.Y", (): void => {
     let usNe = new UsNe();
 
     usNe.setFieldValue(UsNeField.PROCESSING_NOTICE, 1);
@@ -24,13 +24,13 @@ describe("manifest.section.UsNe", (): void => {
     usNe.setFieldValue(UsNeField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNe.setFieldValue(UsNeField.GPC, true);
 
-    expect(usNe.encode()).to.eql("BVWSSVWA.YA");
+    expect(usNe.encode()).to.eql("BVWSSVW.Y");
   });
 
-  it("should encode default to BAAAAAQA", (): void => {
+  it("should encode default to BAAAAAQ", (): void => {
     let usNe = new UsNe();
     usNe.setFieldValue(UsNeField.GPC_SEGMENT_INCLUDED, false);
-    expect(usNe.encode()).to.eql("BAAAAAQA");
+    expect(usNe.encode()).to.eql("BAAAAAQ");
   });
 
   it("should throw an error if invalid values are set", (): void => {
@@ -81,6 +81,24 @@ describe("manifest.section.UsNe", (): void => {
     }).to.throw();
   });
 
+  it("should decode BVWSSVW.Y", (): void => {
+    let usNe = new UsNe("BVWSSVW.Y");
+
+    expect(1, usNe.getFieldValue(UsNeField.PROCESSING_NOTICE));
+    expect(1, usNe.getFieldValue(UsNeField.SALE_OPT_OUT_NOTICE));
+    expect(1, usNe.getFieldValue(UsNeField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usNe.getFieldValue(UsNeField.SALE_OPT_OUT));
+    expect(1, usNe.getFieldValue(UsNeField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1], usNe.getFieldValue(UsNeField.SENSITIVE_DATA_PROCESSING));
+    expect(1, usNe.getFieldValue(UsNeField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usNe.getFieldValue(UsNeField.ADDITIONAL_DATA_PROCESSING_CONSENT));
+    expect(1, usNe.getFieldValue(UsNeField.MSPA_COVERED_TRANSACTION));
+    expect(1, usNe.getFieldValue(UsNeField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usNe.getFieldValue(UsNeField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(true, usNe.getFieldValue(UsNeField.GPC));
+    expect(true, usNe.getFieldValue(UsNeField.GPC_SEGMENT_INCLUDED));
+  });
+
   it("should decode BVWSSVWA.YA", (): void => {
     let usNe = new UsNe("BVWSSVWA.YA");
 
@@ -99,8 +117,8 @@ describe("manifest.section.UsNe", (): void => {
     expect(true, usNe.getFieldValue(UsNeField.GPC_SEGMENT_INCLUDED));
   });
 
-  it("should decode BVWSSVWA", (): void => {
-    let usNe = new UsNe("BVWSSVWA");
+  it("should decode BVWSSVW", (): void => {
+    let usNe = new UsNe("BVWSSVW");
 
     expect(1, usNe.getFieldValue(UsNeField.PROCESSING_NOTICE));
     expect(1, usNe.getFieldValue(UsNeField.SALE_OPT_OUT_NOTICE));

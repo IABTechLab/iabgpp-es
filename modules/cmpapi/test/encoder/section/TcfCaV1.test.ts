@@ -4,14 +4,14 @@ import { TcfCaV1 } from "../../../src/encoder/section/TcfCaV1";
 import { RangeEntry } from "../../../src/encoder/datatype";
 
 describe("manifest.section.TcfCaV1", (): void => {
-  it("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
+  it("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA", (): void => {
     let tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA");
   });
 
-  it("should encode to BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao", (): void => {
+  it("should encode to BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAA.fHHHA4444ao", (): void => {
     let tcfCaV1 = new TcfCaV1();
 
     tcfCaV1.setFieldValue(TcfCaV1Field.CMP_ID, 50);
@@ -145,27 +145,27 @@ describe("manifest.section.TcfCaV1", (): void => {
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
 
-    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAA.fHHHA4444ao");
   });
 
-  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5wAA", (): void => {
+  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA.IAGO5wAA", (): void => {
     let tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.DISCLOSED_VENDORS, [1, 2, 3, 5, 6, 7, 10, 11, 12]);
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5wAA");
+    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA.IAGO5wAA");
   });
 
-  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", (): void => {
+  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJ.YAAAAAAAAA", (): void => {
     let tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.PUB_RESTRICTIONS, [new RangeEntry(1, 1, [1, 2, 3, 5, 6, 7, 9])]);
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJ.YAAAAAAAAA");
   });
 
-  it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
-    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
+  it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA");
 
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_ID)).to.eql(0);
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_VERSION)).to.eql(0);
@@ -301,8 +301,8 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
-  it("should decode BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao", (): void => {
-    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+  it("should decode BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAA.fHHHA4444ao", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAA.fHHHA4444ao");
 
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_ID)).to.eql(50);
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_VERSION)).to.eql(2);
@@ -438,8 +438,8 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
-  it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", (): void => {
-    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+  it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJ.YAAAAAAAAA", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJ.YAAAAAAAAA");
 
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS).length).to.eql(1);
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS)[0].key).to.eql(1);

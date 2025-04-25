@@ -3,12 +3,12 @@ import { UsNhField } from "../../../src/encoder/field/UsNhField";
 import { UsNh } from "../../../src/encoder/section/UsNh";
 
 describe("manifest.section.UsNh", (): void => {
-  it("should encode default to BAAAAABA.QA", (): void => {
+  it("should encode default to BAAAAABA.Q", (): void => {
     let usNh = new UsNh();
-    expect(usNh.encode()).to.eql("BAAAAABA.QA");
+    expect(usNh.encode()).to.eql("BAAAAABA.Q");
   });
 
-  it("should encode to BVWSSZFY.YA", (): void => {
+  it("should encode to BVWSSZFY.Y", (): void => {
     let usNh = new UsNh();
 
     usNh.setFieldValue(UsNhField.PROCESSING_NOTICE, 1);
@@ -24,7 +24,7 @@ describe("manifest.section.UsNh", (): void => {
     usNh.setFieldValue(UsNhField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNh.setFieldValue(UsNhField.GPC, true);
 
-    expect(usNh.encode()).to.eql("BVWSSZFY.YA");
+    expect(usNh.encode()).to.eql("BVWSSZFY.Y");
   });
 
   it("should encode default to BAAAAABA", (): void => {
@@ -79,6 +79,24 @@ describe("manifest.section.UsNh", (): void => {
     expect(function () {
       usNh.setFieldValue(UsNhField.MSPA_SERVICE_PROVIDER_MODE, -1);
     }).to.throw();
+  });
+
+  it("should decode BVWSSZFY.Y", (): void => {
+    let usNh = new UsNh("BVWSSZFY.Y");
+
+    expect(1, usNh.getFieldValue(UsNhField.PROCESSING_NOTICE));
+    expect(1, usNh.getFieldValue(UsNhField.SALE_OPT_OUT_NOTICE));
+    expect(1, usNh.getFieldValue(UsNhField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usNh.getFieldValue(UsNhField.SALE_OPT_OUT));
+    expect(1, usNh.getFieldValue(UsNhField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1], usNh.getFieldValue(UsNhField.SENSITIVE_DATA_PROCESSING));
+    expect([2, 1, 0], usNh.getFieldValue(UsNhField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usNh.getFieldValue(UsNhField.ADDITIONAL_DATA_PROCESSING_CONSENT));
+    expect(1, usNh.getFieldValue(UsNhField.MSPA_COVERED_TRANSACTION));
+    expect(1, usNh.getFieldValue(UsNhField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usNh.getFieldValue(UsNhField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(true, usNh.getFieldValue(UsNhField.GPC));
+    expect(true, usNh.getFieldValue(UsNhField.GPC_SEGMENT_INCLUDED));
   });
 
   it("should decode BVWSSZFY.YA", (): void => {

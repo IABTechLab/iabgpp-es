@@ -3,12 +3,12 @@ import { UsCaField } from "../../../src/encoder/field/UsCaField";
 import { UsCa } from "../../../src/encoder/section/UsCa";
 
 describe("manifest.section.UsCa", (): void => {
-  it("should encode default to BAAAAABA.QA", (): void => {
+  it("should encode default to BAAAAABA.Q", (): void => {
     let usCa = new UsCa();
-    expect(usCa.encode()).to.eql("BAAAAABA.QA");
+    expect(usCa.encode()).to.eql("BAAAAABA.Q");
   });
 
-  it("should encode to BVWSSSVY.YA", (): void => {
+  it("should encode to BVWSSSVY.Y", (): void => {
     let usCa = new UsCa();
 
     usCa.setFieldValue(UsCaField.SALE_OPT_OUT_NOTICE, 1);
@@ -24,7 +24,7 @@ describe("manifest.section.UsCa", (): void => {
     usCa.setFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usCa.setFieldValue(UsCaField.GPC, true);
 
-    expect(usCa.encode()).to.eql("BVWSSSVY.YA");
+    expect(usCa.encode()).to.eql("BVWSSSVY.Y");
   });
 
   it("should encode to BAAAAABA", (): void => {
@@ -81,6 +81,24 @@ describe("manifest.section.UsCa", (): void => {
     }).to.throw();
   });
 
+  it("should decode BVWSSSVY.Y", (): void => {
+    let usCa = new UsCa("BVWSSSVY.Y");
+
+    expect(1, usCa.getFieldValue(UsCaField.SALE_OPT_OUT_NOTICE));
+    expect(1, usCa.getFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE));
+    expect(1, usCa.getFieldValue(UsCaField.SENSITIVE_DATA_LIMIT_USE_NOTICE));
+    expect(1, usCa.getFieldValue(UsCaField.SALE_OPT_OUT));
+    expect(1, usCa.getFieldValue(UsCaField.SHARING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1, 0], usCa.getFieldValue(UsCaField.SENSITIVE_DATA_PROCESSING));
+    expect([2, 1], usCa.getFieldValue(UsCaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usCa.getFieldValue(UsCaField.PERSONAL_DATA_CONSENTS));
+    expect(1, usCa.getFieldValue(UsCaField.MSPA_COVERED_TRANSACTION));
+    expect(1, usCa.getFieldValue(UsCaField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usCa.getFieldValue(UsCaField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(true, usCa.getFieldValue(UsCaField.GPC));
+    expect(true, usCa.getFieldValue(UsCaField.GPC_SEGMENT_INCLUDED));
+  });
+
   it("should decode BVWSSSVY.YA", (): void => {
     let usCa = new UsCa("BVWSSSVY.YA");
 
@@ -99,8 +117,8 @@ describe("manifest.section.UsCa", (): void => {
     expect(true, usCa.getFieldValue(UsCaField.GPC_SEGMENT_INCLUDED));
   });
 
-  it("should decode BAAAAAAA", (): void => {
-    let usCa = new UsCa("BbYbGwXY.YA");
+  it("should decode BbYbGwXY.Y", (): void => {
+    let usCa = new UsCa("BbYbGwXY.Y");
 
     expect(1, usCa.getFieldValue(UsCaField.SALE_OPT_OUT_NOTICE));
     expect(2, usCa.getFieldValue(UsCaField.SHARING_OPT_OUT_NOTICE));
