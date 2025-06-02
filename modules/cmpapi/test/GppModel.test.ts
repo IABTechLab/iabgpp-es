@@ -61,9 +61,10 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("ustn")).to.eql(false);
 
     gppModel.setFieldValue("tcfeuv2", "Version", 2);
+    gppModel.setFieldValue("tcfeuv2", "CmpId", 880);
+    gppModel.setFieldValue("tcfcav1", "Version", 1);
     gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
-    gppModel.setFieldValue("tcfcav1", "Version", 1);
     gppModel.setFieldValue("tcfcav1", "Created", utcDateTime);
     gppModel.setFieldValue("tcfcav1", "LastUpdated", utcDateTime);
     gppModel.setFieldValue("uspv1", "Version", 1);
@@ -106,7 +107,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA"
+      "DBACOdM~CPSG_8APSG_8ANwAAAENAAFAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA"
     );
   });
 
@@ -665,7 +666,7 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOAAAABAAAAA.QAAA.IAAA");
+    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFAAAAAAAAAAAAAAOAAAABAAAAA.QAAA.IAAA");
   });
 
   it("should encode tcfeuv2 vendor consents [29]", (): void => {
@@ -675,7 +676,7 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOwAQAOgAAAA.QAAA.IAAA");
+    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFAAAAAAAAAAAAAAOwAQAOgAAAA.QAAA.IAAA");
   });
 
   it("should encode tcfeuv2 vendor consents [1, 173, 722]", (): void => {
@@ -685,7 +686,7 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA");
+    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA");
   });
 
   it("should decode tcfeuv2 vendor consents [28]", (): void => {
@@ -765,15 +766,28 @@ describe("manifest.GppModel", (): void => {
     let fromObjectModel = new GppModel();
     fromObjectModel.setFieldValue("tcfeuv2", "PurposeConsents", [
       true,
+      false,
+      true,
+      true,
+      false,
+      false,
       true,
       true,
       true,
       true,
       true,
+    ]);
+    fromObjectModel.setFieldValue("tcfeuv2", "PurposeLegitimateInterests", [
       true,
       true,
+      false,
+      false,
       true,
       true,
+      false,
+      false,
+      false,
+      false,
     ]);
     fromObjectModel.setFieldValue("tcfeuv2", "VendorConsents", [32, 128, 81, 210, 755, 21, 173, 238]);
 
@@ -783,16 +797,16 @@ describe("manifest.GppModel", (): void => {
 
     expect(decodedModel.getFieldValue("tcfeuv2", "PurposeConsents")).to.eql([
       true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
+      false,
       true,
       true,
       false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
       false,
       false,
       false,
@@ -807,7 +821,32 @@ describe("manifest.GppModel", (): void => {
       false,
       false,
     ]);
-
+    expect(decodedModel.getFieldValue("tcfeuv2", "PurposeLegitimateInterests")).to.eql([
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ])
     expect(decodedModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([21, 32, 81, 128, 173, 210, 238, 755]);
   });
 

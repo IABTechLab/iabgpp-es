@@ -113,13 +113,35 @@ export class TcfEuV2 extends AbstractLazilyEncodableSection {
 
   //Overriden
   public setFieldValue(fieldName: string, value: any): void {
-    super.setFieldValue(fieldName, value);
-
-    if (fieldName !== TcfEuV2Field.CREATED && fieldName !== TcfEuV2Field.LAST_UPDATED) {
-      let date = new Date();
-
-      super.setFieldValue(TcfEuV2Field.CREATED, date);
-      super.setFieldValue(TcfEuV2Field.LAST_UPDATED, date);
+    //
+    // special handling for exceptions based on TCF policy and specification
+    //
+    // purpose 1, 3 - 6 legitimate interest is always false
+    if (fieldName === TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS) {
+      value[0] = false;
+      value[2] = value[3] = value[4] = value[5] = false;
     }
+
+    // create and last update will need to stay in sync
+    if (fieldName === TcfEuV2Field.CREATED || fieldName  === TcfEuV2Field.LAST_UPDATED) {
+      if (fieldName === TcfEuV2Field.CREATED) {
+          super.setFieldValue(TcfEuV2Field.LAST_UPDATED, value);
+      } else {
+          super.setFieldValue(TcfEuV2Field.CREATED, value);
+        }
+    } else 
+      // always update the date stamp with a change occurs
+      this.updateDateStamp();
+
+    // update the actual given fields
+    super.setFieldValue(fieldName, value);
+  }
+
+  // update last_update and create time stamps when a change occurs
+  private updateDateStamp(): void {
+    const date = new Date();
+    const utcDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+    super.setFieldValue(TcfEuV2Field.CREATED, utcDate);
+    super.setFieldValue(TcfEuV2Field.LAST_UPDATED, utcDate);
   }
 }

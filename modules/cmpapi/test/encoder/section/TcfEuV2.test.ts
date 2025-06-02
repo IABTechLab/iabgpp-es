@@ -7,15 +7,15 @@ describe("manifest.section.TcfEuV2", (): void => {
     let tcfEuV2 = new TcfEuV2();
     tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
+    expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAAFAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
   });
 
   it("encode with service specific", (): void => {
     let tcfEuV2 = new TcfEuV2();
     tcfEuV2.setFieldValue("IsServiceSpecific", true);
     tcfEuV2.setFieldValue("Created", new Date("2022-01-01T00:00:00Z"));
-    tcfEuV2.setFieldValue("LastUpdated", new Date("2022-01-01T00:00:00Z"));
-    expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
+    tcfEuV2.setFieldValue("LastUpdated", new Date("2022-02-01T00:00:00Z"));
+    expect(tcfEuV2.encode()).to.eql("CPTtLAAPTtLAAAAAAAENAAFgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
   });
 
   it("decode defaults", (): void => {

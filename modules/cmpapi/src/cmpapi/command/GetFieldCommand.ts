@@ -13,7 +13,12 @@ export class GetFieldCommand extends Command {
     let sectionName = parts[0];
     let fieldName = parts[1];
 
-    let fieldValue = this.cmpApiContext.gppModel.getFieldValue(sectionName, fieldName);
+    let fieldValue = null;
+    // Since TCF 2.2 no fields are allowed to be called directly. Data always needs to be retrieved using the 
+    // AddEventListener callback
+    if (this.parameter != "tcfeuv2") {
+      fieldValue = this.cmpApiContext.gppModel.getFieldValue(sectionName, fieldName);
+    }
     this.invokeCallback(fieldValue);
   }
 }
