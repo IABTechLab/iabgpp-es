@@ -98,6 +98,9 @@ export class TcfEuV2 extends AbstractLazilyEncodableSection {
         if (segments.length >= 2) {
           encodedSegments.push(segments[1].encode());
         }
+        if (segments.length >= 3) {
+          encodedSegments.push(segments[3].encode());
+        }
       } else {
         if (segments.length >= 2) {
           encodedSegments.push(segments[2].encode());

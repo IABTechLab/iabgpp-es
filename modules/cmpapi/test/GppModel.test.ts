@@ -146,12 +146,17 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "ConsentLanguage", "EN");
     gppModel.setFieldValue("tcfeuv2", "VendorListVersion", 48);
     gppModel.setFieldValue("tcfeuv2", "PolicyVersion", 2);
-    gppModel.setFieldValue("tcfeuv2", "IsServiceSpecific", false);
+    gppModel.setFieldValue("tcfeuv2", "IsServiceSpecific", true);
     gppModel.setFieldValue("tcfeuv2", "UseNonStandardStacks", false);
     gppModel.setFieldValue("tcfeuv2", "PurposeOneTreatment", false);
-    gppModel.setFieldValue("tcfeuv2", "PublisherCountryCode", "AA");
+    gppModel.setFieldValue("tcfeuv2", "PublisherCountryCode", "DE");
     gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
+    
+    // set a few vendors
+    gppModel.setFieldValue("tcfeuv2", "VendorConsents", [1, 2, 3, 4]);
+    gppModel.setFieldValue("tcfeuv2", "VendorLegitimateInterests", []);
+    gppModel.setFieldValue("tcfeuv2", "VendorsDisclosed", [1, 2, 3, 4, 5, 100, 404]);
 
     expect(gppModel.getSectionIds()).to.eql([2]);
     expect(gppModel.hasSection("uspv1")).to.eql(false);
@@ -159,7 +164,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
+    expect(gppString).to.eql("DBABMA~CQSbk4AQSbk4ANwAAAENAwCgAAAAAAAAAAYgACPAAAAA.YAAAAAAAAAAA.IDKQA4AAgAKAGQAygAAA");
 
     expect(gppString.split("~").length).to.eql(2);
 

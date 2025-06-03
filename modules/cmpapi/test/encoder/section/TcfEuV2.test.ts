@@ -15,7 +15,7 @@ describe("manifest.section.TcfEuV2", (): void => {
     tcfEuV2.setFieldValue("IsServiceSpecific", true);
     tcfEuV2.setFieldValue("Created", new Date("2022-01-01T00:00:00Z"));
     tcfEuV2.setFieldValue("LastUpdated", new Date("2022-02-01T00:00:00Z"));
-    expect(tcfEuV2.encode()).to.eql("CPTtLAAPTtLAAAAAAAENAAFgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
+    expect(tcfEuV2.encode()).to.eql("CPTtLAAPTtLAAAAAAAENAAFgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA.IAAA");
   });
 
   it("decode defaults", (): void => {
@@ -165,7 +165,7 @@ describe("manifest.section.TcfEuV2", (): void => {
   });
 
   it("decode service specific", (): void => {
-    let tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
+    let tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA.IAAA");
     expect(tcfEuV2.getFieldValue("Version")).to.eql(2);
     expect(tcfEuV2.getFieldValue("Created")).to.eql(new Date("2022-01-01T00:00:00Z"));
     expect(tcfEuV2.getFieldValue("LastUpdated")).to.eql(new Date("2022-01-01T00:00:00Z"));
@@ -557,7 +557,7 @@ describe("manifest.section.TcfEuV2", (): void => {
   });
 
   it("decode 4", (): void => {
-    let tcfEuV2 = new TcfEuV2("COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA.YAAAAAAAAAAAAAAAAAA");
+    let tcfEuV2 = new TcfEuV2("COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA.YAAAAAAAAAAAAAAAAAA.IGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g");
 
     expect(tcfEuV2.getFieldValue("Version")).to.eql(2);
     expect(tcfEuV2.getFieldValue("CmpId")).to.eql(14);
@@ -642,6 +642,7 @@ describe("manifest.section.TcfEuV2", (): void => {
 
     expect(tcfEuV2.getFieldValue("VendorConsents")).to.eql([2, 6, 8, 12, 18, 23, 25, 37, 42]);
     expect(tcfEuV2.getFieldValue("VendorLegitimateInterests")).to.eql([2, 6, 8, 12, 18, 23, 37, 42]);
+    expect(tcfEuV2.getFieldValue("VendorsDisclosed").length).to.eql(434);
   });
 
   it("should throw Error on garbage 1", (): void => {
