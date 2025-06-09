@@ -385,4 +385,4 @@ __gpp("removeEventListener", callback?, parameter?)
 
 ## Contributing
 
-Here you can find the [contributing guide](CONTRIBUTING.md) to help maintain and update the library.
+Here you can find the [contributing guide](CONTRIBUTING.md) to help maintain and update the library. This library is managed by the Code Libraries Subgroup of the Global Privacy Working Group at the IAB Tech Lab. To join the group, please reach out to support@iabtechlab.com.
