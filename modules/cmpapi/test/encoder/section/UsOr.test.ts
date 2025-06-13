@@ -3,12 +3,12 @@ import { UsOrField } from "../../../src/encoder/field/UsOrField";
 import { UsOr } from "../../../src/encoder/section/UsOr";
 
 describe("manifest.section.UsOr", (): void => {
-  it("should encode default to BAAAAAABAA.QA", (): void => {
+  it("should encode default to BAAAAAABA.Q", (): void => {
     let usOr = new UsOr();
-    expect(usOr.encode()).to.eql("BAAAAAABAA.QA");
+    expect(usOr.encode()).to.eql("BAAAAAABA.Q");
   });
 
-  it("should encode to BVWSSRpFYA.YA", (): void => {
+  it("should encode to BVWSSRpFY.Y", (): void => {
     let usOr = new UsOr();
 
     usOr.setFieldValue(UsOrField.PROCESSING_NOTICE, 1);
@@ -24,13 +24,13 @@ describe("manifest.section.UsOr", (): void => {
     usOr.setFieldValue(UsOrField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usOr.setFieldValue(UsOrField.GPC, true);
 
-    expect(usOr.encode()).to.eql("BVWSSRpFYA.YA");
+    expect(usOr.encode()).to.eql("BVWSSRpFY.Y");
   });
 
-  it("should encode default to BAAAAAABAA", (): void => {
+  it("should encode default to BAAAAAABA", (): void => {
     let usOr = new UsOr();
     usOr.setFieldValue(UsOrField.GPC_SEGMENT_INCLUDED, false);
-    expect(usOr.encode()).to.eql("BAAAAAABAA");
+    expect(usOr.encode()).to.eql("BAAAAAABA");
   });
 
   it("should throw an error if invalid values are set", (): void => {
@@ -81,6 +81,24 @@ describe("manifest.section.UsOr", (): void => {
     }).to.throw();
   });
 
+  it("should decode BVWSSRpFY.Y", (): void => {
+    let usOr = new UsOr("BVWSSRpFY.Y");
+
+    expect(1, usOr.getFieldValue(UsOrField.PROCESSING_NOTICE));
+    expect(1, usOr.getFieldValue(UsOrField.SALE_OPT_OUT_NOTICE));
+    expect(1, usOr.getFieldValue(UsOrField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usOr.getFieldValue(UsOrField.SALE_OPT_OUT));
+    expect(1, usOr.getFieldValue(UsOrField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1, 0, 1, 2], usOr.getFieldValue(UsOrField.SENSITIVE_DATA_PROCESSING));
+    expect([2, 1, 0], usOr.getFieldValue(UsOrField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usOr.getFieldValue(UsOrField.ADDITIONAL_DATA_PROCESSING_CONSENT));
+    expect(1, usOr.getFieldValue(UsOrField.MSPA_COVERED_TRANSACTION));
+    expect(1, usOr.getFieldValue(UsOrField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usOr.getFieldValue(UsOrField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(true, usOr.getFieldValue(UsOrField.GPC));
+    expect(true, usOr.getFieldValue(UsOrField.GPC_SEGMENT_INCLUDED));
+  });
+
   it("should decode BVWSSRpFYA.YA", (): void => {
     let usOr = new UsOr("BVWSSRpFYA.YA");
 
@@ -99,8 +117,8 @@ describe("manifest.section.UsOr", (): void => {
     expect(true, usOr.getFieldValue(UsOrField.GPC_SEGMENT_INCLUDED));
   });
 
-  it("should decode BVWSSRpFYA", (): void => {
-    let usOr = new UsOr("BVWSSRpFYA");
+  it("should decode BVWSSRpFY", (): void => {
+    let usOr = new UsOr("BVWSSRpFY");
 
     expect(1, usOr.getFieldValue(UsOrField.PROCESSING_NOTICE));
     expect(1, usOr.getFieldValue(UsOrField.SALE_OPT_OUT_NOTICE));

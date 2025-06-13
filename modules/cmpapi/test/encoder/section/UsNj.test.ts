@@ -3,12 +3,12 @@ import { UsNjField } from "../../../src/encoder/field/UsNjField";
 import { UsNj } from "../../../src/encoder/section/UsNj";
 
 describe("manifest.section.UsNj", (): void => {
-  it("should encode default to BAAAAAAAQA.QA", (): void => {
+  it("should encode default to BAAAAAAAQ.Q", (): void => {
     let usNj = new UsNj();
-    expect(usNj.encode()).to.eql("BAAAAAAAQA.QA");
+    expect(usNj.encode()).to.eql("BAAAAAAAQ.Q");
   });
 
-  it("should encode to BVWSSRklWA.YA", (): void => {
+  it("should encode to BVWSSRklW.Y", (): void => {
     let usNj = new UsNj();
 
     usNj.setFieldValue(UsNjField.PROCESSING_NOTICE, 1);
@@ -24,13 +24,13 @@ describe("manifest.section.UsNj", (): void => {
     usNj.setFieldValue(UsNjField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNj.setFieldValue(UsNjField.GPC, true);
 
-    expect(usNj.encode()).to.eql("BVWSSRklWA.YA");
+    expect(usNj.encode()).to.eql("BVWSSRklW.Y");
   });
 
-  it("should encode default to BAAAAAAAQA", (): void => {
+  it("should encode default to BAAAAAAAQ", (): void => {
     let usNj = new UsNj();
     usNj.setFieldValue(UsNjField.GPC_SEGMENT_INCLUDED, false);
-    expect(usNj.encode()).to.eql("BAAAAAAAQA");
+    expect(usNj.encode()).to.eql("BAAAAAAAQ");
   });
 
   it("should throw an error if invalid values are set", (): void => {
@@ -81,6 +81,24 @@ describe("manifest.section.UsNj", (): void => {
     }).to.throw();
   });
 
+  it("should decode BVWSSRklW.Y", (): void => {
+    let usNj = new UsNj("BVWSSRklW.Y");
+
+    expect(1, usNj.getFieldValue(UsNjField.PROCESSING_NOTICE));
+    expect(1, usNj.getFieldValue(UsNjField.SALE_OPT_OUT_NOTICE));
+    expect(1, usNj.getFieldValue(UsNjField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usNj.getFieldValue(UsNjField.SALE_OPT_OUT));
+    expect(1, usNj.getFieldValue(UsNjField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1, 0, 1], usNj.getFieldValue(UsNjField.SENSITIVE_DATA_PROCESSING));
+    expect([2, 1, 0, 2, 1], usNj.getFieldValue(UsNjField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usNj.getFieldValue(UsNjField.ADDITIONAL_DATA_PROCESSING_CONSENT));
+    expect(1, usNj.getFieldValue(UsNjField.MSPA_COVERED_TRANSACTION));
+    expect(1, usNj.getFieldValue(UsNjField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usNj.getFieldValue(UsNjField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(true, usNj.getFieldValue(UsNjField.GPC));
+    expect(true, usNj.getFieldValue(UsNjField.GPC_SEGMENT_INCLUDED));
+  });
+
   it("should decode BVWSSRklWA.YA", (): void => {
     let usNj = new UsNj("BVWSSRklWA.YA");
 
@@ -99,8 +117,8 @@ describe("manifest.section.UsNj", (): void => {
     expect(true, usNj.getFieldValue(UsNjField.GPC_SEGMENT_INCLUDED));
   });
 
-  it("should decode BVWSSRklWA", (): void => {
-    let usNj = new UsNj("BVWSSRklWA");
+  it("should decode BVWSSRklW", (): void => {
+    let usNj = new UsNj("BVWSSRklW");
 
     expect(1, usNj.getFieldValue(UsNjField.PROCESSING_NOTICE));
     expect(1, usNj.getFieldValue(UsNjField.SALE_OPT_OUT_NOTICE));
