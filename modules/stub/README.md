@@ -10,27 +10,23 @@ npm install @iabgpp/stub
 
 #### Using
 
-##### include via module loading
+##### Include via module loading
 
 ```javascript
-import * as cmpstub from "@iabgpp/stub";
+import "@iabgpp/stub";
 ```
 
 or
 
 ```javascript
-const cmpstub = require("@iabgpp/stub");
+require("@iabgpp/stub");
 ```
 
-then execute:
+This will set up the global `__gpp()` window function with the queuing functionality. **You do not need to call any function after import; `__gpp` is available globally.**
 
-```javascript
-cmpstub();
-```
+> **Note:** Importing or requiring this module has a global side effect: it attaches `__gpp` to the `window` object.
 
-this should generate the `__gpp()` window function with the queing functionality.
-
-##### to drop on a page
+##### To drop on a page
 
 ```
 git clone https://github.com/InteractiveAdvertisingBureau/iabgpp-es.git
