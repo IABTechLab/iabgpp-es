@@ -144,6 +144,27 @@ describe("manifest.section.UsNat", (): void => {
     expect(false, usNat.getFieldValue(UsNatField.GPC_SEGMENT_INCLUDED));
   });
 
+  it("should decode BVQqAAAACg", (): void => {
+    let usNat = new UsNat("BVQqAAAACg");
+
+    expect(1, usNat.getFieldValue(UsNatField.SHARING_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.SALE_OPT_OUT_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.SHARING_OPT_OUT_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(0, usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE));
+    expect(0, usNat.getFieldValue(UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE));
+    expect(0, usNat.getFieldValue(UsNatField.SALE_OPT_OUT));
+    expect(2, usNat.getFieldValue(UsNatField.SHARING_OPT_OUT));
+    expect(2, usNat.getFieldValue(UsNatField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
+    expect([0, 0, 0], usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(2, usNat.getFieldValue(UsNatField.PERSONAL_DATA_CONSENTS));
+    expect(2, usNat.getFieldValue(UsNatField.MSPA_COVERED_TRANSACTION));
+    expect(0, usNat.getFieldValue(UsNatField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(0, usNat.getFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(false, usNat.getFieldValue(UsNatField.GPC_SEGMENT_INCLUDED));
+  });
+
   it("should throw Error on garbage", (): void => {
     expect(function () {
       new UsNat("z").getFieldValue(UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE);
