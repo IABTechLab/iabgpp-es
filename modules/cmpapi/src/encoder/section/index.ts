@@ -10,6 +10,7 @@ export * from "./UsCt.js";
 export * from "./UsDe.js";
 export * from "./UsFl.js";
 export * from "./UsIa.js";
+export * from "./UsMn.js";
 export * from "./UsMt.js";
 export * from "./UsNat.js";
 export * from "./UsNe.js";
