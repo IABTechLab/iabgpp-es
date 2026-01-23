@@ -107,7 +107,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOdM~CPSG_8APSG_8ANwAAAENAAFAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA"
+      "DBACOdM~CPSG_8APSG_8ANwAAAENAAFgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA"
     );
   });
 
@@ -150,13 +150,14 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "UseNonStandardStacks", false);
     gppModel.setFieldValue("tcfeuv2", "PurposeOneTreatment", false);
     gppModel.setFieldValue("tcfeuv2", "PublisherCountryCode", "DE");
-    gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
-    gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
     
     // set a few vendors
     gppModel.setFieldValue("tcfeuv2", "VendorConsents", [1, 2, 3, 4]);
     gppModel.setFieldValue("tcfeuv2", "VendorLegitimateInterests", []);
     gppModel.setFieldValue("tcfeuv2", "VendorsDisclosed", [1, 2, 3, 4, 5, 100, 404]);
+
+    gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
+    gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     expect(gppModel.getSectionIds()).to.eql([2]);
     expect(gppModel.hasSection("uspv1")).to.eql(false);
@@ -164,8 +165,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CQSbk4AQSbk4ANwAAAENAwCgAAAAAAAAAAYgACPAAAAA.YAAAAAAAAAAA.IDKQA4AAgAKAGQAygAAA");
-
+    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAYgACPAAAAA.IDKQA4AAgAKAGQAygAAA.YAAAAAAAAAAA");
     expect(gppString.split("~").length).to.eql(2);
 
     expect(gppModel.getSectionIds()).to.eql([2]);
@@ -186,7 +186,7 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "ConsentLanguage", "EN");
     gppModel.setFieldValue("tcfeuv2", "VendorListVersion", 48);
     gppModel.setFieldValue("tcfeuv2", "PolicyVersion", 2);
-    gppModel.setFieldValue("tcfeuv2", "IsServiceSpecific", false);
+    gppModel.setFieldValue("tcfeuv2", "IsServiceSpecific", true);
     gppModel.setFieldValue("tcfeuv2", "UseNonStandardStacks", false);
     gppModel.setFieldValue("tcfeuv2", "PurposeOneTreatment", false);
     gppModel.setFieldValue("tcfeuv2", "PublisherCountryCode", "AA");
@@ -207,7 +207,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~1YNN");
+    expect(gppString).to.eql("DBACNYA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~1YNN");
 
     expect(gppString.split("~").length).to.eql(3);
 
@@ -229,7 +229,7 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "ConsentLanguage", "EN");
     gppModel.setFieldValue("tcfeuv2", "VendorListVersion", 48);
     gppModel.setFieldValue("tcfeuv2", "PolicyVersion", 2);
-    gppModel.setFieldValue("tcfeuv2", "IsServiceSpecific", false);
+    gppModel.setFieldValue("tcfeuv2", "IsServiceSpecific", true);
     gppModel.setFieldValue("tcfeuv2", "UseNonStandardStacks", false);
     gppModel.setFieldValue("tcfeuv2", "PurposeOneTreatment", false);
     gppModel.setFieldValue("tcfeuv2", "PublisherCountryCode", "AA");
@@ -391,7 +391,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN"
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN"
     );
 
     expect(gppString.split("~").length).to.eql(4);
@@ -447,7 +447,7 @@ describe("manifest.GppModel", (): void => {
   });
 
   it("should decode tcfeuv2 sections", (): void => {
-    let gppString = "DBABMA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA";
+    let gppString = "DBABMA~CPSG_8APSG_8ANwAAAENDgCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([2]);
@@ -460,9 +460,9 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue("tcfeuv2", "CmpVersion")).to.eql(0);
     expect(gppModel.getFieldValue("tcfeuv2", "ConsentScreen")).to.eql(0);
     expect(gppModel.getFieldValue("tcfeuv2", "ConsentLanguage")).to.eql("EN");
-    expect(gppModel.getFieldValue("tcfeuv2", "VendorListVersion")).to.eql(48);
+    expect(gppModel.getFieldValue("tcfeuv2", "VendorListVersion")).to.eql(224);
     expect(gppModel.getFieldValue("tcfeuv2", "PolicyVersion")).to.eql(2);
-    expect(gppModel.getFieldValue("tcfeuv2", "IsServiceSpecific")).to.eql(false);
+    expect(gppModel.getFieldValue("tcfeuv2", "IsServiceSpecific")).to.eql(true);
     expect(gppModel.getFieldValue("tcfeuv2", "UseNonStandardStacks")).to.eql(false);
     expect(gppModel.getFieldValue("tcfeuv2", "PurposeOneTreatment")).to.eql(false);
     expect(gppModel.getFieldValue("tcfeuv2", "PublisherCountryCode")).to.eql("AA");
@@ -471,7 +471,7 @@ describe("manifest.GppModel", (): void => {
   });
 
   it("should decode uspv1 and tcfeuv2 sections", (): void => {
-    let gppString = "DBACNYA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~1YNN";
+    let gppString = "DBACNYA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([2, 6]);
@@ -490,7 +490,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue("tcfeuv2", "ConsentLanguage")).to.eql("EN");
     expect(gppModel.getFieldValue("tcfeuv2", "VendorListVersion")).to.eql(48);
     expect(gppModel.getFieldValue("tcfeuv2", "PolicyVersion")).to.eql(2);
-    expect(gppModel.getFieldValue("tcfeuv2", "IsServiceSpecific")).to.eql(false);
+    expect(gppModel.getFieldValue("tcfeuv2", "IsServiceSpecific")).to.eql(true);
     expect(gppModel.getFieldValue("tcfeuv2", "UseNonStandardStacks")).to.eql(false);
     expect(gppModel.getFieldValue("tcfeuv2", "PurposeOneTreatment")).to.eql(false);
     expect(gppModel.getFieldValue("tcfeuv2", "PublisherCountryCode")).to.eql("AA");
@@ -500,7 +500,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode uspv1 and tcfeuv2 and tcfcav1 sections", (): void => {
     let gppString =
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACADwAAEAE.fHHHA4444ao~1YNN";
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACADwAAEAE.fHHHA4444ao~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([2, 5, 6]);
@@ -519,7 +519,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue("tcfeuv2", "ConsentLanguage")).to.eql("EN");
     expect(gppModel.getFieldValue("tcfeuv2", "VendorListVersion")).to.eql(48);
     expect(gppModel.getFieldValue("tcfeuv2", "PolicyVersion")).to.eql(2);
-    expect(gppModel.getFieldValue("tcfeuv2", "IsServiceSpecific")).to.eql(false);
+    expect(gppModel.getFieldValue("tcfeuv2", "IsServiceSpecific")).to.eql(true);
     expect(gppModel.getFieldValue("tcfeuv2", "UseNonStandardStacks")).to.eql(false);
     expect(gppModel.getFieldValue("tcfeuv2", "PurposeOneTreatment")).to.eql(false);
     expect(gppModel.getFieldValue("tcfeuv2", "PublisherCountryCode")).to.eql("AA");
@@ -667,52 +667,58 @@ describe("manifest.GppModel", (): void => {
   it("should encode tcfeuv2 vendor consents [28]", (): void => {
     let gppModel = new GppModel();
     gppModel.setFieldValue("tcfeuv2", "VendorConsents", [28]);
+    gppModel.setFieldValue("tcfeuv2", "VendorsDisclosed", [10,11,28]);
+    gppModel.setFieldValue("tcfeuv2", "PurposeLegitimateInterests", [false, false, true, true, false, false ]);
     gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFAAAAAAAAAAAAAAOAAAABAAAAA.QAAA.IAAA");
+    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOAAAABAAAAA.IAOABgAB.YAAAAAAAAAAA");
   });
 
   it("should encode tcfeuv2 vendor consents [29]", (): void => {
     let gppModel = new GppModel();
     gppModel.setFieldValue("tcfeuv2", "VendorConsents", [29]);
+    gppModel.setFieldValue("tcfeuv2", "VendorsDisclosed", [10,11,29]);
     gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFAAAAAAAAAAAAAAOwAQAOgAAAA.QAAA.IAAA");
+    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOwAQAOgAAAA.IAOgBgAAgAAA.YAAAAAAAAAAA");
   });
 
   it("should encode tcfeuv2 vendor consents [1, 173, 722]", (): void => {
     let gppModel = new GppModel();
     gppModel.setFieldValue("tcfeuv2", "VendorConsents", [1, 173, 722]);
+    gppModel.setFieldValue("tcfeuv2", "VendorsDisclosed", [1, 10, 11, 29, 173, 722]);
     gppModel.setFieldValue("tcfeuv2", "Created", utcDateTime);
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA");
+    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.IFpQBQAAwAKAAsADoArQFpAA.YAAAAAAAAAAA");
   });
 
   it("should decode tcfeuv2 vendor consents [28]", (): void => {
-    let gppString = "DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOAAAABAAAAA.QAAA.IAAA";
+    let gppString = "DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOAAAABAAAAA.IAOABgAB.YAAAAAAAAAAA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([28]);
+    expect(gppModel.getFieldValue("tcfeuv2", "VendorsDisclosed")).to.eql([10, 11, 28]);
   });
 
   it("should decode tcfeuv2 vendor consents [29]", (): void => {
-    let gppString = "DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAOwAQAOgAAAA.QAAA.IAAA";
+    let gppString = "DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOwAQAOgAAAA.IAOgBgAAgAAA.YAAAAAAAAAAA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([29]);
+    expect(gppModel.getFieldValue("tcfeuv2", "VendorsDisclosed")).to.eql([10, 11, 29]);
   });
 
   it("should decode tcfeuv2 vendor consents [1, 173, 722]", (): void => {
-    let gppString = "DBABMA~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.QAAA.IAAA";
+    let gppString = "DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.IFpQBQAAwAKAAsADoArQFpAA.YAAAAAAAAAAA";
     let gppModel = new GppModel(gppString);
-
     expect(gppModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([1, 173, 722]);
+    expect(gppModel.getFieldValue("tcfeuv2", "VendorsDisclosed")).to.eql([1, 10, 11, 29, 173, 722]);
   });
 
   it("should decode DBABTA~1YYN", (): void => {
