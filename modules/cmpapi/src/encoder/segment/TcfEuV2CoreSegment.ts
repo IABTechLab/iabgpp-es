@@ -44,8 +44,8 @@ export class TcfEuV2CoreSegment extends AbstractLazilyEncodableSegment<Encodable
     fields.put(TcfEuV2Field.CONSENT_SCREEN.toString(), new EncodableFixedInteger(6, 0));
     fields.put(TcfEuV2Field.CONSENT_LANGUAGE.toString(), new EncodableFixedString(2, "EN"));
     fields.put(TcfEuV2Field.VENDOR_LIST_VERSION.toString(), new EncodableFixedInteger(12, 0));
-    fields.put(TcfEuV2Field.POLICY_VERSION.toString(), new EncodableFixedInteger(6, 2));
-    fields.put(TcfEuV2Field.IS_SERVICE_SPECIFIC.toString(), new EncodableBoolean(false));
+    fields.put(TcfEuV2Field.POLICY_VERSION.toString(), new EncodableFixedInteger(6, 5));
+    fields.put(TcfEuV2Field.IS_SERVICE_SPECIFIC.toString(), new EncodableBoolean(true));
     fields.put(TcfEuV2Field.USE_NON_STANDARD_STACKS.toString(), new EncodableBoolean(false));
     fields.put(
       TcfEuV2Field.SPECIAL_FEATURE_OPTINS.toString(),

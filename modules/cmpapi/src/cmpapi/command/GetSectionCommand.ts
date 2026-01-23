@@ -7,8 +7,12 @@ export class GetSectionCommand extends Command {
     }
 
     let section = null;
-    if (this.cmpApiContext.gppModel.hasSection(this.parameter)) {
-      section = this.cmpApiContext.gppModel.getSection(this.parameter);
+    // Since TCF 2.2 no fields are allowed to be called directly. Data always needs to be retrieved using the 
+    // AddEventListener callback
+    if (this.parameter != "tcfeuv2") {
+      if (this.cmpApiContext.gppModel.hasSection(this.parameter)) {
+        section = this.cmpApiContext.gppModel.getSection(this.parameter);
+      }
     }
     this.invokeCallback(section);
   }
