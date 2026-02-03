@@ -123,6 +123,12 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
   // overriden
   protected encodeSegment(fields: EncodableBitStringFields): string {
     let bitString: string = this.bitStringEncoder.encode(fields, this.getFieldNames());
+
+    let version = fields.get(UsNatField.VERSION).getValue();
+    if (version === 1) {
+      bitString = bitString.substring(0, 48) + bitString.substring(56, 60) + bitString.substring(62);
+    }
+
     let encodedString: string = this.base64UrlEncoder.encode(bitString);
     return encodedString;
   }
@@ -155,5 +161,19 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
     } catch (e) {
       throw new DecodingError("Unable to decode UsNatCoreSegment '" + encodedString + "'");
     }
+  }
+
+  //Override
+  public getFieldValue(fieldName: string): any {
+    let value = super.getFieldValue(fieldName);
+    let version = this.fields.get(UsNatField.VERSION).getValue();
+    if (version === 1) {
+      if (fieldName === UsNatField.SENSITIVE_DATA_PROCESSING) {
+        value = value.slice(0, 12);
+      } else if (fieldName === UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS) {
+        value = value.slice(0, 2);
+      }
+    }
+    return value;
   }
 }

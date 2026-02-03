@@ -106,8 +106,46 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA"
+      "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA"
     );
+  });
+
+  it("should encode usnat v1 with v1 values", (): void => {
+    let gppModel = new GppModel();
+    gppModel.setFieldValue("usnat", "Version", 1);
+    gppModel.setFieldValue("usnat", "SensitiveDataProcessing", [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    gppModel.setFieldValue("usnat", "KnownChildSensitiveDataConsents", [1, 1]);
+
+    let gppString = gppModel.encode();
+    expect(gppString).to.eql("DBABLA~BAAAVVVVUQA.QA");
+  });
+
+  it("should encode usnat v1 with v2 values", (): void => {
+    let gppModel = new GppModel();
+    gppModel.setFieldValue("usnat", "Version", 1);
+    gppModel.setFieldValue("usnat", "SensitiveDataProcessing", [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    gppModel.setFieldValue("usnat", "KnownChildSensitiveDataConsents", [1, 1, 1]);
+
+    let gppString = gppModel.encode();
+    expect(gppString).to.eql("DBABLA~BAAAVVVVUQA.QA");
+  });
+
+  it("should encode usnat v2 with v1 values", (): void => {
+    let gppModel = new GppModel();
+    gppModel.setFieldValue("usnat", "SensitiveDataProcessing", [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    gppModel.setFieldValue("usnat", "KnownChildSensitiveDataConsents", [1, 1]);
+
+    let gppString = gppModel.encode();
+    expect(gppString).to.eql("DBABLA~CAAAVVVVAFBA.QA");
+  });
+
+  it("should encode usnat v2 with v2 values", (): void => {
+    let gppModel = new GppModel();
+    gppModel.setFieldValue("usnat", "SensitiveDataProcessing", [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    gppModel.setFieldValue("usnat", "KnownChildSensitiveDataConsents", [1, 1, 1]);
+
+    let gppString = gppModel.encode();
+    expect(gppString).to.eql("DBABLA~CAAAVVVVVVRA.QA");
   });
 
   it("should encode uspv1 section", (): void => {
@@ -402,7 +440,7 @@ describe("manifest.GppModel", (): void => {
 
   it("should decode defaults from all sections", (): void => {
     let gppString =
-      "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA";
+      "DBACOdM~CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAQA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
@@ -424,6 +462,37 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("usnh")).to.eql(true);
     expect(gppModel.hasSection("usnj")).to.eql(true);
     expect(gppModel.hasSection("ustn")).to.eql(true);
+  });
+
+  it("should decode usnat v1 ", (): void => {
+    let gppString = "DBABLA~BAAAVVVVUQA.QA";
+    let gppModel = new GppModel(gppString);
+
+    expect(gppModel.hasSection("usnat")).to.eql(true);
+    expect(gppModel.getFieldValue("usnat", "SensitiveDataProcessing")).to.eql([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    expect(gppModel.getFieldValue("usnat", "KnownChildSensitiveDataConsents")).to.eql([1, 1]);
+  });
+
+  it("should decode usnat v2 with v1 values", (): void => {
+    let gppString = "DBABLA~CAAAVVVVAFBA.QA";
+    let gppModel = new GppModel(gppString);
+
+    expect(gppModel.hasSection("usnat")).to.eql(true);
+    expect(gppModel.getFieldValue("usnat", "SensitiveDataProcessing")).to.eql([
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+    ]);
+    expect(gppModel.getFieldValue("usnat", "KnownChildSensitiveDataConsents")).to.eql([1, 1, 0]);
+  });
+
+  it("should decode usnat v2 with v2 values", (): void => {
+    let gppString = "DBABLA~CAAAVVVVVVRA.QA";
+    let gppModel = new GppModel(gppString);
+
+    expect(gppModel.hasSection("usnat")).to.eql(true);
+    expect(gppModel.getFieldValue("usnat", "SensitiveDataProcessing")).to.eql([
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    ]);
+    expect(gppModel.getFieldValue("usnat", "KnownChildSensitiveDataConsents")).to.eql([1, 1, 1]);
   });
 
   it("should decode uspv1 section", (): void => {
@@ -721,8 +790,8 @@ describe("manifest.GppModel", (): void => {
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
   });
 
-  it("should decode DBABLA~BAAAAAAAAQA.QA", (): void => {
-    let gppString = "DBABLA~BAAAAAAAAQA.QA";
+  it("should decode DBABLA~CAAAAAAAAQA.QA", (): void => {
+    let gppString = "DBABLA~CAAAAAAAAQA.QA";
     let gppModel = new GppModel(gppString);
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
     expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
@@ -731,8 +800,8 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([0, 0, 0]);
   });
 
-  it("should decode DBABLA~BAAAAAAAAABA.QA", (): void => {
-    let gppString = "DBABLA~BAAAAAAAAABA.QA";
+  it("should decode DBABLA~CAAAAAAAAABA.QA", (): void => {
+    let gppString = "DBABLA~CAAAAAAAAABA.QA";
     let gppModel = new GppModel(gppString);
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
     expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
@@ -741,8 +810,8 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([0, 0, 0]);
   });
 
-  it("should decode DBABLA~BAAAAAABEQA.QA", (): void => {
-    let gppString = "DBABLA~BAAAAAABEQA.QA";
+  it("should decode DBABLA~CAAAAAABEQA.QA", (): void => {
+    let gppString = "DBABLA~CAAAAAABEQA.QA";
     let gppModel = new GppModel(gppString);
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
     expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
@@ -751,8 +820,8 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([0, 1, 0]);
   });
 
-  it("should decode DBABLA~BAAAAAAAAQRA.QA", (): void => {
-    let gppString = "DBABLA~BAAAAAAAAQRA.QA";
+  it("should decode DBABLA~CAAAAAAAAQRA.QA", (): void => {
+    let gppString = "DBABLA~CAAAAAAAAQRA.QA";
     let gppModel = new GppModel(gppString);
     gppModel.getFieldValue(UsNat.NAME, UspV1Field.VERSION);
     expect(gppModel.getFieldValue(UsNat.NAME, UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
