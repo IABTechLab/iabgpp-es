@@ -378,6 +378,21 @@ __gpp("removeEventListener", callback?, parameter?)
 | ustn         | 22         | GpcSegmentType                      | 2 bit int. Value is 1                                          |
 | ustn         | 22         | GpcSegmentIncluded                  | Boolean. Default is true                                       |
 | ustn         | 22         | Gpc                                 | Boolean                                                        |
+| usmn         | 23         | Version                             | 6 bit int. Value is 1                                          |
+| usmn         | 23         | ProcessingNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | SaleOptOutNotice                    | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | TargetedAdvertisingOptOutNotice     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | SaleOptOut                          | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | TargetedAdvertisingOptOut           | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | SensitiveDataProcessing             | 2 bit int array of size 8. 0=Not applicable, 1=Yes, 2=No       |
+| usmn         | 23         | KnownChildSensitiveDataConsents     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | AdditionalDataProcessingConsent     | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | MspaCoveredTransaction              | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | MspaOptOutOptionMode                | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | MspaServiceProviderMode             | 2 bit int. 0=Not applicable, 1=Yes, 2=No                       |
+| usmn         | 23         | GpcSegmentType                      | 2 bit int. Value is 1                                          |
+| usmn         | 23         | GpcSegmentIncluded                  | Boolean. Default is true                                       |
+| usmn         | 23         | Gpc                                 | Boolean                                                        |
 
 ## Example Usage / Encoder / Decoder
 
