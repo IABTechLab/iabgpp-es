@@ -3,12 +3,12 @@ import { UsNatField } from "../../../src/encoder/field/UsNatField";
 import { UsNat } from "../../../src/encoder/section/UsNat";
 
 describe("manifest.section.UsNat", (): void => {
-  it("should encode default to BAAAAAAAAABA.QA", (): void => {
+  it("should encode default to CAAAAAAAAABA.QA", (): void => {
     let usNat = new UsNat();
-    expect(usNat.encode()).to.eql("BAAAAAAAAABA.QA");
+    expect(usNat.encode()).to.eql("CAAAAAAAAABA.QA");
   });
 
-  it("should encode to BVVVkkkkkpFY.YA", (): void => {
+  it("should encode to CVVVkkkkkpFY.YA", (): void => {
     let usNat = new UsNat();
 
     usNat.setFieldValue(UsNatField.SHARING_NOTICE, 1);
@@ -28,13 +28,43 @@ describe("manifest.section.UsNat", (): void => {
     usNat.setFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNat.setFieldValue(UsNatField.GPC, true);
 
-    expect(usNat.encode()).to.eql("BVVVkkkkkpFY.YA");
+    expect(usNat.encode()).to.eql("CVVVkkkkkpFY.YA");
   });
 
-  it("should encode default to BAAAAAAAAABA", (): void => {
+  it("should encode default to CAAAAAAAAABA", (): void => {
     let usNat = new UsNat();
     usNat.setFieldValue(UsNatField.GPC_SEGMENT_INCLUDED, false);
-    expect(usNat.encode()).to.eql("BAAAAAAAAABA");
+    expect(usNat.encode()).to.eql("CAAAAAAAAABA");
+  });
+
+  it("should encode usnat v1 with v1 values", (): void => {
+    let usNat = new UsNat();
+    usNat.setFieldValue(UsNatField.VERSION, 1);
+    usNat.setFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    usNat.setFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, [1, 1]);
+    expect(usNat.encode()).to.eql("BAAAVVVVUQA.QA");
+  });
+
+  it("should encode usnat v1 with v2 values", (): void => {
+    let usNat = new UsNat();
+    usNat.setFieldValue(UsNatField.VERSION, 1);
+    usNat.setFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    usNat.setFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, [1, 1, 1]);
+    expect(usNat.encode()).to.eql("BAAAVVVVUQA.QA");
+  });
+
+  it("should encode usnat v2 with v1 values", (): void => {
+    let usNat = new UsNat();
+    usNat.setFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    usNat.setFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, [1, 1]);
+    expect(usNat.encode()).to.eql("CAAAVVVVAFBA.QA");
+  });
+
+  it("should encode usnat v2 with v2 values", (): void => {
+    let usNat = new UsNat();
+    usNat.setFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    usNat.setFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS, [1, 1, 1]);
+    expect(usNat.encode()).to.eql("CAAAVVVVVVRA.QA");
   });
 
   it("should throw an error if invalid values are set", (): void => {
@@ -101,8 +131,8 @@ describe("manifest.section.UsNat", (): void => {
     }).to.throw();
   });
 
-  it("should decode BVVVkkkkkpFY.YA", (): void => {
-    let usNat = new UsNat("BVVVkkkkkpFY.YA");
+  it("should decode CVVVkkkkkpFY.YA", (): void => {
+    let usNat = new UsNat("CVVVkkkkkpFY.YA");
 
     expect(1, usNat.getFieldValue(UsNatField.SHARING_NOTICE));
     expect(1, usNat.getFieldValue(UsNatField.SALE_OPT_OUT_NOTICE));
@@ -144,9 +174,54 @@ describe("manifest.section.UsNat", (): void => {
     expect(false, usNat.getFieldValue(UsNatField.GPC_SEGMENT_INCLUDED));
   });
 
+  it("should decode CVQqAAAACg", (): void => {
+    let usNat = new UsNat("CVQqAAAACg");
+
+    expect(1, usNat.getFieldValue(UsNatField.SHARING_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.SALE_OPT_OUT_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.SHARING_OPT_OUT_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(0, usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE));
+    expect(0, usNat.getFieldValue(UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE));
+    expect(0, usNat.getFieldValue(UsNatField.SALE_OPT_OUT));
+    expect(2, usNat.getFieldValue(UsNatField.SHARING_OPT_OUT));
+    expect(2, usNat.getFieldValue(UsNatField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
+    expect([0, 0, 0], usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(2, usNat.getFieldValue(UsNatField.PERSONAL_DATA_CONSENTS));
+    expect(2, usNat.getFieldValue(UsNatField.MSPA_COVERED_TRANSACTION));
+    expect(0, usNat.getFieldValue(UsNatField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(0, usNat.getFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(false, usNat.getFieldValue(UsNatField.GPC_SEGMENT_INCLUDED));
+  });
+
   it("should throw Error on garbage", (): void => {
     expect(function () {
       new UsNat("z").getFieldValue(UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE);
     }).to.throw("Unable to decode UsNatCoreSegment 'z'");
+  });
+
+  it("should decode usnat v1", (): void => {
+    let usNat = new UsNat("BAAAVVVVUQA.QA");
+
+    expect(1, usNat.getFieldValue(UsNatField.VERSION));
+    expect([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
+    expect([1, 1], usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  });
+
+  it("should decode usnat v2 with v1 values", (): void => {
+    let usNat = new UsNat("CAAAVVVVAFBA.QA");
+
+    expect(2, usNat.getFieldValue(UsNatField.VERSION));
+    expect([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0], usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
+    expect([1, 1, 0], usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+  });
+
+  it("should decode usnat v2 with v2 values", (): void => {
+    let usNat = new UsNat("CAAAVVVVVVRA.QA");
+
+    expect(1, usNat.getFieldValue(UsNatField.VERSION));
+    expect([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
+    expect([1, 1, 1], usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
   });
 });
