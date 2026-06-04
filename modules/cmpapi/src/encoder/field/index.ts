@@ -10,6 +10,7 @@ export * from "./UsCtField.js";
 export * from "./UsDeField.js";
 export * from "./UsFlField.js";
 export * from "./UsIaField.js";
+export * from "./UsMnField.js";
 export * from "./UsMtField.js";
 export * from "./UsNatField.js";
 export * from "./UsNeField.js";

@@ -7,15 +7,48 @@ describe("manifest.section.TcfEuV2", (): void => {
     let tcfEuV2 = new TcfEuV2();
     tcfEuV2.setFieldValue(TcfEuV2Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfEuV2.setFieldValue(TcfEuV2Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA");
+    expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA");
   });
 
   it("encode with service specific", (): void => {
     let tcfEuV2 = new TcfEuV2();
     tcfEuV2.setFieldValue("IsServiceSpecific", true);
     tcfEuV2.setFieldValue("Created", new Date("2022-01-01T00:00:00Z"));
-    tcfEuV2.setFieldValue("LastUpdated", new Date("2022-01-01T00:00:00Z"));
-    expect(tcfEuV2.encode()).to.eql("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
+    tcfEuV2.setFieldValue("LastUpdated", new Date("2022-02-01T00:00:00Z"));
+    expect(tcfEuV2.encode()).to.eql("CPTtLAAPTtLAAAAAAAENAAFgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA");
+  });
+
+  it("encode with vendor [11, 28, 29] and publisher TC", (): void => {
+    let tcfEuV2 = new TcfEuV2();
+    tcfEuV2.setFieldValue("IsServiceSpecific", true);
+    tcfEuV2.setFieldValue("CmpId", 10);
+    tcfEuV2.setFieldValue("PurposeConsents", [true, false, true, true, true, true]);
+    tcfEuV2.setFieldValue("PurposeLegitimateInterests", [false, true, true, true, true]);
+    tcfEuV2.setFieldValue("VendorConsents", [11, 28, 29]);
+    tcfEuV2.setFieldValue("VendorsDisclosed", [11, 28, 29, 50, 60, 80]);
+    tcfEuV2.setFieldValue("PublisherConsents", [true, false, true, true, true, true, false ]);
+    tcfEuV2.setFieldValue("PublisherLegitimateInterests", [false, true, false, false, false, false, true]);
+    tcfEuV2.setFieldValue("Created", new Date("2022-01-01T00:00:00Z"));
+    tcfEuV2.setFieldValue("LastUpdated", new Date("2022-02-01T00:00:00Z"));
+    expect(tcfEuV2.encode()).to.eql("CPTtLAAPTtLAAAKAAAENAAFgALwAAEAAAAAAAOgAgABgAAAA.IAoAAgABgAAEAQAAEAAA.d4AACEAAAAAA");
+  });
+
+  it("decode with vendor [11, 28, 29] and publisher TC", (): void => {
+    let tcfEuV2 = new TcfEuV2("CPTtLAAPTtLAAAAAAAENAAFgALwAAEAAAAAAAOgAgABgAAAA.IAoAAgABgAAEAQAAEAAA.d4AACEAAAAAA");
+    expect(tcfEuV2.getFieldValue("IsServiceSpecific")).to.eql(true);
+    expect(tcfEuV2.getFieldValue("PolicyVersion")).to.eql(5);
+    expect(tcfEuV2.getFieldValue("Created")).to.eql(new Date("2022-02-01T00:00:00.000Z"));
+    expect(tcfEuV2.getFieldValue("VendorConsents")).to.eql([11, 28, 29]);
+    expect(tcfEuV2.getFieldValue("VendorsDisclosed")).to.eql([11, 28, 29, 50, 60, 80]);
+    expect(tcfEuV2.getFieldValue("PublisherConsents")).to.eql([true, false, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
+    expect(tcfEuV2.getFieldValue("PublisherLegitimateInterests")).to.eql([false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
+    expect(tcfEuV2.getFieldValue("ConsentLanguage")).to.eql("EN");
+    expect(tcfEuV2.getFieldValue("PurposeConsents")[0]).to.eql(true);
+    expect(tcfEuV2.getFieldValue("PurposeConsents")[1]).to.eql(false);
+    expect(tcfEuV2.getFieldValue("PurposeConsents")[2]).to.eql(true);
+    expect(tcfEuV2.getFieldValue("PurposeLegitimateInterests")[0]).to.eql(false);
+    expect(tcfEuV2.getFieldValue("PurposeLegitimateInterests")[1]).to.eql(true);
+    expect(tcfEuV2.getFieldValue("PurposeLegitimateInterests")[2]).to.eql(false);
   });
 
   it("decode defaults", (): void => {
@@ -96,14 +129,7 @@ describe("manifest.section.TcfEuV2", (): void => {
       false,
       false,
       false,
-    ]);
-    expect(tcfEuV2.getFieldValue("PurposeOneTreatment")).to.eql(false);
-    expect(tcfEuV2.getFieldValue("PublisherCountryCode")).to.eql("AA");
-    expect(tcfEuV2.getFieldValue("VendorConsents")).to.eql([]);
-    expect(tcfEuV2.getFieldValue("VendorLegitimateInterests")).to.eql([]);
-    expect(tcfEuV2.getFieldValue("PublisherRestrictions")).to.eql([]);
-    expect(tcfEuV2.getFieldValue("PublisherPurposesSegmentType")).to.eql(3);
-    expect(tcfEuV2.getFieldValue("PublisherConsents")).to.eql([
+    ]);  expect(tcfEuV2.getFieldValue("PublisherConsents")).to.eql([
       false,
       false,
       false,
@@ -156,6 +182,13 @@ describe("manifest.section.TcfEuV2", (): void => {
       false,
     ]);
     expect(tcfEuV2.getFieldValue("NumCustomPurposes")).to.eql(0);
+    expect(tcfEuV2.getFieldValue("PurposeOneTreatment")).to.eql(false);
+    expect(tcfEuV2.getFieldValue("PublisherCountryCode")).to.eql("AA");
+    expect(tcfEuV2.getFieldValue("VendorConsents")).to.eql([]);
+    expect(tcfEuV2.getFieldValue("VendorLegitimateInterests")).to.eql([]);
+    expect(tcfEuV2.getFieldValue("PublisherRestrictions")).to.eql([]);
+    expect(tcfEuV2.getFieldValue("PublisherPurposesSegmentType")).to.eql(3);
+  
     expect(tcfEuV2.getFieldValue("PublisherCustomConsents")).to.eql([]);
     expect(tcfEuV2.getFieldValue("PublisherCustomLegitimateInterests")).to.eql([]);
     expect(tcfEuV2.getFieldValue("VendorsAllowedSegmentType")).to.eql(2);
@@ -165,7 +198,7 @@ describe("manifest.section.TcfEuV2", (): void => {
   });
 
   it("decode service specific", (): void => {
-    let tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAAA");
+    let tcfEuV2 = new TcfEuV2("CPSG_8APSG_8AAAAAAENAACgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA");
     expect(tcfEuV2.getFieldValue("Version")).to.eql(2);
     expect(tcfEuV2.getFieldValue("Created")).to.eql(new Date("2022-01-01T00:00:00Z"));
     expect(tcfEuV2.getFieldValue("LastUpdated")).to.eql(new Date("2022-01-01T00:00:00Z"));
@@ -557,7 +590,7 @@ describe("manifest.section.TcfEuV2", (): void => {
   });
 
   it("decode 4", (): void => {
-    let tcfEuV2 = new TcfEuV2("COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA.YAAAAAAAAAAAAAAAAAA");
+    let tcfEuV2 = new TcfEuV2("COv_eg6Ov_eg6AOADBENAaCgAP_AAH_AACiQAVEUQQoAIQAqIoghAAQgAA.YAAAAAAAAAAAAAAAAAA.IGLtV_T9fb2vj-_Z99_tkeYwf95y3p-wzhheMs-8NyZeH_B4Wv2MyvBX4JiQKGRgksjLBAQdtHGlcTQgBwIlViTLMYk2MjzNKJrJEilsbO2dYGD9Pn8HT3ZCY70-vv__7v3ff_3g");
 
     expect(tcfEuV2.getFieldValue("Version")).to.eql(2);
     expect(tcfEuV2.getFieldValue("CmpId")).to.eql(14);
@@ -642,6 +675,7 @@ describe("manifest.section.TcfEuV2", (): void => {
 
     expect(tcfEuV2.getFieldValue("VendorConsents")).to.eql([2, 6, 8, 12, 18, 23, 25, 37, 42]);
     expect(tcfEuV2.getFieldValue("VendorLegitimateInterests")).to.eql([2, 6, 8, 12, 18, 23, 37, 42]);
+    expect(tcfEuV2.getFieldValue("VendorsDisclosed").length).to.eql(434);
   });
 
   it("should throw Error on garbage 1", (): void => {

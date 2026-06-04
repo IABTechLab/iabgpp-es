@@ -210,7 +210,7 @@ describe("GVL", (): void => {
 
   it("number of language translations should match", (): void => {
     const langSet =  new ConsentLanguages(); 
-    expect(langSet.size).equal(49);
+    expect(langSet.size).equal(52);
     expect(langSet.has("VI")).equal(true);
   });
 

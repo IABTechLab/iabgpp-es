@@ -1,4 +1,5 @@
 import { DecodingError } from "../error/DecodingError.js";
+import { EncodingError } from "../error/EncodingError.js";
 import { TcfEuV2Field } from "../field/TcfEuV2Field.js";
 import { EncodableSegment } from "../segment/EncodableSegment.js";
 import { TcfEuV2CoreSegment } from "../segment/TcfEuV2CoreSegment.js";
@@ -35,7 +36,7 @@ export class TcfEuV2 extends AbstractLazilyEncodableSection {
     return TcfEuV2.VERSION;
   }
 
-  //Overriden
+  //Override
   protected initializeSegments(): EncodableSegment[] {
     let segments: EncodableSegment[] = [];
     segments.push(new TcfEuV2CoreSegment());
@@ -45,7 +46,7 @@ export class TcfEuV2 extends AbstractLazilyEncodableSection {
     return segments;
   }
 
-  //Overriden
+  //Override
   protected decodeSection(encodedString: string): EncodableSegment[] {
     let segments: EncodableSegment[] = this.initializeSegments();
 
@@ -87,7 +88,7 @@ export class TcfEuV2 extends AbstractLazilyEncodableSection {
     return segments;
   }
 
-  // Overriden
+  // Override
   protected encodeSection(segments: EncodableSegment[]): string {
     let encodedSegments: string[] = [];
     if (segments.length >= 1) {
@@ -96,30 +97,50 @@ export class TcfEuV2 extends AbstractLazilyEncodableSection {
       let isServiceSpecific: boolean = this.getFieldValue(TcfEuV2Field.IS_SERVICE_SPECIFIC);
       if (isServiceSpecific) {
         if (segments.length >= 2) {
-          encodedSegments.push(segments[1].encode());
+          encodedSegments.push(segments[3].encode()); // vendorsDisclosed
+        }
+        if (segments.length >= 3) {
+          encodedSegments.push(segments[1].encode()); // publisher segment
         }
       } else {
-        if (segments.length >= 2) {
-          encodedSegments.push(segments[2].encode());
-
-          if (segments.length >= 3) {
-            encodedSegments.push(segments[3].encode());
-          }
-        }
+        // throw an error since isSerivceSpecific == false is not allowed
+        throw new EncodingError("Unable to encode TcfEuV2 segment with isServiceSpecific = '" + isServiceSpecific + "'");
       }
     }
     return encodedSegments.join(".");
   }
 
-  //Overriden
+  //Override
   public setFieldValue(fieldName: string, value: any): void {
-    super.setFieldValue(fieldName, value);
-
-    if (fieldName !== TcfEuV2Field.CREATED && fieldName !== TcfEuV2Field.LAST_UPDATED) {
-      let date = new Date();
-
-      super.setFieldValue(TcfEuV2Field.CREATED, date);
-      super.setFieldValue(TcfEuV2Field.LAST_UPDATED, date);
+    //
+    // special handling for exceptions based on TCF policy and specification
+    //
+    // purpose 1, 3 - 6 legitimate interest is always false
+    if (fieldName === TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS) {
+      value[0] = false;
+      value[2] = value[3] = value[4] = value[5] = false;
     }
+
+    // create and last update will need to stay in sync
+    if (fieldName === TcfEuV2Field.CREATED || fieldName  === TcfEuV2Field.LAST_UPDATED) {
+      if (fieldName === TcfEuV2Field.CREATED) {
+          super.setFieldValue(TcfEuV2Field.LAST_UPDATED, value);
+      } else {
+          super.setFieldValue(TcfEuV2Field.CREATED, value);
+        }
+    } else 
+      // always update the date stamp when a change occurs
+      this.updateDateStamp();
+
+    // update the actual given fields
+    super.setFieldValue(fieldName, value);
+  }
+
+  // update last_update and create time stamps when a change occurs
+  private updateDateStamp(): void {
+    const date = new Date();
+    const utcDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+    super.setFieldValue(TcfEuV2Field.CREATED, utcDate);
+    super.setFieldValue(TcfEuV2Field.LAST_UPDATED, utcDate);
   }
 }
