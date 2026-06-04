@@ -3,12 +3,12 @@ import { UsIaField } from "../../../src/encoder/field/UsIaField";
 import { UsIa } from "../../../src/encoder/section/UsIa";
 
 describe("manifest.section.UsIa", (): void => {
-  it("should encode default to BAAAAAQA.QA", (): void => {
+  it("should encode default to BAAAAAQ.Q", (): void => {
     let usIa = new UsIa();
-    expect(usIa.encode()).to.eql("BAAAAAQA.QA");
+    expect(usIa.encode()).to.eql("BAAAAAQ.Q");
   });
 
-  it("should encode to BVVkklWA.YA", (): void => {
+  it("should encode to BVVkklW.Y", (): void => {
     let usIa = new UsIa();
 
     usIa.setFieldValue(UsIaField.PROCESSING_NOTICE, 1);
@@ -24,13 +24,13 @@ describe("manifest.section.UsIa", (): void => {
     usIa.setFieldValue(UsIaField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usIa.setFieldValue(UsIaField.GPC, true);
 
-    expect(usIa.encode()).to.eql("BVVkklWA.YA");
+    expect(usIa.encode()).to.eql("BVVkklW.Y");
   });
 
-  it("should encode default to BAAAAAQA", (): void => {
+  it("should encode default to BAAAAAQ", (): void => {
     let usIa = new UsIa();
     usIa.setFieldValue(UsIaField.GPC_SEGMENT_INCLUDED, false);
-    expect(usIa.encode()).to.eql("BAAAAAQA");
+    expect(usIa.encode()).to.eql("BAAAAAQ");
   });
 
   it("should throw an error if invalid values are set", (): void => {
@@ -81,6 +81,24 @@ describe("manifest.section.UsIa", (): void => {
     }).to.throw();
   });
 
+  it("should decode BVVkklW.Y", (): void => {
+    let usIa = new UsIa("BVVkklW.Y");
+
+    expect(1, usIa.getFieldValue(UsIaField.PROCESSING_NOTICE));
+    expect(1, usIa.getFieldValue(UsIaField.SALE_OPT_OUT_NOTICE));
+    expect(1, usIa.getFieldValue(UsIaField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usIa.getFieldValue(UsIaField.SENSITIVE_DATA_OPT_OUT_NOTICE));
+    expect(1, usIa.getFieldValue(UsIaField.SALE_OPT_OUT));
+    expect(1, usIa.getFieldValue(UsIaField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1], usIa.getFieldValue(UsIaField.SENSITIVE_DATA_PROCESSING));
+    expect(1, usIa.getFieldValue(UsIaField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usIa.getFieldValue(UsIaField.MSPA_COVERED_TRANSACTION));
+    expect(1, usIa.getFieldValue(UsIaField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usIa.getFieldValue(UsIaField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(true, usIa.getFieldValue(UsIaField.GPC));
+    expect(true, usIa.getFieldValue(UsIaField.GPC_SEGMENT_INCLUDED));
+  });
+
   it("should decode BVVkklWA.YA", (): void => {
     let usIa = new UsIa("BVVkklWA.YA");
 
@@ -99,8 +117,8 @@ describe("manifest.section.UsIa", (): void => {
     expect(true, usIa.getFieldValue(UsIaField.GPC_SEGMENT_INCLUDED));
   });
 
-  it("should decode BVVkklWA", (): void => {
-    let usIa = new UsIa("BVVkklWA");
+  it("should decode BVVkklW", (): void => {
+    let usIa = new UsIa("BVVkklW");
 
     expect(1, usIa.getFieldValue(UsIaField.PROCESSING_NOTICE));
     expect(1, usIa.getFieldValue(UsIaField.SALE_OPT_OUT_NOTICE));

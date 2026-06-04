@@ -3,12 +3,12 @@ import { UsTxField } from "../../../src/encoder/field/UsTxField";
 import { UsTx } from "../../../src/encoder/section/UsTx";
 
 describe("manifest.section.UsTx", (): void => {
-  it("should encode default to BAAAAAQA.QA", (): void => {
+  it("should encode default to BAAAAAQ.Q", (): void => {
     let usTx = new UsTx();
-    expect(usTx.encode()).to.eql("BAAAAAQA.QA");
+    expect(usTx.encode()).to.eql("BAAAAAQ.Q");
   });
 
-  it("should encode to BVWSSVWA.YA", (): void => {
+  it("should encode to BVWSSVW.Y", (): void => {
     let usTx = new UsTx();
 
     usTx.setFieldValue(UsTxField.PROCESSING_NOTICE, 1);
@@ -24,13 +24,13 @@ describe("manifest.section.UsTx", (): void => {
     usTx.setFieldValue(UsTxField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usTx.setFieldValue(UsTxField.GPC, true);
 
-    expect(usTx.encode()).to.eql("BVWSSVWA.YA");
+    expect(usTx.encode()).to.eql("BVWSSVW.Y");
   });
 
-  it("should encode default to BAAAAAQA", (): void => {
+  it("should encode default to BAAAAAQ", (): void => {
     let usTx = new UsTx();
     usTx.setFieldValue(UsTxField.GPC_SEGMENT_INCLUDED, false);
-    expect(usTx.encode()).to.eql("BAAAAAQA");
+    expect(usTx.encode()).to.eql("BAAAAAQ");
   });
 
   it("should throw an error if invalid values are set", (): void => {
@@ -81,6 +81,24 @@ describe("manifest.section.UsTx", (): void => {
     }).to.throw();
   });
 
+  it("should decode BVWSSVW.Y", (): void => {
+    let usTx = new UsTx("BVWSSVWA.YA");
+
+    expect(1, usTx.getFieldValue(UsTxField.PROCESSING_NOTICE));
+    expect(1, usTx.getFieldValue(UsTxField.SALE_OPT_OUT_NOTICE));
+    expect(1, usTx.getFieldValue(UsTxField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usTx.getFieldValue(UsTxField.SALE_OPT_OUT));
+    expect(1, usTx.getFieldValue(UsTxField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1], usTx.getFieldValue(UsTxField.SENSITIVE_DATA_PROCESSING));
+    expect(1, usTx.getFieldValue(UsTxField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usTx.getFieldValue(UsTxField.ADDITIONAL_DATA_PROCESSING_CONSENT));
+    expect(1, usTx.getFieldValue(UsTxField.MSPA_COVERED_TRANSACTION));
+    expect(1, usTx.getFieldValue(UsTxField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usTx.getFieldValue(UsTxField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(true, usTx.getFieldValue(UsTxField.GPC));
+    expect(true, usTx.getFieldValue(UsTxField.GPC_SEGMENT_INCLUDED));
+  });
+
   it("should decode BVWSSVWA.YA", (): void => {
     let usTx = new UsTx("BVWSSVWA.YA");
 
@@ -99,8 +117,8 @@ describe("manifest.section.UsTx", (): void => {
     expect(true, usTx.getFieldValue(UsTxField.GPC_SEGMENT_INCLUDED));
   });
 
-  it("should decode BVWSSVWA", (): void => {
-    let usTx = new UsTx("BVWSSVWA");
+  it("should decode BVWSSVW", (): void => {
+    let usTx = new UsTx("BVWSSVW");
 
     expect(1, usTx.getFieldValue(UsTxField.PROCESSING_NOTICE));
     expect(1, usTx.getFieldValue(UsTxField.SALE_OPT_OUT_NOTICE));

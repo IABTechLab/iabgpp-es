@@ -5,7 +5,7 @@ import { UsMn } from "../../../src/encoder/section/UsMn";
 describe("manifest.section.UsMn", (): void => {
   it("should encode default to BAAAAAQA.QA", (): void => {
     let usMn = new UsMn();
-    expect(usMn.encode()).to.eql("BAAAAAQA.QA");
+    expect(usMn.encode()).to.eql("BAAAAAQ.Q");
   });
 
   it("should encode to BVWSSVWA.YA", (): void => {
@@ -24,13 +24,13 @@ describe("manifest.section.UsMn", (): void => {
     usMn.setFieldValue(UsMnField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usMn.setFieldValue(UsMnField.GPC, true);
 
-    expect(usMn.encode()).to.eql("BVWSSVWA.YA");
+    expect(usMn.encode()).to.eql("BVWSSVW.Y");
   });
 
   it("should encode default to BAAAAAQA", (): void => {
     let usMn = new UsMn();
     usMn.setFieldValue(UsMnField.GPC_SEGMENT_INCLUDED, false);
-    expect(usMn.encode()).to.eql("BAAAAAQA");
+    expect(usMn.encode()).to.eql("BAAAAAQ");
   });
 
   it("should throw an error if invalid values are set", (): void => {

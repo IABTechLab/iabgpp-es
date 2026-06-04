@@ -3,12 +3,12 @@ import { UsNatField } from "../../../src/encoder/field/UsNatField";
 import { UsNat } from "../../../src/encoder/section/UsNat";
 
 describe("manifest.section.UsNat", (): void => {
-  it("should encode default to BAAAAAAAAABA.QA", (): void => {
+  it("should encode default to BAAAAAAAAABA.Q", (): void => {
     let usNat = new UsNat();
-    expect(usNat.encode()).to.eql("BAAAAAAAAABA.QA");
+    expect(usNat.encode()).to.eql("BAAAAAAAAABA.Q");
   });
 
-  it("should encode to BVVVkkkkkpFY.YA", (): void => {
+  it("should encode to BVVVkkkkkpFY.Y", (): void => {
     let usNat = new UsNat();
 
     usNat.setFieldValue(UsNatField.SHARING_NOTICE, 1);
@@ -28,7 +28,7 @@ describe("manifest.section.UsNat", (): void => {
     usNat.setFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usNat.setFieldValue(UsNatField.GPC, true);
 
-    expect(usNat.encode()).to.eql("BVVVkkkkkpFY.YA");
+    expect(usNat.encode()).to.eql("BVVVkkkkkpFY.Y");
   });
 
   it("should encode default to BAAAAAAAAABA", (): void => {
@@ -99,6 +99,28 @@ describe("manifest.section.UsNat", (): void => {
     expect(function () {
       usNat.setFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE, 3);
     }).to.throw();
+  });
+
+  it("should decode BVVVkkkkkpFY.Y", (): void => {
+    let usNat = new UsNat("BVVVkkkkkpFY.Y");
+
+    expect(1, usNat.getFieldValue(UsNatField.SHARING_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.SALE_OPT_OUT_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.SHARING_OPT_OUT_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.SENSITIVE_DATA_LIMIT_USE_NOTICE));
+    expect(1, usNat.getFieldValue(UsNatField.SALE_OPT_OUT));
+    expect(1, usNat.getFieldValue(UsNatField.SHARING_OPT_OUT));
+    expect(1, usNat.getFieldValue(UsNatField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2], usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
+    expect([2, 1, 0], usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usNat.getFieldValue(UsNatField.PERSONAL_DATA_CONSENTS));
+    expect(1, usNat.getFieldValue(UsNatField.MSPA_COVERED_TRANSACTION));
+    expect(1, usNat.getFieldValue(UsNatField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usNat.getFieldValue(UsNatField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(true, usNat.getFieldValue(UsNatField.GPC));
+    expect(true, usNat.getFieldValue(UsNatField.GPC_SEGMENT_INCLUDED));
   });
 
   it("should decode BVVVkkkkkpFY.YA", (): void => {

@@ -3,12 +3,12 @@ import { UsCtField } from "../../../src/encoder/field/UsCtField";
 import { UsCt } from "../../../src/encoder/section/UsCt";
 
 describe("manifest.section.UsCt", (): void => {
-  it("should encode default to BAAAAAEA.QA", (): void => {
+  it("should encode default to BAAAAAEA.Q", (): void => {
     let usCt = new UsCt();
-    expect(usCt.encode()).to.eql("BAAAAAEA.QA");
+    expect(usCt.encode()).to.eql("BAAAAAEA.Q");
   });
 
-  it("should encode to BVWSSZFg.YA", (): void => {
+  it("should encode to BVWSSZFg.Y", (): void => {
     let usCt = new UsCt();
 
     usCt.setFieldValue(UsCtField.SHARING_NOTICE, 1);
@@ -23,7 +23,7 @@ describe("manifest.section.UsCt", (): void => {
     usCt.setFieldValue(UsCtField.MSPA_SERVICE_PROVIDER_MODE, 2);
     usCt.setFieldValue(UsCtField.GPC, true);
 
-    expect(usCt.encode()).to.eql("BVWSSZFg.YA");
+    expect(usCt.encode()).to.eql("BVWSSZFg.Y");
   });
 
   it("should encode default to BAAAAAEA", (): void => {
@@ -74,6 +74,23 @@ describe("manifest.section.UsCt", (): void => {
     expect(function () {
       usCt.setFieldValue(UsCtField.MSPA_SERVICE_PROVIDER_MODE, -1);
     }).to.throw();
+  });
+
+  it("should decode BVWSSZFg.Y", (): void => {
+    let usCt = new UsCt("BVWSSZFg.Y");
+
+    expect(1, usCt.getFieldValue(UsCtField.SHARING_NOTICE));
+    expect(1, usCt.getFieldValue(UsCtField.SALE_OPT_OUT_NOTICE));
+    expect(1, usCt.getFieldValue(UsCtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usCt.getFieldValue(UsCtField.SALE_OPT_OUT));
+    expect(1, usCt.getFieldValue(UsCtField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1], usCt.getFieldValue(UsCtField.SENSITIVE_DATA_PROCESSING));
+    expect([2, 1, 0], usCt.getFieldValue(UsCtField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usCt.getFieldValue(UsCtField.MSPA_COVERED_TRANSACTION));
+    expect(1, usCt.getFieldValue(UsCtField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(2, usCt.getFieldValue(UsCtField.MSPA_SERVICE_PROVIDER_MODE));
+    expect(true, usCt.getFieldValue(UsCtField.GPC));
+    expect(true, usCt.getFieldValue(UsCtField.GPC_SEGMENT_INCLUDED));
   });
 
   it("should decode BVWSSZFg.YA", (): void => {

@@ -1,5 +1,5 @@
 import { AbstractBase64UrlEncoder } from "../base64/AbstractBase64UrlEncoder.js";
-import { TraditionalBase64UrlEncoder } from "../base64/TraditionalBase64UrlEncoder.js";
+import { CompressedBase64UrlEncoder } from "../base64/CompressedBase64UrlEncoder.js";
 import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
@@ -10,7 +10,7 @@ import { TcfCaV1Field } from "../field/TcfCaV1Field.js";
 import { AbstractLazilyEncodableSegment } from "./AbstractLazilyEncodableSegment.js";
 
 export class TcfCaV1DisclosedVendorsSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
-  private base64UrlEncoder: AbstractBase64UrlEncoder = TraditionalBase64UrlEncoder.getInstance();
+  private base64UrlEncoder: AbstractBase64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
   private bitStringEncoder: BitStringEncoder = BitStringEncoder.getInstance();
 
   constructor(encodedString?: string) {

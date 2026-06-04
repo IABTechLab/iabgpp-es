@@ -110,7 +110,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOYs~CPSG_8APSG_8ANwAAAENAAFgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA~1---~BAAAAAAAAABA.QA~BAAAAABA.QA~BAAAABA~BAAAAEA.QA~BAAAAAQA~BAAAAAEA.QA~BAAAAABA~BAAAAABA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAABAA.QA~BAAAAAQA.QA~BAAAAAQA.QA~BAAAAABA.QA~BAAAAAAAQA.QA~BAAAAAQA.QA~BAAAAAQA.QA"
+      "DBACOYs~CPSG_8APSG_8ANwAAAENAAFgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA~1---~BAAAAAAAAABA.Q~BAAAAABA.Q~BAAAABA~BAAAAEA.Q~BAAAAAQ~BAAAAAEA.Q~BAAAAABA~BAAAAABA.Q~BAAAAAABA.Q~BAAAAAQ.Q~BAAAAAABA.Q~BAAAAAQ.Q~BAAAAAQ.Q~BAAAAABA.Q~BAAAAAAAQ.Q~BAAAAAQ.Q~BAAAAAQ.Q"
     );
   });
 
@@ -130,7 +130,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABTA~1YNN");
+    expect(gppString).to.eql("DBABT~1YNN");
 
     expect(gppModel.getSectionIds()).to.eql([6]);
     expect(gppModel.hasSection("uspv1")).to.eql(true);
@@ -168,7 +168,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAYgACPAAAAA.IDKQA4AAgAKAGQAygAAA.YAAAAAAAAAAA");
+    expect(gppString).to.eql("DBABM~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAYgACPAAAAA.IDKQA4AAgAKAGQAygAAA.YAAAAAAAAAAA");
     expect(gppString.split("~").length).to.eql(2);
 
     expect(gppModel.getSectionIds()).to.eql([2]);
@@ -210,7 +210,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.hasSection("tcfcav1")).to.eql(false);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBACNYA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~1YNN");
+    expect(gppString).to.eql("DBACNY~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~1YNN");
 
     expect(gppString.split("~").length).to.eql(3);
 
@@ -394,7 +394,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN"
+      "DBACOe~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAA.fHHHA4444ao~1YNN"
     );
 
     expect(gppString.split("~").length).to.eql(4);
@@ -437,7 +437,7 @@ describe("manifest.GppModel", (): void => {
   });
 
   it("should decode uspv1 section", (): void => {
-    let gppString = "DBABTA~1YNN";
+    let gppString = "DBABT~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([6]);
@@ -475,7 +475,7 @@ describe("manifest.GppModel", (): void => {
   });
 
   it("should decode uspv1 and tcfeuv2 sections", (): void => {
-    let gppString = "DBACNYA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~1YNN";
+    let gppString = "DBACNY~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~1YNN";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getSectionIds()).to.eql([2, 6]);
@@ -677,7 +677,7 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOAAAABAAAAA.IAOABgAB.YAAAAAAAAAAA");
+    expect(gppString).to.eql("DBABM~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOAAAABAAAAA.IAOABgAB.YAAAAAAAAAAA");
   });
 
   it("should encode tcfeuv2 vendor consents [29]", (): void => {
@@ -688,7 +688,7 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOwAQAOgAAAA.IAOgBgAAgAAA.YAAAAAAAAAAA");
+    expect(gppString).to.eql("DBABM~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOwAQAOgAAAA.IAOgBgAAgAAA.YAAAAAAAAAAA");
   });
 
   it("should encode tcfeuv2 vendor consents [1, 173, 722]", (): void => {
@@ -699,11 +699,11 @@ describe("manifest.GppModel", (): void => {
     gppModel.setFieldValue("tcfeuv2", "LastUpdated", utcDateTime);
 
     let gppString = gppModel.encode();
-    expect(gppString).to.eql("DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.IFpQBQAAwAKAAsADoArQFpAA.YAAAAAAAAAAA");
+    expect(gppString).to.eql("DBABM~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.IFpQBQAAwAKAAsADoArQFpAA.YAAAAAAAAAAA");
   });
 
   it("should decode tcfeuv2 vendor consents [28]", (): void => {
-    let gppString = "DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOAAAABAAAAA.IAOABgAB.YAAAAAAAAAAA";
+    let gppString = "DBABM~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOAAAABAAAAA.IAOABgAB.YAAAAAAAAAAA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([28]);
@@ -711,7 +711,7 @@ describe("manifest.GppModel", (): void => {
   });
 
   it("should decode tcfeuv2 vendor consents [29]", (): void => {
-    let gppString = "DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOwAQAOgAAAA.IAOgBgAAgAAA.YAAAAAAAAAAA";
+    let gppString = "DBABM~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAAOwAQAOgAAAA.IAOgBgAAgAAA.YAAAAAAAAAAA";
     let gppModel = new GppModel(gppString);
 
     expect(gppModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([29]);
@@ -719,7 +719,7 @@ describe("manifest.GppModel", (): void => {
   });
 
   it("should decode tcfeuv2 vendor consents [1, 173, 722]", (): void => {
-    let gppString = "DBABMA~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.IFpQBQAAwAKAAsADoArQFpAA.YAAAAAAAAAAA";
+    let gppString = "DBABM~CPSG_8APSG_8AAAAAAENAAFgAAAAAAAAAAAAFpQAwAAgCtAWkAAAAAAA.IFpQBQAAwAKAAsADoArQFpAA.YAAAAAAAAAAA";
     let gppModel = new GppModel(gppString);
     expect(gppModel.getFieldValue("tcfeuv2", "VendorConsents")).to.eql([1, 173, 722]);
     expect(gppModel.getFieldValue("tcfeuv2", "VendorsDisclosed")).to.eql([1, 10, 11, 29, 173, 722]);
@@ -870,7 +870,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.encode()).to.eq("DBAA");
 
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
-    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+    expect(gppModel.encode()).to.eq("DBABT~1Y--");
   });
 
   it("should handle empty string constructor", (): void => {
@@ -878,7 +878,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.encode()).to.eq("DBAA");
 
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
-    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+    expect(gppModel.encode()).to.eq("DBABT~1Y--");
   });
 
   it("should decode null", (): void => {
@@ -889,7 +889,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.encode()).to.eq("DBAA");
 
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
-    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+    expect(gppModel.encode()).to.eq("DBABT~1Y--");
   });
 
   it("should decode empty string", (): void => {
@@ -900,7 +900,7 @@ describe("manifest.GppModel", (): void => {
     expect(gppModel.encode()).to.eq("DBAA");
 
     gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
-    expect(gppModel.encode()).to.eq("DBABTA~1Y--");
+    expect(gppModel.encode()).to.eq("DBABT~1Y--");
   });
 
   it("should fail to decode missing sections", (): void => {

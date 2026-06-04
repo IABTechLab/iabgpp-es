@@ -3,12 +3,12 @@ import { UsUtField } from "../../../src/encoder/field/UsUtField";
 import { UsUt } from "../../../src/encoder/section/UsUt";
 
 describe("manifest.section.UsUt", (): void => {
-  it("should encode default to BAAAAAQA", (): void => {
+  it("should encode default to BAAAAAQ", (): void => {
     let usUt = new UsUt();
-    expect(usUt.encode()).to.eql("BAAAAAQA");
+    expect(usUt.encode()).to.eql("BAAAAAQ");
   });
 
-  it("should encode to BVVkklWA", (): void => {
+  it("should encode to BVVkklW", (): void => {
     let usUt = new UsUt();
 
     usUt.setFieldValue(UsUtField.SHARING_NOTICE, 1);
@@ -23,7 +23,7 @@ describe("manifest.section.UsUt", (): void => {
     usUt.setFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE, 1);
     usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 2);
 
-    expect(usUt.encode()).to.eql("BVVkklWA");
+    expect(usUt.encode()).to.eql("BVVkklW");
   });
 
   it("should throw an error if invalid values are set", (): void => {
@@ -72,6 +72,22 @@ describe("manifest.section.UsUt", (): void => {
     expect(function () {
       usUt.setFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE, 3);
     }).to.throw();
+  });
+
+  it("should decode BVVkklW", (): void => {
+    let usUt = new UsUt("BVVkklW");
+
+    expect(1, usUt.getFieldValue(UsUtField.SHARING_NOTICE));
+    expect(1, usUt.getFieldValue(UsUtField.SALE_OPT_OUT_NOTICE));
+    expect(1, usUt.getFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT_NOTICE));
+    expect(1, usUt.getFieldValue(UsUtField.SENSITIVE_DATA_PROCESSING_OPT_OUT_NOTICE));
+    expect(1, usUt.getFieldValue(UsUtField.SALE_OPT_OUT));
+    expect(1, usUt.getFieldValue(UsUtField.TARGETED_ADVERTISING_OPT_OUT));
+    expect([2, 1, 0, 2, 1, 0, 2, 1], usUt.getFieldValue(UsUtField.SENSITIVE_DATA_PROCESSING));
+    expect(1, usUt.getFieldValue(UsUtField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(1, usUt.getFieldValue(UsUtField.MSPA_COVERED_TRANSACTION));
+    expect(1, usUt.getFieldValue(UsUtField.MSPA_OPT_OUT_OPTION_MODE));
+    expect(3, usUt.getFieldValue(UsUtField.MSPA_SERVICE_PROVIDER_MODE));
   });
 
   it("should decode BVVkklWA", (): void => {
