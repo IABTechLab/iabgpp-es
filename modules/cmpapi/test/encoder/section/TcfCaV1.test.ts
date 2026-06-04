@@ -148,12 +148,12 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAA.fHHHA4444ao");
   });
 
-  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA.IAGO5wAA", (): void => {
+  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA.IAGO5w", (): void => {
     let tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.DISCLOSED_VENDORS, [1, 2, 3, 5, 6, 7, 10, 11, 12]);
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA.IAGO5wAA");
+    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAA.YAAAAAAAAA.IAGO5w");
   });
 
   it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJ.YAAAAAAAAA", (): void => {
