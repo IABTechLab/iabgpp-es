@@ -24,6 +24,7 @@ import { UsNh } from "./section/UsNh.js";
 import { UsNj } from "./section/UsNj.js";
 import { UsTn } from "./section/UsTn.js";
 import { UsMn } from "./section/UsMn.js";
+import { UsIn } from "./section/UsIn.js";
 
 export class GppModel {
   private sections = new Map<string, EncodableSection>();
@@ -107,6 +108,9 @@ export class GppModel {
       } else if (sectionName === UsMn.NAME) {
         section = new UsMn();
         this.sections.set(UsMn.NAME, section);
+      } else if (sectionName === UsIn.NAME) {
+        section = new UsIn();
+        this.sections.set(UsIn.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
@@ -342,6 +346,9 @@ export class GppModel {
           } else if (sectionIds[i] === UsMn.ID) {
             let section = new UsMn(encodedSections[i + 1]);
             sections.set(UsMn.NAME, section);
+          } else if (sectionIds[i] === UsIn.ID) {
+            let section = new UsIn(encodedSections[i + 1]);
+            sections.set(UsIn.NAME, section);
           }
         }
       }
@@ -450,6 +457,9 @@ export class GppModel {
       } else if (sectionName === UsMn.NAME) {
         section = new UsMn();
         this.sections.set(UsMn.NAME, section);
+      } else if (sectionName === UsIn.NAME) {
+        section = new UsIn();
+        this.sections.set(UsIn.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);

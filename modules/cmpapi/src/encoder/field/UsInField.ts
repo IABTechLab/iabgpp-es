@@ -1,0 +1,33 @@
+export enum UsInField {
+  MSPA_VERSION = "MspaVersion",
+  MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction",
+  MSPA_MODE = "MspaMode",
+  PROCESSING_NOTICE = "ProcessingNotice",
+  SALE_OPT_OUT_NOTICE = "SaleOptOutNotice",
+  TARGETED_ADVERTISING_OPT_OUT_NOTICE = "TargetedAdvertisingOptOutNotice",
+  SALE_OPT_OUT = "SaleOptOut",
+  TARGETED_ADVERTISING_OPT_OUT = "TargetedAdvertisingOptOut",
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents",
+  ADDITIONAL_DATA_PROCESSING_CONSENT = "AdditionalDataProcessingConsent",
+  SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing",
+
+  GPC_SEGMENT_TYPE = "GpcSegmentType",
+  GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded",
+  GPC = "Gpc",
+}
+
+export const UsIn_CORE_SEGMENT_FIELD_NAMES = [
+  UsInField.MSPA_VERSION,
+  UsInField.MSPA_COVERED_TRANSACTION,
+  UsInField.MSPA_MODE,
+  UsInField.PROCESSING_NOTICE,
+  UsInField.SALE_OPT_OUT_NOTICE,
+  UsInField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+  UsInField.SALE_OPT_OUT,
+  UsInField.TARGETED_ADVERTISING_OPT_OUT,
+  UsInField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+  UsInField.ADDITIONAL_DATA_PROCESSING_CONSENT,
+  UsInField.SENSITIVE_DATA_PROCESSING,
+];
+
+export const UsIn_GPC_SEGMENT_FIELD_NAMES = [UsInField.GPC_SEGMENT_TYPE, UsInField.GPC];
