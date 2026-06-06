@@ -19,6 +19,8 @@ export * from "./UsDeGpcSegment.js";
 export * from "./UsFlCoreSegment.js";
 export * from "./UsIaCoreSegment.js";
 export * from "./UsIaGpcSegment.js";
+export * from "./UsKyCoreSegment.js";
+export * from "./UsKyGpcSegment.js";
 export * from "./UsNatCoreSegment.js";
 export * from "./UsNeCoreSegment.js";
 export * from "./UsNeGpcSegment.js";
