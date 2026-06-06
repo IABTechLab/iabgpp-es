@@ -18,6 +18,7 @@ import { UsNh } from "./UsNh.js";
 import { UsNj } from "./UsNj.js";
 import { UsTn } from "./UsTn.js";
 import { UsMn } from "./UsMn.js";
+import { UsMd } from "./UsMd.js";
 
 export class Sections {
   public static SECTION_ID_NAME_MAP = new Map([
@@ -41,6 +42,7 @@ export class Sections {
     [UsNj.ID, UsNj.NAME],
     [UsTn.ID, UsTn.NAME],
     [UsMn.ID, UsMn.NAME],
+    [UsMd.ID, UsMd.NAME],
   ]);
   public static SECTION_ORDER = [
     TcfEuV2.NAME,
@@ -62,6 +64,7 @@ export class Sections {
     UsNh.NAME,
     UsNj.NAME,
     UsTn.NAME,
-    UsMn.NAME
+    UsMn.NAME,
+    UsMd.NAME
   ];
 }
