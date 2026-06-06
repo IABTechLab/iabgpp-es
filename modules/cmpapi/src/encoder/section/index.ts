@@ -17,6 +17,7 @@ export * from "./UsNe.js";
 export * from "./UsNh.js";
 export * from "./UsNj.js";
 export * from "./UsOr.js";
+export * from "./UsRi.js";
 export * from "./UsTn.js";
 export * from "./UsTx.js";
 export * from "./UsUt.js";

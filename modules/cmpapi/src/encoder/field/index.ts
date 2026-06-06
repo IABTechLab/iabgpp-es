@@ -17,6 +17,7 @@ export * from "./UsNeField.js";
 export * from "./UsNhField.js";
 export * from "./UsNjField.js";
 export * from "./UsOrField.js";
+export * from "./UsRiField.js";
 export * from "./UsTnField.js";
 export * from "./UsTxField.js";
 export * from "./UsUtField.js";

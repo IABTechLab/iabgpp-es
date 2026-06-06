@@ -34,6 +34,8 @@ export * from "./UsNatGpcSegment.js";
 export * from "./UspV1CoreSegment.js";
 export * from "./UsOrCoreSegment.js";
 export * from "./UsOrGpcSegment.js";
+export * from "./UsRiCoreSegment.js";
+export * from "./UsRiGpcSegment.js";
 export * from "./UsTnCoreSegment.js";
 export * from "./UsTnGpcSegment.js";
 export * from "./UsTxCoreSegment.js";

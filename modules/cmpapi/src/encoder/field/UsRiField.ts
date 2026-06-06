@@ -1,0 +1,33 @@
+export enum UsRiField {
+  MSPA_VERSION = "MspaVersion",
+  MSPA_COVERED_TRANSACTION = "MspaCoveredTransaction",
+  MSPA_MODE = "MspaMode",
+  PROCESSING_NOTICE = "ProcessingNotice",
+  SALE_OPT_OUT_NOTICE = "SaleOptOutNotice",
+  TARGETED_ADVERTISING_OPT_OUT_NOTICE = "TargetedAdvertisingOptOutNotice",
+  SALE_OPT_OUT = "SaleOptOut",
+  TARGETED_ADVERTISING_OPT_OUT = "TargetedAdvertisingOptOut",
+  KNOWN_CHILD_SENSITIVE_DATA_CONSENTS = "KnownChildSensitiveDataConsents",
+  ADDITIONAL_DATA_PROCESSING_CONSENT = "AdditionalDataProcessingConsent",
+  SENSITIVE_DATA_PROCESSING = "SensitiveDataProcessing",
+
+  GPC_SEGMENT_TYPE = "GpcSegmentType",
+  GPC_SEGMENT_INCLUDED = "GpcSegmentIncluded",
+  GPC = "Gpc",
+}
+
+export const UsRi_CORE_SEGMENT_FIELD_NAMES = [
+  UsRiField.MSPA_VERSION,
+  UsRiField.MSPA_COVERED_TRANSACTION,
+  UsRiField.MSPA_MODE,
+  UsRiField.PROCESSING_NOTICE,
+  UsRiField.SALE_OPT_OUT_NOTICE,
+  UsRiField.TARGETED_ADVERTISING_OPT_OUT_NOTICE,
+  UsRiField.SALE_OPT_OUT,
+  UsRiField.TARGETED_ADVERTISING_OPT_OUT,
+  UsRiField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS,
+  UsRiField.ADDITIONAL_DATA_PROCESSING_CONSENT,
+  UsRiField.SENSITIVE_DATA_PROCESSING,
+];
+
+export const UsRi_GPC_SEGMENT_FIELD_NAMES = [UsRiField.GPC_SEGMENT_TYPE, UsRiField.GPC];
