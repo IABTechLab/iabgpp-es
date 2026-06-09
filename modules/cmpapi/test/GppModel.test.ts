@@ -394,7 +394,7 @@ describe("manifest.GppModel", (): void => {
 
     let gppString = gppModel.encode();
     expect(gppString).to.eql(
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao~1YNN"
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao~1YNN"
     );
 
     expect(gppString.split("~").length).to.eql(4);
@@ -905,12 +905,12 @@ describe("manifest.GppModel", (): void => {
 
   it("should fail to decode missing sections", (): void => {
     let gppModel = new GppModel(
-      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao"
+      "DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao"
     );
     expect(function () {
       gppModel.getHeader();
     }).to.throw(
-      "Unable to decode 'DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao'. The number of sections does not match the number of sections defined in the header."
+      "Unable to decode 'DBACOeA~CPSG_8APSG_8ANwAAAENAwCAAAAAAAAAAAAAAAAAAAAA.QAAA.IAAA~BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao'. The number of sections does not match the number of sections defined in the header."
     );
   });
 

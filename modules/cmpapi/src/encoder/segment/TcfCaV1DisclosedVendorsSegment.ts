@@ -1,8 +1,8 @@
 import { AbstractBase64UrlEncoder } from "../base64/AbstractBase64UrlEncoder.js";
-import { TraditionalBase64UrlEncoder } from "../base64/TraditionalBase64UrlEncoder.js";
+import { CompressedBase64UrlEncoder } from "../base64/CompressedBase64UrlEncoder.js";
 import { BitStringEncoder } from "../bitstring/BitStringEncoder.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
-import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
+import { EncodableOptimizedFibonacciRange } from "../datatype/EncodableOptimizedFibonacciRange.js";
 import { DecodingError } from "../error/DecodingError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 import { TCFCAV1_DISCLOSED_VENDORS_SEGMENT_FIELD_NAMES } from "../field/TcfCaV1Field.js";
@@ -10,7 +10,7 @@ import { TcfCaV1Field } from "../field/TcfCaV1Field.js";
 import { AbstractLazilyEncodableSegment } from "./AbstractLazilyEncodableSegment.js";
 
 export class TcfCaV1DisclosedVendorsSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
-  private base64UrlEncoder: AbstractBase64UrlEncoder = TraditionalBase64UrlEncoder.getInstance();
+  private base64UrlEncoder: AbstractBase64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
   private bitStringEncoder: BitStringEncoder = BitStringEncoder.getInstance();
 
   constructor(encodedString?: string) {
@@ -29,7 +29,7 @@ export class TcfCaV1DisclosedVendorsSegment extends AbstractLazilyEncodableSegme
   protected initializeFields(): EncodableBitStringFields {
     let fields: EncodableBitStringFields = new EncodableBitStringFields();
     fields.put(TcfCaV1Field.DISCLOSED_VENDORS_SEGMENT_TYPE.toString(), new EncodableFixedInteger(3, 1));
-    fields.put(TcfCaV1Field.DISCLOSED_VENDORS.toString(), new EncodableOptimizedFixedRange([]));
+    fields.put(TcfCaV1Field.DISCLOSED_VENDORS.toString(), new EncodableOptimizedFibonacciRange([]));
     return fields;
   }
 

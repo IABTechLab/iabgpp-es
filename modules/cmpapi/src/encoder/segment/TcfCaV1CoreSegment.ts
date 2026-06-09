@@ -7,7 +7,7 @@ import { EncodableDatetime } from "../datatype/EncodableDatetime.js";
 import { EncodableFixedBitfield } from "../datatype/EncodableFixedBitfield.js";
 import { EncodableFixedInteger } from "../datatype/EncodableFixedInteger.js";
 import { EncodableFixedString } from "../datatype/EncodableFixedString.js";
-import { EncodableOptimizedFixedRange } from "../datatype/EncodableOptimizedFixedRange.js";
+import { EncodableOptimizedFibonacciRange } from "../datatype/EncodableOptimizedFibonacciRange.js";
 import { DecodingError } from "../error/DecodingError.js";
 import { EncodableBitStringFields } from "../field/EncodableBitStringFields.js";
 import { TCFCAV1_CORE_SEGMENT_FIELD_NAMES } from "../field/TcfCaV1Field.js";
@@ -108,8 +108,8 @@ export class TcfCaV1CoreSegment extends AbstractLazilyEncodableSegment<Encodable
         false,
       ])
     );
-    fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
-    fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT.toString(), new EncodableOptimizedFixedRange([]));
+    fields.put(TcfCaV1Field.VENDOR_EXPRESS_CONSENT.toString(), new EncodableOptimizedFibonacciRange([]));
+    fields.put(TcfCaV1Field.VENDOR_IMPLIED_CONSENT.toString(), new EncodableOptimizedFibonacciRange([]));
     fields.put(TcfCaV1Field.PUB_RESTRICTIONS.toString(), new EncodableArrayOfFixedIntegerRanges(6, 2, [], false));
 
     return fields;
