@@ -495,6 +495,39 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS)).to.eql([1, 2, 3, 5, 6, 7, 10, 11, 12]);
   });
 
+  it("should decode a legacy string and re-encode it in the spec-compliant Fibonacci form", (): void => {
+    // A real TcfCaV1 string produced by the pre-fix encoder (fixed-integer OptimizedRange). The
+    // backwards-compatible decoder reads it, and re-encoding emits the spec-compliant Fibonacci form.
+    let legacy =
+      "BQliWsAQliWsAPoABAELC9CoAKgAAJIAAApNAOABUAC0AGgAQwAlgBQAC6AG0AO4AfgBBATAAnMBSYEwYFgAXQBOwC3ALgAc4A7gCAAEmAJ2AT8AxQBmgDOgGfANeAcQA6oCJgEngJyAT-Ao8BUQCpQFvALhAXQAvcBf4DMAGggNNAbUA3EBxoDlgHiAPNAfIBAQCEgEbgI_gSlgmACYIAA.YAAAAAAAAAA";
+    let tcfCaV1 = new TcfCaV1(legacy);
+
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_ID)).to.eql(1000);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_VERSION)).to.eql(1);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.CONSENT_LANGUAGE)).to.eql("EL");
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_LIST_VERSION)).to.eql(189);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.USE_NON_STANDARD_STACKS)).to.eql(true);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT)).to.eql([
+      42, 45, 52, 67, 75, 80, 93, 109, 119, 126, 130, 1216, 1254, 1318,
+    ]);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT)).to.eql([
+      93, 157, 183, 184, 231, 238, 256, 294, 315, 319, 394, 410, 413, 415, 431, 452, 469, 550, 591, 626, 639, 655, 674,
+      677, 734, 737, 744, 759, 767, 816, 833, 845, 874, 881, 909, 918, 964, 973, 996, 1028, 1060, 1134, 1151, 1189,
+      1216, 1217,
+    ]);
+
+    // Touching the timestamps (preserving their values) marks the core segment dirty, and
+    // setIsDirty(true) marks the section dirty (the same mechanism GppModel uses), so encode()
+    // re-emits the string in the spec-compliant Fibonacci form.
+    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, tcfCaV1.getFieldValue(TcfCaV1Field.CREATED));
+    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, tcfCaV1.getFieldValue(TcfCaV1Field.LAST_UPDATED));
+    tcfCaV1.setIsDirty(true);
+
+    expect(tcfCaV1.encode()).to.eql(
+      "BQliWsAQliWsAPoABAELC9CoAKgAAJIAAApNAOBMZZGDDAxMmWskIahojBMGBYoGiOJ4FlhahgNZUxMZiYDUwllGgYGJpYyBjLIwZFqasFllNGqaMhisVpTU1DyeAAA.YAAAAAAAAAA"
+    );
+  });
+
   it("should throw Error on garbage 1", (): void => {
     expect(function () {
       new TcfCaV1("A").getFieldValue(TcfCaV1Field.USE_NON_STANDARD_STACKS);
