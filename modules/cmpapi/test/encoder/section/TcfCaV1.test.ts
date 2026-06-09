@@ -473,6 +473,28 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(decodedPubRestrictions[1].ids).to.eql([3, 500]);
   });
 
+  it("should decode a legacy fixed-range vendor string (backwards compatibility)", (): void => {
+    // String produced by the pre-fix encoder, which used fixed-integer ranges for the
+    // VendorExpressConsent / VendorImpliedConsent OptimizedRange fields.
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT)).to.eql([12, 24, 48]);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT)).to.eql([18, 30]);
+  });
+
+  it("should decode a legacy fixed-range PubRestrictions string (backwards compatibility)", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+    let pubRestrictions = tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS);
+    expect(pubRestrictions.length).to.eql(1);
+    expect(pubRestrictions[0].key).to.eql(1);
+    expect(pubRestrictions[0].type).to.eql(1);
+    expect(pubRestrictions[0].ids).to.eql([1, 2, 3, 5, 6, 7, 9]);
+  });
+
+  it("should decode a legacy traditional-base64 DisclosedVendors string (backwards compatibility)", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5wAA");
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS)).to.eql([1, 2, 3, 5, 6, 7, 10, 11, 12]);
+  });
+
   it("should throw Error on garbage 1", (): void => {
     expect(function () {
       new TcfCaV1("A").getFieldValue(TcfCaV1Field.USE_NON_STANDARD_STACKS);
