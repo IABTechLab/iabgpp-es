@@ -156,12 +156,12 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5w");
   });
 
-  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", (): void => {
+  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA", (): void => {
     let tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.PUB_RESTRICTIONS, [new RangeEntry(1, 1, [1, 2, 3, 5, 6, 7, 9])]);
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA");
   });
 
   it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
@@ -438,8 +438,8 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
-  it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", (): void => {
-    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+  it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA");
 
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS).length).to.eql(1);
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS)[0].key).to.eql(1);
@@ -454,11 +454,23 @@ describe("manifest.section.TcfCaV1", (): void => {
     tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, [1, 100, 200]);
     tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, [50, 51, 52, 999]);
     tcfCaV1.setFieldValue(TcfCaV1Field.DISCLOSED_VENDORS, [2, 250, 600]);
+    tcfCaV1.setFieldValue(TcfCaV1Field.PUB_RESTRICTIONS, [
+      new RangeEntry(1, 0, [5, 100, 101, 102, 800]),
+      new RangeEntry(2, 2, [3, 500]),
+    ]);
 
     let decoded = new TcfCaV1(tcfCaV1.encode());
     expect(decoded.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT)).to.eql([1, 100, 200]);
     expect(decoded.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT)).to.eql([50, 51, 52, 999]);
     expect(decoded.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS)).to.eql([2, 250, 600]);
+    let decodedPubRestrictions = decoded.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS);
+    expect(decodedPubRestrictions.length).to.eql(2);
+    expect(decodedPubRestrictions[0].key).to.eql(1);
+    expect(decodedPubRestrictions[0].type).to.eql(0);
+    expect(decodedPubRestrictions[0].ids).to.eql([5, 100, 101, 102, 800]);
+    expect(decodedPubRestrictions[1].key).to.eql(2);
+    expect(decodedPubRestrictions[1].type).to.eql(2);
+    expect(decodedPubRestrictions[1].ids).to.eql([3, 500]);
   });
 
   it("should throw Error on garbage 1", (): void => {
