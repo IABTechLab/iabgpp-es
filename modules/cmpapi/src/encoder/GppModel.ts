@@ -24,6 +24,10 @@ import { UsNh } from "./section/UsNh.js";
 import { UsNj } from "./section/UsNj.js";
 import { UsTn } from "./section/UsTn.js";
 import { UsMn } from "./section/UsMn.js";
+import { UsMd } from "./section/UsMd.js";
+import { UsIn } from "./section/UsIn.js";
+import { UsKy } from "./section/UsKy.js";
+import { UsRi } from "./section/UsRi.js";
 
 export class GppModel {
   private sections = new Map<string, EncodableSection>();
@@ -107,6 +111,18 @@ export class GppModel {
       } else if (sectionName === UsMn.NAME) {
         section = new UsMn();
         this.sections.set(UsMn.NAME, section);
+      } else if (sectionName === UsMd.NAME) {
+        section = new UsMd();
+        this.sections.set(UsMd.NAME, section);
+      } else if (sectionName === UsIn.NAME) {
+        section = new UsIn();
+        this.sections.set(UsIn.NAME, section);
+      } else if (sectionName === UsKy.NAME) {
+        section = new UsKy();
+        this.sections.set(UsKy.NAME, section);
+      } else if (sectionName === UsRi.NAME) {
+        section = new UsRi();
+        this.sections.set(UsRi.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
@@ -342,6 +358,18 @@ export class GppModel {
           } else if (sectionIds[i] === UsMn.ID) {
             let section = new UsMn(encodedSections[i + 1]);
             sections.set(UsMn.NAME, section);
+          } else if (sectionIds[i] === UsMd.ID) {
+            let section = new UsMd(encodedSections[i + 1]);
+            sections.set(UsMd.NAME, section);
+          } else if (sectionIds[i] === UsIn.ID) {
+            let section = new UsIn(encodedSections[i + 1]);
+            sections.set(UsIn.NAME, section);
+          } else if (sectionIds[i] === UsKy.ID) {
+            let section = new UsKy(encodedSections[i + 1]);
+            sections.set(UsKy.NAME, section);
+          } else if (sectionIds[i] === UsRi.ID) {
+            let section = new UsRi(encodedSections[i + 1]);
+            sections.set(UsRi.NAME, section);
           }
         }
       }
@@ -450,6 +478,18 @@ export class GppModel {
       } else if (sectionName === UsMn.NAME) {
         section = new UsMn();
         this.sections.set(UsMn.NAME, section);
+      } else if (sectionName === UsMd.NAME) {
+        section = new UsMd();
+        this.sections.set(UsMd.NAME, section);
+      } else if (sectionName === UsIn.NAME) {
+        section = new UsIn();
+        this.sections.set(UsIn.NAME, section);
+      } else if (sectionName === UsKy.NAME) {
+        section = new UsKy();
+        this.sections.set(UsKy.NAME, section);
+      } else if (sectionName === UsRi.NAME) {
+        section = new UsRi();
+        this.sections.set(UsRi.NAME, section);
       }
     } else {
       section = this.sections.get(sectionName);
