@@ -11,7 +11,7 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA");
   });
 
-  it("should encode to BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao", (): void => {
+  it("should encode to BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao", (): void => {
     let tcfCaV1 = new TcfCaV1();
 
     tcfCaV1.setFieldValue(TcfCaV1Field.CMP_ID, 50);
@@ -145,23 +145,23 @@ describe("manifest.section.TcfCaV1", (): void => {
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
 
-    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao");
   });
 
-  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5wAA", (): void => {
+  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5w", (): void => {
     let tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.DISCLOSED_VENDORS, [1, 2, 3, 5, 6, 7, 10, 11, 12]);
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5wAA");
+    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5w");
   });
 
-  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", (): void => {
+  it("should encode to BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA", (): void => {
     let tcfCaV1 = new TcfCaV1();
     tcfCaV1.setFieldValue(TcfCaV1Field.PUB_RESTRICTIONS, [new RangeEntry(1, 1, [1, 2, 3, 5, 6, 7, 9])]);
     tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, new Date("2022-01-01T00:00:00Z"));
     tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, new Date("2022-01-01T00:00:00Z"));
-    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+    expect(tcfCaV1.encode()).to.eql("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA");
   });
 
   it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA", (): void => {
@@ -301,8 +301,8 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
-  it("should decode BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao", (): void => {
-    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+  it("should decode BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBhADVqxGAD0AILVgAA.fHHHA4444ao");
 
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_ID)).to.eql(50);
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_VERSION)).to.eql(2);
@@ -438,13 +438,94 @@ describe("manifest.section.TcfCaV1", (): void => {
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_PURPOSES_SEGMENT_TYPE)).to.eql(3);
   });
 
-  it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA", (): void => {
-    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+  it("should decode BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgAS7o.YAAAAAAAAAA");
 
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS).length).to.eql(1);
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS)[0].key).to.eql(1);
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS)[0].type).to.eql(1);
     expect(tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS)[0].ids).to.eql([1, 2, 3, 5, 6, 7, 9]);
+  });
+
+  it("should round-trip vendor/disclosed ranges via the Fibonacci range path", (): void => {
+    // Sparse, high vendor IDs force the OptimizedRange to choose the (Fibonacci) range
+    // representation over a bitfield, exercising the Fibonacci range encode/decode path.
+    let tcfCaV1 = new TcfCaV1();
+    tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT, [1, 100, 200]);
+    tcfCaV1.setFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT, [50, 51, 52, 999]);
+    tcfCaV1.setFieldValue(TcfCaV1Field.DISCLOSED_VENDORS, [2, 250, 600]);
+    tcfCaV1.setFieldValue(TcfCaV1Field.PUB_RESTRICTIONS, [
+      new RangeEntry(1, 0, [5, 100, 101, 102, 800]),
+      new RangeEntry(2, 2, [3, 500]),
+    ]);
+
+    let decoded = new TcfCaV1(tcfCaV1.encode());
+    expect(decoded.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT)).to.eql([1, 100, 200]);
+    expect(decoded.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT)).to.eql([50, 51, 52, 999]);
+    expect(decoded.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS)).to.eql([2, 250, 600]);
+    let decodedPubRestrictions = decoded.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS);
+    expect(decodedPubRestrictions.length).to.eql(2);
+    expect(decodedPubRestrictions[0].key).to.eql(1);
+    expect(decodedPubRestrictions[0].type).to.eql(0);
+    expect(decodedPubRestrictions[0].ids).to.eql([5, 100, 101, 102, 800]);
+    expect(decodedPubRestrictions[1].key).to.eql(2);
+    expect(decodedPubRestrictions[1].type).to.eql(2);
+    expect(decodedPubRestrictions[1].ids).to.eql([3, 500]);
+  });
+
+  it("should decode a legacy fixed-range vendor string (backwards compatibility)", (): void => {
+    // String produced by the pre-fix encoder, which used fixed-integer ranges for the
+    // VendorExpressConsent / VendorImpliedConsent OptimizedRange fields.
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAyACAENGdCgf_gfgAfgfgBgABABAAABAB4AACACAAA.fHHHA4444ao");
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT)).to.eql([12, 24, 48]);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT)).to.eql([18, 30]);
+  });
+
+  it("should decode a legacy fixed-range PubRestrictions string (backwards compatibility)", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAACCgBwABAAOAAoADgAJA.YAAAAAAAAAA");
+    let pubRestrictions = tcfCaV1.getFieldValue(TcfCaV1Field.PUB_RESTRICTIONS);
+    expect(pubRestrictions.length).to.eql(1);
+    expect(pubRestrictions[0].key).to.eql(1);
+    expect(pubRestrictions[0].type).to.eql(1);
+    expect(pubRestrictions[0].ids).to.eql([1, 2, 3, 5, 6, 7, 9]);
+  });
+
+  it("should decode a legacy traditional-base64 DisclosedVendors string (backwards compatibility)", (): void => {
+    let tcfCaV1 = new TcfCaV1("BPSG_8APSG_8AAAAAAENAACAAAAAAAAAAAAAAAAAAA.YAAAAAAAAAA.IAGO5wAA");
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.DISCLOSED_VENDORS)).to.eql([1, 2, 3, 5, 6, 7, 10, 11, 12]);
+  });
+
+  it("should decode a legacy string and re-encode it in the spec-compliant Fibonacci form", (): void => {
+    // A real TcfCaV1 string produced by the pre-fix encoder (fixed-integer OptimizedRange). The
+    // backwards-compatible decoder reads it, and re-encoding emits the spec-compliant Fibonacci form.
+    let legacy =
+      "BQliWsAQliWsAPoABAELC9CoAKgAAJIAAApNAOABUAC0AGgAQwAlgBQAC6AG0AO4AfgBBATAAnMBSYEwYFgAXQBOwC3ALgAc4A7gCAAEmAJ2AT8AxQBmgDOgGfANeAcQA6oCJgEngJyAT-Ao8BUQCpQFvALhAXQAvcBf4DMAGggNNAbUA3EBxoDlgHiAPNAfIBAQCEgEbgI_gSlgmACYIAA.YAAAAAAAAAA";
+    let tcfCaV1 = new TcfCaV1(legacy);
+
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_ID)).to.eql(1000);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.CMP_VERSION)).to.eql(1);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.CONSENT_LANGUAGE)).to.eql("EL");
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_LIST_VERSION)).to.eql(189);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.USE_NON_STANDARD_STACKS)).to.eql(true);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_EXPRESS_CONSENT)).to.eql([
+      42, 45, 52, 67, 75, 80, 93, 109, 119, 126, 130, 1216, 1254, 1318,
+    ]);
+    expect(tcfCaV1.getFieldValue(TcfCaV1Field.VENDOR_IMPLIED_CONSENT)).to.eql([
+      93, 157, 183, 184, 231, 238, 256, 294, 315, 319, 394, 410, 413, 415, 431, 452, 469, 550, 591, 626, 639, 655, 674,
+      677, 734, 737, 744, 759, 767, 816, 833, 845, 874, 881, 909, 918, 964, 973, 996, 1028, 1060, 1134, 1151, 1189,
+      1216, 1217,
+    ]);
+
+    // Touching the timestamps (preserving their values) marks the core segment dirty, and
+    // setIsDirty(true) marks the section dirty (the same mechanism GppModel uses), so encode()
+    // re-emits the string in the spec-compliant Fibonacci form.
+    tcfCaV1.setFieldValue(TcfCaV1Field.CREATED, tcfCaV1.getFieldValue(TcfCaV1Field.CREATED));
+    tcfCaV1.setFieldValue(TcfCaV1Field.LAST_UPDATED, tcfCaV1.getFieldValue(TcfCaV1Field.LAST_UPDATED));
+    tcfCaV1.setIsDirty(true);
+
+    expect(tcfCaV1.encode()).to.eql(
+      "BQliWsAQliWsAPoABAELC9CoAKgAAJIAAApNAOBMZZGDDAxMmWskIahojBMGBYoGiOJ4FlhahgNZUxMZiYDUwllGgYGJpYyBjLIwZFqasFllNGqaMhisVpTU1DyeAAA.YAAAAAAAAAA"
+    );
   });
 
   it("should throw Error on garbage 1", (): void => {

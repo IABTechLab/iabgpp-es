@@ -3,6 +3,7 @@ export * from "./validate/index.js";
 export * from "./AbstractEncodableBitStringDataType.js";
 export * from "./DataType.js";
 export * from "./EncodableArrayOfFixedIntegerRanges.js";
+export * from "./EncodableArrayOfOptimizedFibonacciRanges.js";
 export * from "./EncodableBoolean.js";
 export * from "./EncodableDataType.js";
 export * from "./EncodableDatetime.js";
