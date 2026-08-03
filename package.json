@@ -2,6 +2,10 @@
   "name": "iabgpp",
   "version": "3.2.0",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IABTechLab/iabgpp-es.git"
+  },
   "private": false,
   "workspaces": [
     "modules/stub",

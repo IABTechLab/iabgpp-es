@@ -2,6 +2,11 @@
   "name": "@iabgpp/stub",
   "version": "3.2.0",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IABTechLab/iabgpp-es.git",
+    "directory": "modules/stub"
+  },
   "type": "module",
   "main": "lib/stub.js",
   "files": [
