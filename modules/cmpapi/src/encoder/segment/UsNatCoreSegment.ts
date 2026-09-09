@@ -15,6 +15,9 @@ import { AbstractLazilyEncodableSegment } from "./AbstractLazilyEncodableSegment
 export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBitStringFields> {
   private base64UrlEncoder: AbstractBase64UrlEncoder = CompressedBase64UrlEncoder.getInstance();
   private bitStringEncoder: BitStringEncoder = BitStringEncoder.getInstance();
+  // Set during decode: the v1 field layout is 60 bits, or 66 once the encoder pads it. A payload that
+  // reports version 1 but arrives at a v2 width carries all 16 + 3 values and must not be sliced.
+  private decodedV1Layout: boolean | null = null;
 
   constructor(encodedString?: string) {
     super();
@@ -144,6 +147,7 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
       // Necessary to maintain backwards compatibility when sensitive data processing changed from a
       // length of 12 to 16 and known child sensitive data consents changed from a length of 2 to 3 in the
       // DE, IA, NE, NH, NJ, TN release
+      this.decodedV1Layout = bitString.length == 60 || bitString.length == 66;
       if (bitString.length == 60) {
         bitString =
           bitString.substring(0, 48) +
@@ -167,7 +171,8 @@ export class UsNatCoreSegment extends AbstractLazilyEncodableSegment<EncodableBi
   public getFieldValue(fieldName: string): any {
     let value = super.getFieldValue(fieldName);
     let version = this.fields.get(UsNatField.VERSION).getValue();
-    if (version === 1) {
+    let useV1Lists = this.decodedV1Layout === true || (this.decodedV1Layout === null && version === 1);
+    if (useV1Lists) {
       if (fieldName === UsNatField.SENSITIVE_DATA_PROCESSING) {
         value = value.slice(0, 12);
       } else if (fieldName === UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS) {
