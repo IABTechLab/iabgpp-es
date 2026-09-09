@@ -1007,4 +1007,110 @@ describe("manifest.GppModel", (): void => {
       "Unable to decode 'DBACOeA~~1YNN'. The number of sections does not match the number of sections defined in the header."
     );
   });
+
+  it("should delete a section by name", (): void => {
+    let gppModel = new GppModel("DBABJg~BVUAAJg.QA");
+    gppModel.deleteSection("usco");
+
+    expect(gppModel.hasSection("usco")).to.eql(false);
+    expect(gppModel.getSectionIds()).to.eql([]);
+    expect(gppModel.encode()).to.eql("DBAA");
+  });
+
+  it("should delete a section by id", (): void => {
+    let gppModel = new GppModel("DBABJg~BVUAAJg.QA");
+    gppModel.deleteSectionById(10);
+
+    expect(gppModel.hasSection("usco")).to.eql(false);
+    expect(gppModel.getSectionIds()).to.eql([]);
+    expect(gppModel.encode()).to.eql("DBAA");
+  });
+
+  it("should not change the gpp string when deleting a section that is not present", (): void => {
+    let gppModel = new GppModel("DBABJg~BVUAAJg.QA");
+    gppModel.deleteSection("tcfeuv2");
+
+    expect(gppModel.encode()).to.eql("DBABJg~BVUAAJg.QA");
+    expect(gppModel.hasSection("usco")).to.eql(true);
+    expect(gppModel.getSectionIds()).to.eql([10]);
+  });
+
+  it("should not change the gpp string when deleting a section id that is not present", (): void => {
+    let gppModel = new GppModel("DBABJg~BVUAAJg.QA");
+    gppModel.deleteSectionById(2);
+
+    expect(gppModel.encode()).to.eql("DBABJg~BVUAAJg.QA");
+    expect(gppModel.hasSection("usco")).to.eql(true);
+    expect(gppModel.getSectionIds()).to.eql([10]);
+  });
+
+  it("should not change the gpp string when deleting an unknown section id", (): void => {
+    let gppModel = new GppModel("DBABJg~BVUAAJg.QA");
+    gppModel.deleteSectionById(999);
+
+    expect(gppModel.encode()).to.eql("DBABJg~BVUAAJg.QA");
+    expect(gppModel.getSectionIds()).to.eql([10]);
+  });
+
+  it("should keep the other sections when deleting one section of many", (): void => {
+    let gppModel = new GppModel("DBACNYA~CPXxRfAPXxRfAAfKABENB-CgAAAAAAAAAAYgAAAAAAAA~1YNN");
+    gppModel.deleteSectionById(6);
+
+    expect(new GppModel(gppModel.encode()).getSectionIds()).to.eql([2]);
+    expect(gppModel.hasSection("tcfeuv2")).to.eql(true);
+    expect(gppModel.hasSection("uspv1")).to.eql(false);
+    expect(gppModel.getFieldValue("tcfeuv2", "CmpId")).to.eql(31);
+  });
+
+  it("should keep all sections when deleting a section that is not present from a multi section string", (): void => {
+    let gppModel = new GppModel("DBACNYA~CPXxRfAPXxRfAAfKABENB-CgAAAAAAAAAAYgAAAAAAAA~1YNN");
+    gppModel.deleteSectionById(9);
+
+    expect(gppModel.encode()).to.eql("DBACNYA~CPXxRfAPXxRfAAfKABENB-CgAAAAAAAAAAYgAAAAAAAA~1YNN");
+    expect(gppModel.getSectionIds()).to.eql([2, 6]);
+  });
+
+  it("should delete a section that was never encoded", (): void => {
+    let gppModel = new GppModel();
+    gppModel.setFieldValue("uspv1", UspV1Field.NOTICE, "Y");
+    gppModel.deleteSection("uspv1");
+
+    expect(gppModel.hasSection("uspv1")).to.eql(false);
+    expect(gppModel.encode()).to.eql("DBAA");
+  });
+
+  it("should not throw when deleting a section after decoding null", (): void => {
+    let gppModel = new GppModel("DBABTA~1---");
+    gppModel.decode(null);
+    gppModel.deleteSection("uspv1");
+
+    expect(gppModel.getSectionIds()).to.eql([]);
+    expect(gppModel.encode()).to.eql("DBAA");
+  });
+
+  it("should return the decoded values from getSection", (): void => {
+    let gppModel = new GppModel();
+    gppModel.decode("DBABRg~BVqqqpY");
+
+    expect(gppModel.getSection("usva")).to.eql({
+      Version: 1,
+      SharingNotice: 1,
+      SaleOptOutNotice: 1,
+      TargetedAdvertisingOptOutNotice: 1,
+      SaleOptOut: 2,
+      TargetedAdvertisingOptOut: 2,
+      SensitiveDataProcessing: [2, 2, 2, 2, 2, 2, 2, 2],
+      KnownChildSensitiveDataConsents: 2,
+      MspaCoveredTransaction: 1,
+      MspaOptOutOptionMode: 1,
+      MspaServiceProviderMode: 2,
+    });
+  });
+
+  it("should return null from getSection after decoding null", (): void => {
+    let gppModel = new GppModel("DBABTA~1---");
+    gppModel.decode(null);
+
+    expect(gppModel.getSection("uspv1")).to.eql(null);
+  });
 });

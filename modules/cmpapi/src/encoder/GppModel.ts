@@ -192,17 +192,23 @@ export class GppModel {
   }
 
   public deleteSection(sectionName: string) {
-    // lazily decode
-    if (!this.decoded && this.encodedString != null && this.encodedString.length > 0) {
-      this.decode(this.encodedString);
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
     }
 
-    this.sections.delete(sectionName);
-    this.dirty = true;
+    // re-encoding a model that didn't change would needlessly rewrite the string
+    if (this.sections.delete(sectionName)) {
+      this.dirty = true;
+    }
   }
 
   public deleteSectionById(sectionId: number) {
-    this.deleteSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
+    let sectionName = Sections.SECTION_ID_NAME_MAP.get(sectionId);
+    if (sectionName) {
+      this.deleteSection(sectionName);
+    }
   }
 
   public clear() {
@@ -277,7 +283,9 @@ export class GppModel {
   }
 
   protected decodeModel(str: string) {
-    if (!str || str.length == 0 || str.startsWith("DB")) {
+    if (!str || str.length == 0) {
+      return new Map<string, EncodableSection>();
+    } else if (str.startsWith("DB")) {
       let encodedSections = str.split("~");
       let sections = new Map<string, EncodableSection>();
       if (encodedSections[0].startsWith("D")) {
