@@ -204,24 +204,28 @@ describe("manifest.section.UsNat", (): void => {
   it("should decode usnat v1", (): void => {
     let usNat = new UsNat("BAAAVVVVUQA.QA");
 
-    expect(1, usNat.getFieldValue(UsNatField.VERSION));
-    expect([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
-    expect([1, 1], usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(usNat.getFieldValue(UsNatField.VERSION)).to.eql(1);
+    expect(usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    expect(usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([1, 1]);
   });
 
   it("should decode usnat v2 with v1 values", (): void => {
     let usNat = new UsNat("CAAAVVVVAFBA.QA");
 
-    expect(2, usNat.getFieldValue(UsNatField.VERSION));
-    expect([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0], usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
-    expect([1, 1, 0], usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(usNat.getFieldValue(UsNatField.VERSION)).to.eql(2);
+    expect(usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+    ]);
+    expect(usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([1, 1, 0]);
   });
 
   it("should decode usnat v2 with v2 values", (): void => {
     let usNat = new UsNat("CAAAVVVVVVRA.QA");
 
-    expect(1, usNat.getFieldValue(UsNatField.VERSION));
-    expect([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING));
-    expect([1, 1, 1], usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS));
+    expect(usNat.getFieldValue(UsNatField.VERSION)).to.eql(2);
+    expect(usNat.getFieldValue(UsNatField.SENSITIVE_DATA_PROCESSING)).to.eql([
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    ]);
+    expect(usNat.getFieldValue(UsNatField.KNOWN_CHILD_SENSITIVE_DATA_CONSENTS)).to.eql([1, 1, 1]);
   });
 });
