@@ -89,4 +89,22 @@ describe("manifest.section.UsVa", (): void => {
       new UsVa("z").getFieldValue(UsVaField.SHARING_NOTICE);
     }).to.throw("Unable to decode UsVaCoreSegment 'z'");
   });
+
+  it("should convert a decoded section to an object without reading a field first", (): void => {
+    let usVa = new UsVa("BVqqqpY");
+
+    expect(usVa.toObj()).to.eql({
+      Version: 1,
+      SharingNotice: 1,
+      SaleOptOutNotice: 1,
+      TargetedAdvertisingOptOutNotice: 1,
+      SaleOptOut: 2,
+      TargetedAdvertisingOptOut: 2,
+      SensitiveDataProcessing: [2, 2, 2, 2, 2, 2, 2, 2],
+      KnownChildSensitiveDataConsents: 2,
+      MspaCoveredTransaction: 1,
+      MspaOptOutOptionMode: 1,
+      MspaServiceProviderMode: 2,
+    });
+  });
 });
