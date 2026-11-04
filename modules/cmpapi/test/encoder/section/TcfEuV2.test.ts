@@ -33,6 +33,15 @@ describe("manifest.section.TcfEuV2", (): void => {
     expect(tcfEuV2.encode()).to.eql("CPTtLAAPTtLAAAKAAAENAAFgALwAAEAAAAAAAOgAgABgAAAA.IAoAAgABgAAEAQAAEAAA.d4AACEAAAAAA");
   });
 
+  it("encode with li = [] - Bugfix 161", (): void => {
+    let tcfEuV2 = new TcfEuV2();
+    tcfEuV2.setFieldValue("IsServiceSpecific", true);
+    tcfEuV2.setFieldValue("PurposeLegitimateInterests", []);
+    tcfEuV2.setFieldValue("Created", new Date("2022-01-01T00:00:00Z"));
+    tcfEuV2.setFieldValue("LastUpdated", new Date("2022-02-01T00:00:00Z"));
+    expect(tcfEuV2.encode()).to.eql("CPTtLAAPTtLAAAAAAAENAAFgAAAAAAAAAAAAAAAAAAAA.IAAA.YAAAAAAAAAAA");
+  });
+
   it("decode with vendor [11, 28, 29] and publisher TC", (): void => {
     let tcfEuV2 = new TcfEuV2("CPTtLAAPTtLAAAAAAAENAAFgALwAAEAAAAAAAOgAgABgAAAA.IAoAAgABgAAEAQAAEAAA.d4AACEAAAAAA");
     expect(tcfEuV2.getFieldValue("IsServiceSpecific")).to.eql(true);
