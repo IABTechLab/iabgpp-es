@@ -119,6 +119,7 @@ export class TcfEuV2 extends AbstractLazilyEncodableSection {
     if (fieldName === TcfEuV2Field.PURPOSE_LEGITIMATE_INTERESTS) {
       value[0] = false;
       value[2] = value[3] = value[4] = value[5] = false;
+      value[1] = value[1] === undefined ? false : value[1];
     }
 
     // create and last update will need to stay in sync
