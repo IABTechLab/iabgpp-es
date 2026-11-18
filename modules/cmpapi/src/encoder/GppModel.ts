@@ -238,6 +238,20 @@ export class GppModel {
     }
   }
 
+  public getSectionSegments(sectionName: string): any[] | null {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+
+    if (this.sections.has(sectionName)) {
+      return this.sections.get(sectionName).toSegments();
+    } else {
+      return null;
+    }
+  }
+
   public getSectionIds() {
     if (!this.decoded) {
       this.sections = this.decodeModel(this.encodedString);
@@ -517,6 +531,24 @@ export class GppModel {
       let sectionName = Sections.SECTION_ORDER[i];
       if (this.sections.has(sectionName)) {
         obj[sectionName] = this.sections.get(sectionName).toObj();
+      }
+    }
+
+    return obj;
+  }
+
+  public toSegmentsObject() {
+    if (!this.decoded) {
+      this.sections = this.decodeModel(this.encodedString);
+      this.dirty = false;
+      this.decoded = true;
+    }
+
+    let obj = {};
+    for (let i = 0; i < Sections.SECTION_ORDER.length; i++) {
+      let sectionName = Sections.SECTION_ORDER[i];
+      if (this.sections.has(sectionName)) {
+        obj[sectionName] = this.sections.get(sectionName).toSegments();
       }
     }
 

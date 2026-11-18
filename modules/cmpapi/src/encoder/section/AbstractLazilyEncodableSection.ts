@@ -78,7 +78,13 @@ export abstract class AbstractLazilyEncodableSection implements EncodableSection
     throw new InvalidFieldError("Invalid field: '" + fieldName + "'");
   }
 
-  //Overriden
+  public toSegments(): any[] {
+    return this.segments.map((segment) => segment.toObj());
+  }
+
+  /**
+   * @deprecated Merges all segments into one flat object. Use toSegments() instead.
+   */
   public toObj(): any {
     let obj = {};
     for (let i = 0; i < this.segments.length; i++) {
