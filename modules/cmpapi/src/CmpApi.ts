@@ -137,6 +137,14 @@ export class CmpApi {
     return this.getSection(Sections.SECTION_ID_NAME_MAP.get(sectionId));
   }
 
+  public getSectionSegments(sectionName: string): any[] | null {
+    return this.cmpApiContext.gppModel.getSectionSegments(sectionName);
+  }
+
+  public getSectionSegmentsById(sectionId: number): any[] | null {
+    return this.getSectionSegments(Sections.SECTION_ID_NAME_MAP.get(sectionId));
+  }
+
   public hasSection(sectionName: string): any {
     return this.cmpApiContext.gppModel.hasSection(sectionName);
   }
@@ -155,6 +163,10 @@ export class CmpApi {
 
   public clear() {
     this.cmpApiContext.gppModel.clear();
+  }
+
+  public getSegmentsObject() {
+    return this.cmpApiContext.gppModel.toSegmentsObject();
   }
 
   public getObject() {

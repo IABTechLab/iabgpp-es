@@ -14,6 +14,7 @@ export class PingData {
   public applicableSections: number[];
   public gppString: string;
   public parsedSections;
+  public parsedSegments;
 
   constructor(cmpApiContext: CmpApiContext) {
     this.gppVersion = cmpApiContext.gppVersion;
@@ -26,5 +27,6 @@ export class PingData {
     this.applicableSections = cmpApiContext.applicableSections;
     this.gppString = cmpApiContext.gppModel.encode();
     this.parsedSections = cmpApiContext.gppModel.toObject();
+    this.parsedSegments = cmpApiContext.gppModel.toSegmentsObject();
   }
 }

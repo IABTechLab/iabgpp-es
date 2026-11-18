@@ -9,7 +9,14 @@ export interface EncodableSection {
 
   setFieldValue(fieldName: string, value: any): void;
 
+  /**
+   * @deprecated Merges all segments into one flat object. Use toSegments(), which matches the
+   * array-of-segments shape defined by the GPP CMP API spec for getSection.
+   */
   toObj(): any;
+
+  /** Returns one object per segment, as defined by the GPP CMP API spec. */
+  toSegments(): any[];
 
   encode(): string;
 

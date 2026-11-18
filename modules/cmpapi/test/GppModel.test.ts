@@ -1007,4 +1007,40 @@ describe("manifest.GppModel", (): void => {
       "Unable to decode 'DBACOeA~~1YNN'. The number of sections does not match the number of sections defined in the header."
     );
   });
+
+  describe("segments", (): void => {
+    const gppString = "DBABTA~1YNN";
+
+    it("should return one object per segment from toSegments without changing toObj", (): void => {
+      let gppModel = new GppModel("DBABTA~1YNN");
+      let segments = gppModel.getSectionSegments(UspV1.NAME);
+      expect(segments).to.be.an("array").with.lengthOf(1);
+      expect(segments[0]).to.eql(gppModel.getSection(UspV1.NAME));
+    });
+
+    it("should keep flat toObj and expose a segment array for multi-segment sections", (): void => {
+      let gppModel = new GppModel();
+      gppModel.setFieldValue(UsNat.NAME, UsNatField.GPC, true);
+      let flat = gppModel.getSection(UsNat.NAME);
+      let segments = gppModel.getSectionSegments(UsNat.NAME);
+      expect(segments).to.have.lengthOf(2);
+      expect(segments[0]).to.not.have.property(UsNatField.GPC);
+      expect(segments[1]).to.eql({ [UsNatField.GPC_SEGMENT_TYPE]: 1, [UsNatField.GPC]: true });
+      expect(flat[UsNatField.GPC]).to.equal(true);
+      expect(flat[UsNatField.VERSION]).to.equal(segments[0][UsNatField.VERSION]);
+    });
+
+    it("should return null for missing sections", (): void => {
+      expect(new GppModel().getSectionSegments(UsNat.NAME)).to.equal(null);
+    });
+
+    it("should build toSegmentsObject keyed by section name", (): void => {
+      let gppModel = new GppModel(gppString);
+      let obj = gppModel.toSegmentsObject();
+      expect(Object.keys(obj)).to.eql(Object.keys(gppModel.toObject()));
+      for (const name of Object.keys(obj)) {
+        expect(obj[name]).to.be.an("array");
+      }
+    });
+  });
 });
